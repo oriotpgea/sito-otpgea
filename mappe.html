@@ -6,17 +6,19 @@
     <title>Le Nostre Mappe - OTP-GEA Orienteering Piacenza</title>
     
     <meta name="description" content="Esplora l'archivio cartografico di OTP-GEA Piacenza. Consulta le nostre mappe di orienteering su Google Maps e Google Earth.">
-
     <meta property="og:title" content="Il Nostro Archivio Mappe - OTP-GEA Piacenza">
     <meta property="og:description" content="Naviga l'archivio interattivo delle mappe che abbiamo creato per le nostre gare ed eventi nel piacentino.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.tuosito.it/mappe.html"> <meta property="og:image" content="https://www.tuosito.it/images/sfondo-mappe.jpg"> <link rel="stylesheet" href="style.css">
+    <meta property="og:url" content="https://www.tuosito.it/mappe.html">
+    <meta property="og:image" content="https://www.tuosito.it/images/sfondo-mappe.jpg">
+
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="icon" href="images/favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="images/logo.png">
 </head>
 <body>
 
@@ -27,12 +29,25 @@
             </div>
             <ul class="nav-links">
                 <li><a href="home.html">Home</a></li>
-                <li><a href="gare.html">Gare ed Eventi</a></li>
-                <li><a href="corso.html">Corsi</a></li>
-                <li><a href="teambuilding.html">Teambuilding</a></li>
-                <li><a href="compleanni.html">Compleanni</a></li>
-                <li><a href="promozione-territorio.html">Promozione Territorio</a></li>
-                <li><a href="mappe.html" class="active">Le Nostre Mappe</a></li>
+                <li class="dropdown">
+                    <a href="#">Le Nostre Attività <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-content">
+                        <li><a href="gare.html">Gare ed Eventi</a></li>
+                        <li><a href="corso.html">Corsi</a></li>
+                        <li><a href="teambuilding.html">Teambuilding</a></li>
+                        <li><a href="compleanni.html">Compleanni</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">L'Associazione <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-content">
+                        <li><a href="home.html#chi-siamo">La Nostra Storia</a></li>
+                        <li><a href="promozione-territorio.html">Promozione Territorio</a></li>
+                        <li><a href="mappe.html" class="active">Le Nostre Mappe</a></li>
+                        <li><a href="trasparenza.html">Trasparenza</a></li>
+                        <li><a href="sostienici.html">Sostienici (5x1000)</a></li>
+                    </ul>
+                </li>
             </ul>
             <button class="menu-toggle" id="menu-toggle" aria-label="Apri menu">
                 <i class="fas fa-bars"></i>
@@ -53,7 +68,7 @@
                 <h2>Le Mappe in Vista Satellitare</h2>
                 <p>Qui sotto trovi il nostro archivio mappe interattivo su Google My Maps, ideale per una consultazione rapida e per vedere tutti i nostri tracciati in un unico luogo. Puoi navigare, zoomare e cliccare sui percorsi per vedere i dettagli.</p>
                 <div class="map-container">
-                    <iframe src="https://www.google.com/maps/d/embed?mid=1Lbc2NokmWpSxZir78Hy5ipAA_e-moA7S&ehbc=2E312F" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/d/embed?mid=1vmTi8RWvdjBpN1tbB72_gRi1UEl6M0ss&ehbc=2E312F" width="100%" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <hr>
                 <p>Per un'esperienza più spettacolare e immersiva, abbiamo preparato lo stesso progetto anche su <strong>Google Earth</strong>. Clicca sul pulsante qui sotto per "volare" virtualmente sui nostri percorsi di gara e apprezzare i dislivelli e i dettagli del terreno in 3D!</p>
@@ -71,7 +86,6 @@
             <div class="contact-info">
                 <p>📧 Email: <a href="mailto:ori.otpgea@gmail.com">ori.otpgea@gmail.com</a></p>
                 <p>📞 Telefono: <a href="tel:+393333188069">+39 333 318 8069</a></p>
-                <p>📍 Sede: Via Molineria S. Giovanni 11/13, 29121 Piacenza</p>
             </div>
             <div class="social-links">
                 <a href="https://www.facebook.com/61562420964039/about/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>

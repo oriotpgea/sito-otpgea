@@ -6,17 +6,19 @@
     <title>Corso Base di Orienteering - OTP-GEA Piacenza</title>
 
     <meta name="description" content="Impara le basi dell'orienteering con il nostro corso a Piacenza. Domina mappa e bussola ed esplora la natura in sicurezza. Iscriviti ora!">
-
     <meta property="og:title" content="Corso Base di Orienteering - OTP-GEA Piacenza">
     <meta property="og:description" content="Trasforma ogni tua escursione in un'avventura sicura. Scopri il programma e iscriviti al nostro corso base.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.tuosito.it/corso.html"> <meta property="og:image" content="https://www.tuosito.it/images/sfondo-corso.jpg"> <link rel="stylesheet" href="style.css">
+    <meta property="og:url" content="https://www.tuosito.it/corso.html">
+    <meta property="og:image" content="https://www.tuosito.it/images/sfondo-corso.jpg">
+
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="icon" href="images/favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="images/logo.png">
 </head>
 <body>
 
@@ -27,12 +29,25 @@
             </div>
             <ul class="nav-links">
                 <li><a href="home.html">Home</a></li>
-                <li><a href="gare.html">Gare ed Eventi</a></li>
-                <li><a href="corso.html" class="active">Corsi</a></li>
-                <li><a href="teambuilding.html">Teambuilding</a></li>
-                <li><a href="compleanni.html">Compleanni</a></li>
-                <li><a href="promozione-territorio.html">Promozione Territorio</a></li>
-                <li><a href="mappe.html">Le Nostre Mappe</a></li>
+                <li class="dropdown">
+                    <a href="#">Le Nostre Attività <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-content">
+                        <li><a href="gare.html">Gare ed Eventi</a></li>
+                        <li><a href="corso.html" class="active">Corsi</a></li>
+                        <li><a href="teambuilding.html">Teambuilding</a></li>
+                        <li><a href="compleanni.html">Compleanni</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#">L'Associazione <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-content">
+                        <li><a href="home.html#chi-siamo">La Nostra Storia</a></li>
+                        <li><a href="promozione-territorio.html">Promozione Territorio</a></li>
+                        <li><a href="mappe.html">Le Nostre Mappe</a></li>
+                        <li><a href="trasparenza.html">Trasparenza</a></li>
+                        <li><a href="sostienici.html">Sostienici (5x1000)</a></li>
+                    </ul>
+                </li>
             </ul>
             <button class="menu-toggle" id="menu-toggle" aria-label="Apri menu">
                 <i class="fas fa-bars"></i>
@@ -103,7 +118,6 @@
             <div class="contact-info">
                 <p>📧 Email: <a href="mailto:ori.otpgea@gmail.com">ori.otpgea@gmail.com</a></p>
                 <p>📞 Telefono: <a href="tel:+393333188069">+39 333 318 8069</a></p>
-                <p>📍 Sede: Via Molineria S. Giovanni 11/13, 29121 Piacenza</p>
             </div>
             <div class="social-links">
                 <a href="https://www.facebook.com/61562420964039/about/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>

@@ -257,7 +257,7 @@ body {
 
 /* === Stili specifici per le card della sezione "Cosa facciamo" === */
 #attivita .card {
-    background-color: var(--background-light);
+    background-color: #fff;
     box-shadow: none;
     border: 1px solid #e0e0e0;
 }
@@ -618,4 +618,133 @@ hr {
     margin-top: 0;
     line-height: 1.4;
     text-align: center;
+}
+
+/* ==========================================================================
+   STILI PER SEZIONE "COS'E' L'ORIENTEERING"
+   ========================================================================== */
+
+/* Stile per il paragrafo introduttivo, per dargli più risalto */
+.lead-paragraph {
+    font-size: 1.1em;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem auto;
+    line-height: 1.7;
+}
+
+/* Contenitore a griglia per le discipline */
+.discipline-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Due colonne su schermi grandi */
+    gap: 30px; /* Spazio tra i riquadri */
+}
+
+/* Stile per ogni riquadro di una disciplina */
+.disciplina-item {
+    background-color: var(--background-light);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+}
+
+/* Stile per le icone */
+.disciplina-item i {
+    font-size: 2.5rem; /* Dimensione grande */
+    color: var(--primary-color); /* Colore principale del tema */
+    margin-bottom: 1rem;
+}
+
+/* Stile per i titoli delle discipline */
+.disciplina-item h4 {
+    font-family: var(--font-headings);
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.disciplina-item p {
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   STILI PER SEZIONE PROSSIMA GARA IN EVIDENZA
+   ========================================================================== */
+.featured-race-container {
+    display: flex;
+    flex-wrap: wrap; /* Per andare a capo su mobile */
+    gap: 40px; /* Spazio tra le due colonne */
+    align-items: center;
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.race-details, .race-flyer {
+    flex: 1; /* Le colonne si dividono lo spazio */
+    min-width: 300px; /* Larghezza minima prima di andare a capo */
+}
+
+.race-details h3 {
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.race-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0;
+}
+
+.race-details li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.race-flyer img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.race-flyer img:hover {
+    transform: scale(1.03);
+}
+
+/* ==========================================================================
+   STILI PER VIDEO YOUTUBE RESPONSIVO
+   ========================================================================== */
+.video-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%; /* Proporzioni 16:9 (9 / 16 * 100) */
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Adattamento per schermi piccoli (smartphone) */
+@media(max-width: 768px) {
+    .discipline-grid {
+        grid-template-columns: 1fr; /* Una colonna su schermi piccoli */
+    }
 }

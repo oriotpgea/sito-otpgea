@@ -748,3 +748,12 @@ hr {
         grid-template-columns: 1fr; /* Una colonna su schermi piccoli */
     }
 }
+
+/* ==========================================================================
+   CORREZIONE LAYOUT GARA SU MOBILE
+   ========================================================================== */
+@media(max-width: 768px) {
+    .featured-race-container {
+        flex-direction: column; /* Impila gli elementi in verticale */
+    }
+}

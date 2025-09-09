@@ -1,0 +1,6 @@
+# Regola di reindirizzamento forzato dal vecchio al nuovo dominio
+[[redirects]]
+  from = "https://orienteeringpiacenza.netlify.app/*"
+  to = "https://www.orienteeringpiacenza.it/:splat"
+  status = 301
+  force = true

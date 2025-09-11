@@ -750,6 +750,74 @@ hr {
 }
 
 /* ==========================================================================
+   STILI PER VIDEO YOUTUBE A DUE CLICK
+   ========================================================================== */
+/* Nuovo: Contenitore esterno per gestire lo spazio e la larghezza */
+.video-wrapper {
+    max-width: 800px;
+    margin: 3rem auto; /* Spazio sopra e sotto, e centrato */
+}
+
+/* Contenitore interno, ora si occupa solo delle proporzioni */
+.video-due-click-container {
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    width: 100%;
+    padding-top: 56.25%; /* Mantiene le proporzioni 16:9 del video */
+}
+
+.video-due-click-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Assicura che l'immagine copra tutto lo spazio */
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.video-due-click-container:hover img {
+    transform: scale(1.03); /* Leggero effetto zoom al passaggio del mouse */
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 56px;
+    background-color: rgba(255, 0, 0, 0.8);
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.play-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-40%, -50%);
+    border-left: 20px solid white;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+}
+
+.video-due-click-container:hover .play-button {
+    background-color: rgba(255, 0, 0, 1);
+}
+
+.video-due-click-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* ==========================================================================
    CORREZIONE LAYOUT GARA SU MOBILE
    ========================================================================== */
 @media(max-width: 768px) {

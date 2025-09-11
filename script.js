@@ -15,3 +15,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+/* ==========================================================================
+   GESTIONE VIDEO YOUTUBE A DUE CLICK
+   ========================================================================== */
+document.querySelectorAll('.video-due-click-container').forEach(container => {
+    container.addEventListener('click', function() {
+        const videoId = this.dataset.videoId;
+        const iframe = document.createElement('iframe');
+        
+        iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+
+        // Sostituisce il contenuto del contenitore (immagine e play button) con l'iframe
+        this.innerHTML = '';
+        this.appendChild(iframe);
+    });
+});

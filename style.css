@@ -126,7 +126,7 @@ body {
 }
 
 /* Hero a schermo pieno per le pagine principali */
-#hero-home, #hero-gare, #hero-corso, #hero-teambuilding, #hero-compleanni, #hero-promozione-territorio, #hero-mappe {
+#hero-home, #hero-gare, #hero-corso, #hero-teambuilding, #hero-caccia-al-tesoro, #hero-promozione-territorio, #hero-mappe {
     height: 100vh;
 }
 
@@ -146,8 +146,8 @@ body {
 #hero-teambuilding {
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/sfondo-teambuilding.jpg');
 }
-#hero-compleanni {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/sfondo-compleanni.jpg');
+#hero-caccia-al-tesoro {
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/sfondo-caccia-al-tesoro.jpg');
 }
 #hero-mappe {
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/sfondo-mappe.jpg');
@@ -562,7 +562,7 @@ hr {
 }
 
 /* Assicurati che la regola per l'altezza a schermo pieno includa tutti gli ID corretti */
-#hero-home, #hero-gare, #hero-corso, #hero-teambuilding, #hero-compleanni, #hero-promozione-territorio, #hero-mappe, #hero-sostienici, #hero-trasparenza, #hero-storia {
+#hero-home, #hero-gare, #hero-corso, #hero-teambuilding, #hero-caccia-al-tesoro, #hero-promozione-territorio, #hero-mappe, #hero-sostienici, #hero-trasparenza, #hero-storia {
     height: 100vh;
 }
 

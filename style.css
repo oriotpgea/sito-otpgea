@@ -827,9 +827,10 @@ hr {
 }
 
 /* ==========================================================================
-   STILI FORM NEWSLETTER (BREVO)
+   STILI FORM NEWSLETTER (BREVO) - Versione Corretta
    ========================================================================== */
 
+/* Contenitore principale personalizzato */
 #newsletter-form-container {
     background-color: #fff;
     padding: 2.5rem;
@@ -839,26 +840,27 @@ hr {
     margin-top: 2rem;
 }
 
-#sib-form {
-    width: 100%;
+/* Rimuove padding extra dai wrapper di Brevo */
+#sib-container {
+    padding: 0;
 }
-
-/* Stile per ogni gruppo di campi (label + input) */
-.form-group {
+.sib-form-block {
+    padding: 0;
     margin-bottom: 1.5rem;
 }
 
-/* Etichette (label) */
-.form-group label {
+/* Etichetta (Label) del campo email */
+.entry__label {
     display: block;
     font-family: var(--font-headings);
     font-weight: 700;
     margin-bottom: 0.5rem;
     color: var(--text-color);
+    font-size: 1rem; /* Dimensione coerente */
 }
 
 /* Campo di input email */
-.form-group input[type="text"] {
+.entry__field .input {
     width: 100%;
     padding: 12px;
     font-family: var(--font-body);
@@ -868,7 +870,7 @@ hr {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.form-group input[type="text"]:focus {
+.entry__field .input:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
@@ -879,32 +881,52 @@ hr {
     width: 100%;
     font-size: 1.1rem;
     padding: 15px 25px;
-    /* La classe .cta-button del tuo CSS fa il resto */
+    margin-top: 1rem; /* Spazio sopra il pulsante */
 }
 
 /* Stile per il gruppo checkbox */
-.form-opt-in {
+.sib-optin .entry__choice {
     display: flex;
     align-items: flex-start;
     gap: 10px;
 }
-.form-opt-in input[type="checkbox"] {
-    margin-top: 5px;
+/* Nasconde la checkbox originale di Brevo */
+.sib-optin .input_replaced {
+    display: none;
+}
+/* Stile del finto checkbox (coerente con il tuo sito) */
+.sib-optin .checkbox {
     flex-shrink: 0;
-    /* Stile checkbox moderno */
     width: 1.3em;
     height: 1.3em;
-    accent-color: var(--primary-color);
+    border: 2px solid var(--text-color);
+    border-radius: 3px;
+    margin-top: 5px;
+    cursor: pointer;
+    position: relative;
+    background-color: #fff;
 }
-.form-opt-in label {
+/* Stile del segno di spunta (appare quando cliccato) */
+.sib-optin .input_replaced:checked + .checkbox::after {
+    content: '✔';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+/* Etichetta del checkbox */
+.sib-optin .optin-label {
     font-family: var(--font-body);
     font-weight: 400;
     font-size: 0.9em;
     color: #555;
     line-height: 1.5;
-    margin-bottom: 0;
 }
-.form-opt-in label .entry__specification {
+.sib-optin .entry__specification {
     display: block;
     font-size: 0.9em;
     color: #777;

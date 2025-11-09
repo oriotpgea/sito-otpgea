@@ -149,6 +149,55 @@
             </div>
         </section>
     </main>
+
+    <section id="newsletter" class="content-section">
+            <div class="container" style="max-width: 800px; text-align: center;">
+                <h2>Rimani Aggiornato</h2>
+                <p class="lead-paragraph" style="margin-bottom: 2rem; font-size: 1.1em;">
+                    Iscriviti alla nostra newsletter per ricevere una volta al mese 
+                    il calendario dei successivi appuntamenti, le notizie sulle gare e le nostre iniziative.
+                </p>
+
+                <div id="newsletter-form-container">
+                    
+                    <div id="error-message" class="sib-form-message-panel"></div>
+                    <div id="success-message" class="sib-form-message-panel"></div>
+
+                    <form id="sib-form" method="POST" action="https://170f5049.sibforms.com/serve/MUIFAIY-6daoQHTEG-f_i-Ng-MlQQ_gjg6YV-2NVlNwFiP7dwiCEb5XKVvfIz9a2xfSgoVoT6nwL2ADO0ncxnGKUCmvIDyp9LdBRBcQn9jt4tU6pLOPe4kmOQhoBsCXYRWabXQs5R7LxlspMgOKOrF3ZvbsOEvZfG9LiP_vBhkpWCtnkPdsjOoZ-3QZ5ASlVioKf6Q46DWJ5S432jQ==" data-type="subscription">
+
+                        <div class="form-group">
+                            <label for="EMAIL">Inserisci la tua email *</label>
+                            <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="la-tua-email@esempio.com" data-required="true" required />
+                            <label class="entry__error entry__error--primary"></label>
+                        </div>
+
+                        <div class="form-group form-opt-in">
+                            <input type="checkbox" value="1" id="OPT_IN" name="OPT_IN" required />
+                            <label for="OPT_IN">Accetto le condizioni generali e di ricevere le newsletter.
+                                <span class="entry__specification">
+                                    Puoi annullare l'iscrizione in qualsiasi momento utilizzando il link incluso nella nostra newsletter.
+                                </span>
+                            </label>
+                            <label class="entry__error entry__error--primary"></label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button class="sib-form-block__button sib-form-block__button-with-loader cta-button" form="sib-form" type="submit">
+                                ISCRIVITI
+                            </button>
+                        </div>
+
+                        <div class="g-recaptcha-v3" data-sitekey="6LfgRQcsAAAAAKDoPQgH28PdXsbLGR2jG-xhLDUC" style="display: none"></div>
+                        <input type="text" name="email_address_check" value="" class="input--hidden" style="display:none;">
+                        <input type="hidden" name="locale" value="it">
+
+                        <div class="form-declaration">
+                            <p>Utilizziamo Brevo come piattaforma di marketing. Inviando questo modulo, accetti che i dati personali da te forniti vengano trasferiti a Brevo per il trattamento in conformità <a href="https://www.brevo.com/it/legal/privacypolicy/" target="_blank">all'Informativa sulla privacy di Brevo.</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    </section>
     
     <section id="contatti" class="content-section bg-dark">
         <div class="container">
@@ -171,5 +220,28 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+      window.REQUIRED_CODE_ERROR_MESSAGE = 'Scegli un prefisso paese';
+      window.LOCALE = 'it';
+      window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Le informazioni fornite non sono valide. Controlla il formato del campo e riprova.";
+      window.REQUIRED_ERROR_MESSAGE = "Questo campo non può essere lasciato vuoto. ";
+      window.GENERIC_INVALID_MESSAGE = "Le informazioni fornite non sono valide. Controlla il formato del campo e riprova.";
+      window.translation = {
+        common: {
+          selectedList: '{quantity} lista selezionata',
+          selectedLists: '{quantity} liste selezionate',
+          selectedOption: '{quantity} selezionato',
+          selectedOptions: '{quantity} selezionati',
+        }
+      };
+      var AUTOHIDE = Boolean(0);
+    </script>
+    <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfgRQcsAAAAAKDoPQgH28PdXsbLGR2jG-xhLDUC&hl=it" async defer></script>
+    </body>
+    </html>
+
 </body>
 </html>

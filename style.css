@@ -825,3 +825,91 @@ hr {
         flex-direction: column; /* Impila gli elementi in verticale */
     }
 }
+
+/* ==========================================================================
+   PERSONALIZZAZIONE STILI FORM BREVO
+   ========================================================================== */
+
+/* Rendiamo il contenitore esterno coerente con lo stile .bg-light */
+#newsletter .sib-form {
+    background-color: var(--background-light) !important;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Togliamo lo sfondo e il bordo al contenitore interno */
+#newsletter #sib-container {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    max-width: 100% !important; /* Lo lasciamo adattare al contenitore */
+}
+
+/* Stile per il Titolo del Form */
+#newsletter #sib-container .sib-form-block[style*="font-size:32px"] p {
+    font-family: var(--font-headings) !important;
+    color: var(--primary-color) !important;
+    font-size: 2.2rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+}
+
+/* Stile per la Descrizione */
+#newsletter #sib-container .sib-text-form-block p {
+    font-family: var(--font-body) !important;
+    color: var(--text-color) !important;
+    font-size: 1.1em !important;
+    text-align: center !important;
+}
+
+/* Stile per le Etichette (Label) */
+#newsletter #sib-container label.entry__label {
+    font-family: var(--font-body) !important;
+    color: var(--text-color) !important;
+    font-weight: 700 !important;
+    text-align: left !important;
+}
+
+/* Stile per il campo Input Email */
+#newsletter #sib-container input.input {
+    font-family: var(--font-body) !important;
+    padding: 12px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 5px !important;
+    font-size: 1rem !important;
+}
+
+/* Stile per il testo della Checkbox Privacy */
+#newsletter #sib-container .sib-optin span p {
+    font-family: var(--font-body) !important;
+    color: var(--text-color) !important;
+    font-size: 0.9rem !important;
+    text-align: left !important;
+}
+
+/* Stile per il Pulsante "ISCRIVITI" (Stile .cta-button) */
+#newsletter #sib-form-container button.sib-form-block__button {
+    background-color: var(--secondary-color) !important;
+    color: var(--text-light) !important;
+    font-family: var(--font-headings) !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    padding: 12px 25px !important;
+    border-radius: 5px !important;
+    border-width: 0 !important;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease !important;
+    width: auto !important; /* Impedisce al pulsante di andare a tutta larghezza */
+    display: inline-block !important;
+}
+
+/* Effetto Hover sul Pulsante */
+#newsletter #sib-form-container button.sib-form-block__button:hover {
+    background-color: var(--primary-color) !important;
+}
+
+/* Centriamo il pulsante (Brevo lo forza a sinistra) */
+#newsletter #sib-container .sib-form-block[style*="text-align: left"] {
+    text-align: center !important;
+}

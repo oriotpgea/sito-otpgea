@@ -964,3 +964,142 @@ hr {
     margin-bottom: 8px; /* Spazio prima dell'input */
     font-weight: 400 !important; /* Rende il font normale, non bold */
 }
+
+/* ==========================================================================
+   STILI TROFEO NOLIVARI (PAGINA GARE)
+   ========================================================================== */
+
+/* Contenitore principale del trofeo */
+.trofeo-container {
+    width: 100%;
+    margin-bottom: 3rem; /* Spazio prima del prossimo elemento */
+}
+
+/* Box con la descrizione del trofeo */
+.trofeo-description-box {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    border-left: 5px solid var(--primary-color);
+    margin-bottom: 3rem;
+}
+
+.trofeo-description-box h3 {
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.trofeo-description-box p {
+    font-size: 1.1em;
+    line-height: 1.7;
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    text-align: center; /* Sovrascrive text-align: justify */
+}
+
+/* Titolo per il calendario */
+.trofeo-calendario-title {
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+/* Griglia per le card delle gare */
+.trofeo-races-grid {
+    display: grid;
+    /* Crea colonne responsive: si adattano da 1 a 3 per riga */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* Stile della singola card di gara */
+.trofeo-race-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Per il border-radius */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trofeo-race-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* Header della card (data e luogo) */
+.race-card-header {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 15px 20px;
+    text-align: center;
+}
+
+.race-card-header .race-date {
+    font-family: var(--font-headings);
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: block;
+}
+
+.race-card-header .race-location {
+    font-size: 1rem;
+    font-weight: 400;
+    opacity: 0.9;
+}
+
+/* Corpo della card (descrizione breve) */
+.race-card-body {
+    padding: 20px;
+    flex-grow: 1; /* Spinge i link in fondo */
+}
+
+.race-card-body p {
+    text-align: left;
+    font-size: 0.95em;
+    margin-bottom: 0;
+}
+
+/* Sezione link in fondo alla card */
+.race-card-links {
+    padding: 0 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Spazio tra i bottoni */
+}
+
+/* Stile per i link (bollettino, iscrizioni) */
+.race-link {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 700;
+    padding: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 0.9em;
+}
+
+.race-link:hover {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+/* Stile per link disabilitati (placeholder) */
+.race-link.disabled {
+    color: #999;
+    border-color: #ccc;
+    background-color: #f9f9f9;
+    pointer-events: none; /* Non cliccabile */
+    opacity: 0.8;
+}

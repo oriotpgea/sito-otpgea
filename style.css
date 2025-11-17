@@ -827,8 +827,51 @@ hr {
 }
 
 /* ==========================================================================
-   STILI MODULO NEWSLETTER (BREVO)
+   SEZIONE CONTATTI (Layout a Colonna Singola)
    ========================================================================== */
+
+/*
+ * 1. Stili per i blocchi principali
+ */
+
+/* Stile per i box contenitori (Newsletter, Seguici, Contattaci) */
+.contatti-box {
+    margin-top: 3.5rem; /* Spazio verticale consistente tra i blocchi */
+    margin-bottom: 3.5rem; /* Spazio aggiunto sotto il box newsletter */
+    max-width: 500px; /* Limita la larghezza per la leggibilità */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Stile per i titoli H3 dei box (Newsletter, Seguici, Contattaci) */
+#contatti h3 {
+    font-family: var(--font-headings);
+    color: var(--secondary-color); /* Colore verde per i titoli */
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+/* Assicura che le info di contatto siano centrate */
+#contatti .contact-info {
+    text-align: center;
+}
+
+/* Assicura che i link social siano centrati */
+#contatti .social-links {
+    text-align: center;
+    margin-top: 0;
+}
+
+#contatti .social-links a {
+    margin: 0 15px; /* Spazio uniforme tra le icone */
+}
+
+
+/*
+ * 2. Sovrascrittura Stili Brevo (per integrazione)
+ */
 
 /* Rimuove sfondi e bordi di Brevo per integrarlo nella sezione scura */
 #contatti .sib-form,
@@ -836,39 +879,18 @@ hr {
     background-color: transparent !important;
     border: none !important;
     padding: 0 !important;
-    margin-top: 2rem;
-    max-width: 500px; /* Limita la larghezza del form */
-    margin-left: auto;
-    margin-right: auto;
+    margin-top: 0 !important; /* Rimuove il margine del modulo */
 }
 
-/* Stile per i testi (Titolo, Paragrafo) */
-#contatti #sib-form .sib-form-block p,
-#contatti #sib-form .sib-text-form-block p {
-    font-family: var(--font-body) !important;
-    color: #FFFFFF !important; /* Testo bianco */
-    text-align: center !important;
-}
-
-/* Titolo "Newsletter" */
-#contatti #sib-form .sib-form-block[style*="font-size:32px"] p {
-    font-family: var(--font-headings) !important;
-    font-size: 2rem !important;
-    font-weight: 700 !important;
-    margin-bottom: 0.5rem;
-}
-
-/* Paragrafo "Abbonati..." */
-#contatti #sib-form .sib-form-block[style*="font-size:16px"] p {
-    font-size: 1rem !important;
-    font-weight: 400 !important;
-    margin-bottom: 1.5rem;
-}
-
-/* Nasconde etichette e testi descrittivi superflui */
-#contatti #sib-form label.entry__label,
-#contatti #sib-form label.entry__specification {
+/* Nasconde i titoli e i paragrafi originali di Brevo (ora usiamo il nostro H3) */
+#contatti #sib-form div[style*="font-size:32px"],
+#contatti #sib-form div[style*="font-size:16px"] {
     display: none !important;
+}
+
+/* Rimuove il padding strano che Brevo aggiunge ad alcuni div */
+#contatti #sib-form div[style*="padding: 8px 0"] {
+    padding: 0 !important;
 }
 
 /* Stile per il campo input EMAIL */
@@ -880,22 +902,28 @@ hr {
     font-family: var(--font-body);
     font-size: 1rem;
     margin-bottom: 1rem;
-    color: #333 !important; /* Testo scuro nell'input */
-    background-color: #FFF !important; /* Sfondo bianco nell'input */
+    color: #333 !important;
+    background-color: #FFF !important;
 }
 
-/* Stile per la sezione Checkbox Privacy */
+/* Stile per la sezione Checkbox GDPR */
 #contatti #sib-form .sib-optin .entry__choice {
-    text-align: center !important; /* Centra checkbox e testo */
+    text-align: left !important; /* Allinea checkbox e testo a sinistra */
     margin-bottom: 1.5rem;
 }
 
-/* Testo della privacy */
+/* Nasconde l'etichetta "Conferma" della checkbox */
+#contatti #sib-form .sib-optin .form__label-row label.entry__label {
+    display: none !important;
+}
+
+/* Stile per il testo della checkbox GDPR ("Accetto le condizioni...") */
 #contatti #sib-form .sib-optin span[style*="font-size:14px"] p {
     font-size: 0.9rem !important;
-    color: #eee !important;
+    font-family: var(--font-body) !important;
+    color: #FFFFFF !important; /* Testo bianco */
     text-align: left !important;
-    display: inline; /* Allinea il testo accanto alla checkbox */
+    display: inline;
     margin-left: 10px;
 }
 
@@ -910,7 +938,7 @@ hr {
     transition: background-color 0.3s ease;
     border: none !important;
     cursor: pointer;
-    width: 100% !important; /* Larghezza piena */
+    width: 100% !important;
     font-size: 1.1rem !important;
     font-family: var(--font-body) !important;
     text-align: center !important;
@@ -924,4 +952,15 @@ hr {
 /* Nasconde l'icona SVG di caricamento */
 #contatti #sib-form button.sib-form-block__button svg {
     display: none;
+}
+
+/* Stile per l'etichetta dell'input EMAIL ("Inserisci il tuo indirizzo...") */
+#contatti #sib-form .sib-input .form__label-row label.entry__label {
+    display: block !important; /* Assicura che sia visibile */
+    font-size: 0.9rem !important;
+    font-family: var(--font-body) !important;
+    color: #FFFFFF !important; /* Testo bianco */
+    text-align: left !important;
+    margin-bottom: 8px; /* Spazio prima dell'input */
+    font-weight: 400 !important; /* Rende il font normale, non bold */
 }

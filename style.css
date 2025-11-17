@@ -825,3 +825,103 @@ hr {
         flex-direction: column; /* Impila gli elementi in verticale */
     }
 }
+
+/* ==========================================================================
+   STILI MODULO NEWSLETTER (BREVO)
+   ========================================================================== */
+
+/* Rimuove sfondi e bordi di Brevo per integrarlo nella sezione scura */
+#contatti .sib-form,
+#contatti #sib-container {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin-top: 2rem;
+    max-width: 500px; /* Limita la larghezza del form */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Stile per i testi (Titolo, Paragrafo) */
+#contatti #sib-form .sib-form-block p,
+#contatti #sib-form .sib-text-form-block p {
+    font-family: var(--font-body) !important;
+    color: #FFFFFF !important; /* Testo bianco */
+    text-align: center !important;
+}
+
+/* Titolo "Newsletter" */
+#contatti #sib-form .sib-form-block[style*="font-size:32px"] p {
+    font-family: var(--font-headings) !important;
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 0.5rem;
+}
+
+/* Paragrafo "Abbonati..." */
+#contatti #sib-form .sib-form-block[style*="font-size:16px"] p {
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    margin-bottom: 1.5rem;
+}
+
+/* Nasconde etichette e testi descrittivi superflui */
+#contatti #sib-form label.entry__label,
+#contatti #sib-form label.entry__specification {
+    display: none !important;
+}
+
+/* Stile per il campo input EMAIL */
+#contatti #sib-form input#EMAIL {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #333 !important; /* Testo scuro nell'input */
+    background-color: #FFF !important; /* Sfondo bianco nell'input */
+}
+
+/* Stile per la sezione Checkbox Privacy */
+#contatti #sib-form .sib-optin .entry__choice {
+    text-align: center !important; /* Centra checkbox e testo */
+    margin-bottom: 1.5rem;
+}
+
+/* Testo della privacy */
+#contatti #sib-form .sib-optin span[style*="font-size:14px"] p {
+    font-size: 0.9rem !important;
+    color: #eee !important;
+    text-align: left !important;
+    display: inline; /* Allinea il testo accanto alla checkbox */
+    margin-left: 10px;
+}
+
+/* Stile per il pulsante ISCRIVITI (usa i colori del sito) */
+#contatti #sib-form button.sib-form-block__button {
+    display: inline-block;
+    background: var(--secondary-color) !important; /* Colore verde sito */
+    color: var(--text-light) !important;
+    padding: 12px 25px;
+    border-radius: 5px !important;
+    font-weight: 700 !important;
+    transition: background-color 0.3s ease;
+    border: none !important;
+    cursor: pointer;
+    width: 100% !important; /* Larghezza piena */
+    font-size: 1.1rem !important;
+    font-family: var(--font-body) !important;
+    text-align: center !important;
+}
+
+/* Hover sul pulsante */
+#contatti #sib-form button.sib-form-block__button:hover {
+    background: var(--primary-color) !important; /* Colore verde scuro sito */
+}
+
+/* Nasconde l'icona SVG di caricamento */
+#contatti #sib-form button.sib-form-block__button svg {
+    display: none;
+}

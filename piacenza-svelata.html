@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Piacenza Svelata - Oltre la Facciata | OTP-GEA Orienteering</title>
     
-    <meta name="description" content="Piacenza Svelata: Orienteering Culturale tra le 50 chiese del centro storico. 17 Maggio 2026.">
+    <meta name="description" content="Piacenza Svelata: Urban Game Culturale tra le 50 chiese del centro storico. 17 Maggio 2026.">
     <meta property="og:title" content="Piacenza Svelata - Oltre la Facciata">
-    <meta property="og:description" content="Scopri Piacenza come non l'hai mai vista. Gara di Orienteering Culturale.">
+    <meta property="og:description" content="Scopri Piacenza come non l'hai mai vista. Un'avventura urbana tra storia e strategia.">
     
     <link rel="stylesheet" href="style.css">
     
@@ -18,15 +18,28 @@
 
     <style>
         :root {
-            /* NUOVO COLORE FUCSIA POTENTE */
-            --event-accent: #FF0099; /*oro: #D4AF37; fucsia: #FF0099;*/ 
-            --event-dark: #1a1a1a;
+            /* COLORI ISTITUZIONALI */
+            --otp-green: #2E7D32;       /* Verde OTP per titoli e icone */
+            
+            /* COLORI EVENTO */
+            --event-accent: #FF0099;    /* Fucsia per Titolo Hero e Bottoni */
+            --event-black: #050505;     /* Sfondo scuro */
+            --event-panel: #121212;     /* Sfondo card */
         }
 
-        /* --- Hero Section --- */
+        /* --- GLOBAL DARK MODE --- */
+        body {
+            background-color: var(--event-black);
+            color: #e0e0e0;
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- HERO SECTION --- */
         #hero-piacenza-svelata {
             height: 100vh;
-            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.3)), url('images/hero-piacenza-svelata-fucsia.jpg');
+            /* Filtro alleggerito: immagine più visibile */
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('images/hero-piacenza-svelata-fucsia.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -38,6 +51,7 @@
             color: white;
             padding-top: 80px;
             position: relative;
+            border-bottom: 2px solid var(--event-accent);
         }
 
         /* --- Language Switcher --- */
@@ -46,10 +60,10 @@
             top: 100px;
             right: 20px;
             z-index: 1001;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.8);
             border-radius: 30px;
             padding: 5px;
-            border: 1px solid var(--event-accent);
+            border: 1px solid var(--otp-green); /* Bordo verde istituzionale */
         }
 
         .lang-btn {
@@ -65,52 +79,68 @@
         }
 
         .lang-btn.active {
-            background-color: var(--event-accent);
+            background-color: var(--otp-green); /* Attivo verde */
             color: white;
         }
 
         /* --- Tipografia Hero --- */
         .event-logo-text {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
+            font-weight: 800; /* Bold ma font standard */
             font-size: 4rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--event-accent); /* Fucsia */
-            text-shadow: 0 4px 15px rgba(255, 0, 153, 0.3);
+            color: var(--event-accent); /* Fucsia per identità evento */
+            text-shadow: 0 0 20px rgba(255, 0, 153, 0.4);
             margin-bottom: 0.5rem;
             line-height: 1.1;
         }
 
         .event-subtitle {
-            font-size: 1.8rem;
-            font-weight: 300;
-            letter-spacing: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 6px;
             margin-bottom: 2rem;
-            border-bottom: 2px solid var(--event-accent);
-            padding-bottom: 10px;
+            color: #fff;
+            text-transform: uppercase;
+            position: relative;
             display: inline-block;
         }
+
+        /* Linee decorative: Verde OTP per richiamare il brand */
+        .event-subtitle::before, .event-subtitle::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40px;
+            height: 3px;
+            background: var(--otp-green);
+        }
+        .event-subtitle::before { left: -60px; }
+        .event-subtitle::after { right: -60px; }
 
         /* --- Countdown --- */
         .countdown-container {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             margin-bottom: 3rem;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .countdown-item {
-            background: rgba(255,255,255,0.1);
+            background: rgba(20, 20, 20, 0.8);
             backdrop-filter: blur(5px);
             padding: 15px 25px;
-            border-radius: 8px;
-            border: 1px solid var(--event-accent);
+            /* Clip path mantenuto per stile moderno */
+            clip-path: polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%);
+            border: 1px solid var(--otp-green); /* Bordo verde */
             min-width: 100px;
         }
 
         .countdown-number {
+            font-family: 'Montserrat', sans-serif;
             font-size: 2.5rem;
             font-weight: 700;
             color: white;
@@ -120,54 +150,62 @@
         .countdown-label {
             font-size: 0.8rem;
             text-transform: uppercase;
-            color: var(--event-accent);
+            color: var(--otp-green); /* Label verde */
+            letter-spacing: 1px;
+            font-weight: 700;
         }
 
-        /* --- Bottoni (Stato Disabled) --- */
+        /* --- Bottoni --- */
         .btn-fuchsia {
             background-color: var(--event-accent);
             color: white;
             padding: 15px 40px;
+            font-family: 'Montserrat', sans-serif;
             font-size: 1.2rem;
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
-            border-radius: 50px;
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 0 20px rgba(255, 0, 153, 0.4);
             display: inline-block;
+            clip-path: polygon(5% 0, 100% 0, 100% 70%, 95% 100%, 0 100%, 0 30%);
         }
 
-        /* Stile specifico per bottone disabilitato */
         .btn-disabled {
-            background-color: #555 !important;
-            color: #999 !important;
+            background-color: #333 !important;
+            color: #888 !important;
             cursor: not-allowed;
             box-shadow: none !important;
             transform: none !important;
-            pointer-events: none; /* Impedisce il click */
-            border: 1px solid #666;
+            pointer-events: none;
+            border: 1px solid #555;
         }
 
         .btn-fuchsia:hover:not(.btn-disabled) {
             background-color: #fff;
             color: var(--event-accent);
-            transform: translateY(-3px);
+            transform: scale(1.05);
         }
 
-        /* --- Concept Section --- */
-        .concept-section {
-            background-color: var(--event-dark);
-            color: #f0f0f0;
-            padding: 6rem 0;
-            text-align: center;
+        /* --- SEZIONI SCURE --- */
+        .concept-section, .tech-section, .program-section, #iscriviti, #contatti {
+            background-color: var(--event-black) !important;
+            color: #e0e0e0;
+            border-bottom: 1px solid #222;
         }
 
-        .concept-section h2 {
-            color: var(--event-accent);
-            font-size: 3rem;
+        /* TITOLI H2: Fucsia */
+        h2 {
+            font-family: 'Montserrat', sans-serif !important;
+            color: var(--event-accent) !important;
+            text-transform: uppercase;
+            font-size: 2.2rem !important;
+            font-weight: 800 !important;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
         }
 
+        /* --- Icons & Cards --- */
         .icon-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -175,143 +213,139 @@
             margin-top: 4rem;
         }
 
-        .icon-box i {
-            font-size: 3.5rem;
-            color: var(--event-accent);
-            margin-bottom: 1.5rem;
+        .icon-box, .card, .content-box {
+            background-color: var(--event-panel) !important;
+            padding: 2rem;
+            border: 1px solid #333;
+            transition: 0.3s;
+            position: relative;
         }
 
-        .icon-box h3 {
+        .icon-box:hover, .card:hover {
+            border-color: var(--otp-green); /* Hover verde */
+            box-shadow: 0 0 15px rgba(46, 125, 50, 0.3); /* Ombra verde */
+        }
+
+        /* ICONE: VERDE OTP */
+        .icon-box i {
+            font-size: 3.5rem;
+            color: var(--otp-green);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 10px rgba(46, 125, 50, 0.4);
+        }
+
+        .icon-box h3, .card h3 {
             font-family: 'Montserrat', sans-serif;
             margin-bottom: 1rem;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff !important;
         }
 
         /* --- Tech Section --- */
-        .tech-section {
-            padding: 6rem 0;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-
-        .tech-text {
-            flex: 1;
-            min-width: 300px;
-            padding-right: 40px;
-        }
-
+        .tech-section { padding: 5rem 0; }
+        .tech-text { padding-right: 40px; }
+        
         .tech-text h2 {
-            text-align: left;
-            color: var(--primary-color);
-            border-left: 5px solid var(--event-accent);
+            border-left: 5px solid var(--event-accent); /* Qui lasciamo fucsia per richiamare la tecnologia/app */
             padding-left: 20px;
         }
+        
+        /* Lista Tech: Icone verdi */
+        .tech-text i { color: var(--otp-green) !important; }
 
-        .tech-image {
-            flex: 1;
-            min-width: 300px;
-            text-align: center;
-        }
-
-        .tech-image img {
-            max-width: 80%;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        /* --- Timeline --- */
-        .program-section {
-            background-color: #f9f9f9;
-            padding: 6rem 0;
-        }
-
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
+        /* --- Timeline (Programma) --- */
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
         .timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: var(--event-accent);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
+            content: ''; position: absolute; width: 2px; background-color: #333;
+            top: 0; bottom: 0; left: 50%; margin-left: -1px;
         }
 
         .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            background-color: inherit;
-            width: 50%;
-            box-sizing: border-box;
+            padding: 10px 40px; position: relative; width: 50%; box-sizing: border-box;
         }
 
         .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            right: -10px;
-            background-color: white;
-            border: 4px solid var(--event-accent);
-            top: 15px;
-            border-radius: 50%;
-            z-index: 1;
+            content: ''; position: absolute; width: 16px; height: 16px;
+            background-color: var(--event-black); 
+            border: 2px solid var(--otp-green); /* Pallini verdi */
+            top: 20px; border-radius: 50%; z-index: 1;
+            box-shadow: 0 0 8px var(--otp-green);
         }
 
         .left { left: 0; text-align: right; }
         .right { left: 50%; text-align: left; }
-        .right::after { left: -10px; }
+        .left::after { right: -9px; } 
+        .right::after { left: -9px; }
 
         .content-box {
-            padding: 20px 30px;
-            background-color: white;
-            position: relative;
-            border-radius: 6px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 3px solid var(--otp-green); /* Bordo laterale verde */
+            padding: 20px;
         }
+        
+        .content-box h3 { color: var(--event-accent) !important; margin-bottom: 5px; font-weight: 700; }
 
-        .content-box h3 {
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-
-        /* --- GESTIONE LINGUA (Nuovo Metodo) --- */
-        /* Di default nascondiamo l'inglese se non c'è una classe specifica */
+        /* --- GESTIONE LINGUA --- */
         .lang-en { display: none !important; }
-
-        /* Se il corpo della pagina ha la classe 'lang-en' (Inglese attivo):
-        1. Nascondiamo l'italiano
-        2. Mostriamo l'inglese (ripristinando il display originale dell'elemento) */
         body.is-lang-en .lang-it { display: none !important; }
         body.is-lang-en .lang-en { display: initial !important; }
-
-        /* Fix specifico per elementi che richiedono layout particolari (come il sottotitolo e i titoli) */
-        body.is-lang-en h1.lang-en,
-        body.is-lang-en h2.lang-en,
-        body.is-lang-en h3.lang-en,
-        body.is-lang-en p.lang-en,
-        body.is-lang-en div.lang-en { display: block !important; }
-
+        body.is-lang-en h1.lang-en, body.is-lang-en h2.lang-en, body.is-lang-en h3.lang-en, body.is-lang-en p.lang-en, body.is-lang-en div.lang-en { display: block !important; }
         body.is-lang-en span.event-subtitle.lang-en { display: inline-block !important; }
-        body.is-lang-en span.lang-en { display: inline !important; }
 
-        /* Mobile */
+
+        /* =========================================
+           MOBILE & RESPONSIVE FIXES
+           ========================================= */
         @media screen and (max-width: 768px) {
-            .event-logo-text { font-size: 2.5rem; }
-            .timeline::after { left: 31px; }
-            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
-            .timeline-item::after { left: 21px; }
-            .left { text-align: left; }
-            .tech-text { padding-right: 0; margin-bottom: 2rem; }
+            .event-logo-text { font-size: 2.8rem; }
+            .event-subtitle { font-size: 1.2rem; letter-spacing: 3px; }
+            .event-subtitle::before, .event-subtitle::after { display: none; }
             .lang-switch { top: 85px; right: 10px; }
+
+            .tech-section { flex-direction: column; }
+            .tech-text { 
+                padding: 0 20px; 
+                margin-bottom: 2rem; 
+            }
+            .tech-image img { max-width: 100%; }
+
+            /* Timeline Mobile Fix */
+            .timeline::after { left: 30px; } 
+            .timeline-item { 
+                width: 100%; 
+                padding-left: 60px; 
+                padding-right: 15px; 
+                margin-bottom: 20px;
+            }
+            .timeline-item::after { left: 21px; } 
+            .left { text-align: left; } 
+            .right { left: 0; } 
+            .content-box { text-align: left; }
+        }
+
+        /* =========================================
+           NAVBAR DARK OVERRIDE
+           ========================================= */
+        .main-header {
+            background-color: rgba(5, 5, 5, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #333;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .nav-links a { color: #ffffff !important; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--otp-green) !important; } /* Hover verde nella nav */
+        
+        .logo img { filter: brightness(0) invert(1); transition: transform 0.3s ease; }
+        .logo img:hover { transform: scale(1.1); }
+        
+        .dropdown-content { background-color: var(--event-black) !important; border: 1px solid var(--otp-green); }
+        .dropdown-content li a { color: #fff !important; border-bottom: 1px solid #333; }
+        .dropdown-content li a:hover { background-color: rgba(46, 125, 50, 0.2) !important; }
+        .menu-toggle { color: #fff !important; }
+
+        @media(max-width: 768px) {
+            .nav-links { background-color: var(--event-black) !important; border-bottom: 2px solid var(--event-accent); }
+            .nav-links li { border-top: 1px solid #333; }
         }
     </style>
 </head>
@@ -323,13 +357,12 @@
                 <a href="index.html"><img src="images/logo.png" alt="Logo OTP-GEA Orienteering"></a>
             </div>
             <ul class="nav-links">
-                
-                <li><a href="index.html">Home</a></li>
                 <li>
-                    <a href="piacenza-svelata.html" class="active" style="color: #FF0099; font-weight: 800; border: 2px solid #FF0099; padding: 8px 15px; border-radius: 4px; text-transform: uppercase;">
+                    <a href="piacenza-svelata.html" class="active" style="color: var(--event-accent); font-weight: 800; border: 2px solid var(--event-accent); padding: 8px 15px; border-radius: 4px; text-transform: uppercase;">
                         Piacenza Svelata
                     </a>
                 </li>
+                <li><a href="index.html">Home</a></li>
                 <li class="dropdown">
                     <a href="#">Le Nostre Attività <i class="fas fa-caret-down"></i></a>
                     <ul class="dropdown-content">
@@ -400,41 +433,41 @@
 
         <section class="concept-section">
             <div class="container">
-                <h2 class="lang-it">Non è una gara. È una scoperta.</h2>
-                <h2 class="lang-en">Not just a race. A discovery.</h2>
+                <h2 class="lang-it">Un'Avventura Urbana.</h2>
+                <h2 class="lang-en">An Urban Adventure.</h2>
 
                 <p class="lang-it" style="font-size: 1.2rem; max-width: 800px; margin: 2rem auto;">
-                    Dimentica le lanterne nel bosco. Questa volta il campo di gara è la storia. 
-                    50 chiese nel cuore di Piacenza. Una mappa digitale. Una squadra.
-                    L'obiettivo non è solo correre, ma osservare, capire e svelare i segreti nascosti dietro ogni facciata.
+                    Piacenza Svelata è un grande gioco strategico a cielo aperto. 
+                    Hai una mappa, una squadra di amici e circa 50 luoghi segreti da scovare tra i vicoli del centro.
+                    Non serve essere atleti: servono occhi aperti, intuito e voglia di esplorare.
                 </p>
                 <p class="lang-en" style="font-size: 1.2rem; max-width: 800px; margin: 2rem auto;">
-                    Forget the woods. This time, history is your playground. 
-                    50 churches in the heart of Piacenza. A digital map. A team.
-                    The goal is not just to run, but to observe, understand, and unveil the secrets hidden behind every facade.
+                    Piacenza Revealed is a massive strategic game outdoors. 
+                    You have a map, a team of friends, and about 50 secret spots to find in the city center.
+                    No need to be an athlete: you need sharp eyes, intuition, and a desire to explore.
                 </p>
 
                 <div class="icon-grid">
                     <div class="icon-box">
-                        <i class="fas fa-church"></i>
-                        <h3 class="lang-it">50 Chiese</h3>
-                        <h3 class="lang-en">50 Churches</h3>
-                        <p class="lang-it">Il centro storico diventa un museo a cielo aperto. Ogni chiesa è un checkpoint da conquistare.</p>
-                        <p class="lang-en">The city center becomes an open-air museum. Every church is a checkpoint to conquer.</p>
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3 class="lang-it">Esplora</h3>
+                        <h3 class="lang-en">Explore</h3>
+                        <p class="lang-it">50 tappe nascoste. Vince chi ne trova di più usando la strategia migliore.</p>
+                        <p class="lang-en">50 hidden spots. The winner is the one who finds the most using the best strategy.</p>
                     </div>
                     <div class="icon-box">
                         <i class="fas fa-mobile-alt"></i>
-                        <h3 class="lang-it">100% Digital</h3>
-                        <h3 class="lang-en">100% Digital</h3>
-                        <p class="lang-it">Niente carta, niente plastica. Usa la nostra WebApp esclusiva per navigare e validare i punti.</p>
-                        <p class="lang-en">No paper, no plastic. Use our exclusive WebApp to navigate and validate checkpoints.</p>
+                        <h3 class="lang-it">Gioca Smart</h3>
+                        <h3 class="lang-en">Play Smart</h3>
+                        <p class="lang-it">Tutto sul tuo smartphone. Quiz direttamente in App. Niente bussole o strumenti tecnici.</p>
+                        <p class="lang-en">Everything on your phone. Quizzes in the App. No compasses or technical gear.</p>
                     </div>
                     <div class="icon-box">
                         <i class="fas fa-users"></i>
-                        <h3 class="lang-it">Squadra</h3>
+                        <h3 class="lang-it">Team</h3>
                         <h3 class="lang-en">Team</h3>
-                        <p class="lang-it">Fino a 5 componenti. Agonistica per chi vuole vincere, Ludica per chi vuole esplorare.</p>
-                        <p class="lang-en">Up to 5 members. Competitive to win, Recreational to explore.</p>
+                        <p class="lang-it">Crea la tua squadra (fino a 4 persone). Divertimento condiviso, zero stress.</p>
+                        <p class="lang-en">Build your team (up to 4 people). Shared fun, zero stress.</p>
                     </div>
                 </div>
             </div>
@@ -442,24 +475,24 @@
 
         <section class="tech-section container">
             <div class="tech-text">
-                <h2 class="lang-it">Tecnologia al servizio della Cultura</h2>
-                <h2 class="lang-en">Technology serving Culture</h2>
+                <h2 class="lang-it">Come funziona?</h2>
+                <h2 class="lang-en">How does it work?</h2>
                 
-                <p class="lang-it">Abbiamo eliminato le punzonature fisiche. La tua "lanterna" è un dettaglio architettonico.</p>
-                <p class="lang-en">We removed physical punches. Your "lantern" is an architectural detail.</p>
+                <p class="lang-it">È una moderna caccia al tesoro. La città è il tuo tabellone di gioco.</p>
+                <p class="lang-en">It's a modern treasure hunt. The city is your game board.</p>
                 
                 <ul style="list-style: none; margin-top: 1.5rem;">
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-color);"></i> 
-                        <strong class="lang-it">Arriva sul posto:</strong> <span class="lang-it">La mappa ti guida alla chiesa.</span>
-                        <strong class="lang-en">Get there:</strong> <span class="lang-en">The map guides you to the church.</span>
+                    <li style="margin-bottom: 1.5rem;"><i class="fas fa-check-circle" style="color: var(--otp-green);"></i> 
+                        <strong class="lang-it">Trova il punto:</strong> <span class="lang-it">Segui la mappa e raggiungi la chiesa indicata.</span>
+                        <strong class="lang-en">Find the spot:</strong> <span class="lang-en">Follow the map to reach the church.</span>
                     </li>
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-color);"></i> 
-                        <strong class="lang-it">Osserva:</strong> <span class="lang-it">L'App ti pone un quesito su un dettaglio visibile solo in loco.</span>
-                        <strong class="lang-en">Observe:</strong> <span class="lang-en">The App asks a question about a detail visible only on-site.</span>
+                    <li style="margin-bottom: 1.5rem;"><i class="fas fa-check-circle" style="color: var(--otp-green);"></i> 
+                        <strong class="lang-it">Aguzza la vista:</strong> <span class="lang-it">L'App ti chiederà di trovare un dettaglio architettonico visibile solo lì.</span>
+                        <strong class="lang-en">Look closely:</strong> <span class="lang-en">The App will ask you to find an architectural detail visible only there.</span>
                     </li>
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-color);"></i> 
-                        <strong class="lang-it">Scatta:</strong> <span class="lang-it">Un selfie di squadra certifica la presenza.</span>
-                        <strong class="lang-en">Shoot:</strong> <span class="lang-en">A team selfie certifies your presence.</span>
+                    <li style="margin-bottom: 1.5rem;"><i class="fas fa-check-circle" style="color: var(--otp-green);"></i> 
+                        <strong class="lang-it">Conquista:</strong> <span class="lang-it">Rispondi o scatta un selfie di gruppo. Punti presi!</span>
+                        <strong class="lang-en">Conquer:</strong> <span class="lang-en">Answer or take a group selfie. Points earned!</span>
                     </li>
                 </ul>
             </div>
@@ -470,67 +503,69 @@
 
         <section class="program-section">
             <div class="container">
-                <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 3rem; font-family: 'Montserrat', sans-serif;">
-                    <span class="lang-it">Il Programma</span><span class="lang-en">The Schedule</span> - 16/05/2026
+                <h2 style="text-align: center; margin-bottom: 3rem;">
+                    <span class="lang-it">Il Programma</span><span class="lang-en">The Schedule</span>
                 </h2>
                 <div class="timeline">
                     <div class="timeline-item left">
                         <div class="content-box">
                             <h3>14:00</h3>
-                            <p class="lang-it">Apertura Segreteria<br><small>Cortile Palazzo Farnese</small></p>
-                            <p class="lang-en">Event Office Opening<br><small>Palazzo Farnese Courtyard</small></p>
+                            <p class="lang-it">Apertura Villaggio Evento<br><small>Ritiro materiali e info</small></p>
+                            <p class="lang-en">Event Village Opening<br><small>Info & check-in</small></p>
                         </div>
                     </div>
                     <div class="timeline-item right">
                         <div class="content-box">
                             <h3>15:00</h3>
-                            <p class="lang-it">PARTENZA<br><small>Inizio tempo gara (3 ore)</small></p>
-                            <p class="lang-en">START<br><small>Race time begins (3 hours)</small></p>
+                            <p class="lang-it">START<br><small>Inizia l'avventura! (Tempo max: 3 ore)</small></p>
+                            <p class="lang-en">START<br><small>Adventure begins! (Max time: 3h)</small></p>
                         </div>
                     </div>
                     <div class="timeline-item left">
                         <div class="content-box">
                             <h3>18:00</h3>
-                            <p class="lang-it">Chiusura Percorsi<br><small>Fine tempo massimo</small></p>
-                            <p class="lang-en">Course Closed<br><small>Max time limit</small></p>
+                            <p class="lang-it">Fine dei Giochi<br><small>Tutti al traguardo</small></p>
+                            <p class="lang-en">Game Over<br><small>Everyone at the finish line</small></p>
                         </div>
                     </div>
                     <div class="timeline-item right">
                         <div class="content-box">
                             <h3>18:30</h3>
-                            <p class="lang-it">Premiazioni<br><small>Categoria Competitiva</small></p>
-                            <p class="lang-en">Prize Giving<br><small>Competitive Category</small></p>
+                            <p class="lang-it">Festa e Premiazioni<br><small>Solo per la categoria Competitiva</small></p>
+                            <p class="lang-en">Party & Awards<br><small>Competitive Category only</small></p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="iscriviti" class="content-section" style="background: white;">
+        <section id="iscriviti" class="content-section">
             <div class="container" style="text-align: center;">
-                <h2 class="lang-it" style="color: var(--event-dark);">Scegli la tua sfida</h2>
-                <h2 class="lang-en" style="color: var(--event-dark);">Choose your Challenge</h2>
+                <h2 class="lang-it">Scegli la tua sfida</h2>
+                <h2 class="lang-en">Choose your Challenge</h2>
 
                 <div class="cards-container" style="justify-content: center;">
                     
-                    <div class="card" style="border: 2px solid var(--primary-color);">
-                        <h3 style="color: var(--primary-color);">
+                    <div class="card" style="border: 2px solid var(--otp-green);">
+                        <h3 style="color: var(--otp-green);">
                             <span class="lang-it">COMPETITIVA</span>
                             <span class="lang-en">COMPETITIVE</span>
                         </h3>
                         
-                        <p class="lang-it">Per chi vuole sfidare il cronometro. Richiesto tesseramento FISO.</p>
-                        <p class="lang-en">For those challenging the clock. FISO license required.</p>
+                        <p class="lang-it">Per chi ama la strategia e la sfida. Non vince chi corre più forte, ma chi pianifica il giro migliore.</p>
+                        <p class="lang-en">For strategy lovers. The winner is not the fastest runner, but the best planner.</p>
                         
                         <ul style="text-align: left; margin: 1rem 0; list-style: circle; padding-left: 20px;">
-                            <li class="lang-it">Classifica a punti</li>
-                            <li class="lang-en">Points ranking</li>
-                            <li class="lang-it">Strategia pura</li>
-                            <li class="lang-en">Pure strategy</li>
+                            <li class="lang-it">Sfida a punti (Score)</li>
+                            <li class="lang-en">Points Challenge (Score)</li>
+                            <li class="lang-it">Classifica finale con premi</li>
+                            <li class="lang-en">Final ranking with prizes</li>
+                            <li class="lang-it">Necessario certificato medico non agonistico o superiore</li>
+                            <li class="lang-en">Medical certificate required</li>
                         </ul>
-                        <a href="javascript:void(0)" class="cta-button btn-disabled">
-                            <span class="lang-it">Iscrizioni a breve</span>
-                            <span class="lang-en">Opening Soon</span>
+                        <a href="javascript:void(0)" class="cta-button btn-disabled" style="background-color: var(--event-accent);">
+                            <span class="lang-it">Iscrizioni da aprile</span>
+                            <span class="lang-en">Registration from April</span>
                         </a>
                     </div>
 
@@ -540,18 +575,20 @@
                             <span class="lang-en">RECREATIONAL</span>
                         </h3>
                         
-                        <p class="lang-it">Per famiglie, turisti e gruppi. Goditi Piacenza senza fretta.</p>
-                        <p class="lang-en">For families, tourists and groups. Enjoy Piacenza at your pace.</p>
+                        <p class="lang-it">Goditi la città senza fretta. Cammina, fai foto, scopri angoli nascosti con gli amici.</p>
+                        <p class="lang-en">Enjoy the city, no rush. Walk, take photos, discover hidden corners with friends.</p>
                         
                         <ul style="text-align: left; margin: 1rem 0; list-style: circle; padding-left: 20px;">
                             <li class="lang-it">Nessuna classifica</li>
                             <li class="lang-en">No ranking</li>
-                            <li class="lang-it">Scoperta culturale</li>
-                            <li class="lang-en">Cultural discovery</li>
+                            <li class="lang-it">Nessuna fretta (tempo libero)</li>
+                            <li class="lang-en">No rush (free time)</li>
+                            <li class="lang-it">Aperto a tutti (famiglie, amici, colleghi e curiosi)</li>
+                            <li class="lang-en">Open to all (families, friends)</li>
                         </ul>
                         <a href="javascript:void(0)" class="cta-button btn-disabled" style="background-color: var(--event-accent);">
-                            <span class="lang-it">Registrazione a breve</span>
-                            <span class="lang-en">Registration Soon</span>
+                            <span class="lang-it">Iscrizioni da aprile</span>
+                            <span class="lang-en">Registration from April</span>
                         </a>
                     </div>
 
@@ -559,11 +596,12 @@
             </div>
         </section>
     </main>
+
     <section id="contatti" class="content-section bg-dark" style="background-color: var(--event-dark);">
         <div class="container">
             
-            <h2 class="lang-it" style="color: var(--event-accent);">Seguici e Contattaci</h2>
-            <h2 class="lang-en" style="color: var(--event-accent);">Follow and Contact Us</h2>
+            <h2 class="lang-it" style="color: var(--otp-green);">Seguici e Contattaci</h2>
+            <h2 class="lang-en" style="color: var(--otp-green);">Follow and Contact Us</h2>
             
             <p class="lang-it">Hai domande o vuoi unirti a noi? Scrivici o seguici sui nostri canali social!</p>
             <p class="lang-en">Have questions or want to join us? Write to us or follow our social channels!</p>
@@ -584,33 +622,30 @@
         </div>
     </section>
 
-    <footer class="main-footer">
-        <pp>© 2025 OTP-GEA Orienteering ASD APS - C.F. 91130370330 - P.IVA 01877620334</p>
-        <p class="lang-it" style="font-size: 0.8rem; margin-top: 10px;">Evento patrocinato dal Comune di Piacenza</p>
-        <p class="lang-en" style="font-size: 0.8rem; margin-top: 10px;">Event sponsored by the Municipality of Piacenza</p>
+    <footer class="main-footer" style="background-color: #000; border-top: 1px solid #333;">
+        <p>© 2026 OTP-GEA Orienteering ASD APS - C.F. 91130370330 - P.IVA 01877620334</p>
+        <p class="lang-it" style="font-size: 0.8rem; margin-top: 10px; color: #888;">Evento patrocinato dal Comune di Piacenza</p>
+        <p class="lang-en" style="font-size: 0.8rem; margin-top: 10px; color: #888;">Event sponsored by the Municipality of Piacenza</p>
     </footer>
 
     <script>
-        // 1. GESTIONE LINGUA OTTIMIZZATA
+        // 1. GESTIONE LINGUA
         function setLang(lang) {
             const body = document.body;
             
             if (lang === 'en') {
-                body.classList.add('is-lang-en'); // Attiva classe inglese
+                body.classList.add('is-lang-en');
             } else {
-                body.classList.remove('is-lang-en'); // Rimuove classe inglese (torna default italiano)
+                body.classList.remove('is-lang-en');
             }
 
-            // Aggiorna stile visivo dei bottoni (attivo/inattivo)
             const btns = document.querySelectorAll('.lang-btn');
             btns.forEach(btn => btn.classList.remove('active'));
-            // Seleziona il bottone cliccato e lo rende attivo
             document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
         }
 
         // 2. GESTIONE MENU MOBILE
         document.addEventListener('DOMContentLoaded', function () {
-            // Inizializza lingua IT
             setLang('it');
 
             const menuToggle = document.getElementById('menu-toggle');
@@ -631,7 +666,7 @@
             }
 
             // 3. COUNTDOWN
-            const eventDate = new Date("May 17, 2026 11:00:00").getTime();
+            const eventDate = new Date("May 17, 2026 15:00:00").getTime();
             const x = setInterval(function() {
                 const now = new Date().getTime();
                 const distance = eventDate - now;

@@ -215,6 +215,82 @@
                 <div class="featured-race-container" style="margin-bottom: 4rem;">
                     
                     <div class="race-details">
+                        <h3>Orienteerig del solstizio 2025</h3>
+                        <p>
+                            La pizzata di fine anno non fa per noi! Molto meglio un rogaining con polentata nell'amato rifugio Maramotti per scambiarci gli auguri di fine anno e passare una bella giornata in compagia all'aria aperta. 
+                        </p>
+                        <ul>
+                            <li><strong>Data:</strong> 21 dicembre 2025</li>
+                            <li><strong>Luogo:</strong> Val Perino - rifugio Maramotti</li>
+                            <li><strong>Tipologia:</strong> attività per tesserati</li>
+                        </ul>
+                    </div>
+
+                    <div class="race-flyer">
+                        <div class="slideshow-container">
+                            
+                            <div class="mySlides fade" style="display: block;">
+                                <img src="images/solstizio2025/foto1.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 1">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto2.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 2">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto3.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 3">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto4.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 4">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto5.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 5">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto6.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 6">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto7.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 7">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto8.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 8">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto9.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 9">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto10.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 10">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto11.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 11">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto12.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 12">
+                            </div>
+
+                            <div class="mySlides fade">
+                                <img src="images/solstizio2025/foto13.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 13">
+                            </div>
+
+                            <a class="prev" onclick="moveLocalSlide(this, -1)">&#10094;</a>
+                            <a class="next" onclick="moveLocalSlide(this, 1)">&#10095;</a>
+                        </div>
+                        <p style="text-align:center; font-size:0.8rem; margin-top:5px;"><i>Clicca per ingrandire</i></p>
+                    </div>
+                </div>
+
+                <div class="featured-race-container" style="margin-bottom: 4rem;">
+                    
+                    <div class="race-details">
                         <h3>Piacenza2030 - Giovane Città futura</h3>
                         <p>
                             Per il terzo anno in due anni di vita dell'associazione, abbiamo ottenuto un finanziamento dal bando Piacenza 2030 - Giovane Città Futura. Grazie al Comune di Piacenza per il rinnovato supporto.
@@ -317,5 +393,14 @@
     </footer>
 
     <script src="script.js"></script>
+    <div id="universalModal" class="modal">
+        <span class="close cursor" onclick="closeUniversalModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" style="width:100%; max-height: 85vh; object-fit: contain;">
+            
+            <a class="prev" onclick="moveModalImage(-1)">&#10094;</a>
+            <a class="next" onclick="moveModalImage(1)">&#10095;</a>
+        </div>
+    </div>
 </body>
 </html>

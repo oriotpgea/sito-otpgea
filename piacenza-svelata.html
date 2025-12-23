@@ -347,6 +347,79 @@
             .nav-links { background-color: var(--event-black) !important; border-bottom: 2px solid var(--event-accent); }
             .nav-links li { border-top: 1px solid #333; }
         }
+
+        /* --- DESCRIZIONE HERO AGGIORNATA --- */
+        .hero-desc {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 2rem auto;
+            line-height: 1.7;
+            color: #f0f0f0;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            font-weight: 400;
+        }
+
+        .hero-desc strong {
+            color: var(--event-accent); /* Fucsia per evidenziare */
+            font-weight: 700;
+        }
+
+        /* Frase sulle categorie */
+        .categories-tag {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            color: #ddd;
+            border-top: 1px solid rgba(255,255,255,0.3); /* Linea sottile sopra */
+            padding-top: 15px;
+        }
+
+        /* --- NUOVO RIQUADRO DATA/LUOGO (Verde) --- */
+        .event-info-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 3rem;
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.6); /* Sfondo scuro semitrasparente */
+            backdrop-filter: blur(5px);
+            
+            /* BORDI LATERALI VERDI (Elemento richiesto) */
+            border-left: 4px solid var(--otp-green);
+            border-right: 4px solid var(--otp-green);
+            border-radius: 4px;
+            
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .info-date, .info-place {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .info-divider {
+            color: var(--event-accent); /* Divisore fucsia per contrasto */
+            font-size: 1.4rem;
+            font-weight: 300;
+        }
+
+        /* Adattamento Mobile */
+        @media screen and (max-width: 768px) {
+            .event-info-box {
+                flex-direction: column; /* Uno sotto l'altro su mobile */
+                gap: 5px;
+                padding: 10px 20px;
+                border-top: 2px solid var(--otp-green); /* Aggiunge bordo sopra/sotto su mobile */
+                border-bottom: 2px solid var(--otp-green);
+                border-left: none;
+                border-right: none;
+            }
+            .info-divider { display: none; } /* Nasconde la stanghetta su mobile */
+        }
     </style>
 </head>
 <body>
@@ -357,12 +430,12 @@
                 <a href="index.html"><img src="images/logo.png" alt="Logo OTP-GEA Orienteering"></a>
             </div>
             <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
                 <li>
                     <a href="piacenza-svelata.html" class="active" style="color: var(--event-accent); font-weight: 800; border: 2px solid var(--event-accent); padding: 8px 15px; border-radius: 4px; text-transform: uppercase;">
                         Piacenza Svelata
                     </a>
                 </li>
-                <li><a href="index.html">Home</a></li>
                 <li class="dropdown">
                     <a href="#">Le Nostre Attività <i class="fas fa-caret-down"></i></a>
                     <ul class="dropdown-content">
@@ -391,45 +464,42 @@
 
     <main>
         <section id="hero-piacenza-svelata">
-            
-            <div class="lang-switch">
-                <button class="lang-btn active" onclick="setLang('it')">IT</button>
-                <button class="lang-btn" onclick="setLang('en')">EN</button>
-            </div>
+    
+    <div class="lang-switch">
+        <button class="lang-btn active" onclick="setLang('it')">IT</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
 
-            <div class="hero-content">
-                <h1 class="event-logo-text lang-it">Piacenza Svelata</h1>
-                <h1 class="event-logo-text lang-en">Piacenza Revealed</h1>
-                
-                <span class="event-subtitle lang-it">OLTRE LA FACCIATA</span>
-                <span class="event-subtitle lang-en">BEYOND THE FACADE</span>
-                
-                <div class="countdown-container" id="countdown">
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="days">00</span>
-                        <span class="countdown-label lang-it">Giorni</span>
-                        <span class="countdown-label lang-en">Days</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="hours">00</span>
-                        <span class="countdown-label lang-it">Ore</span>
-                        <span class="countdown-label lang-en">Hours</span>
-                    </div>
-                    <div class="countdown-item">
-                        <span class="countdown-number" id="minutes">00</span>
-                        <span class="countdown-label lang-it">Minuti</span>
-                        <span class="countdown-label lang-en">Mins</span>
-                    </div>
-                </div>
+    <div class="hero-content">
+        <h1 class="event-logo-text lang-it">Piacenza Svelata</h1>
+        <h1 class="event-logo-text lang-en">Piacenza Revealed</h1>
+        
+        <span class="event-subtitle lang-it">OLTRE LA FACCIATA</span>
+        <span class="event-subtitle lang-en">BEYOND THE FACADE</span>
+        
+        <div class="hero-text-container">
+            <p class="hero-desc lang-it">
+                Il centro storico diventa un <strong>museo interattivo</strong> a cielo aperto.<br>
+                Raggiungi le chiese, scopri la loro <strong>storia</strong> e rispondi ai quiz sull'App.<br>
+                <br>
+                <span class="categories-tag">Scegli la tua modalità: <strong>Sfida Competitiva</strong> o <strong>Passeggiata Culturale</strong>.</span>
+            </p>
+            <p class="hero-desc lang-en">
+                The city center becomes an interactive <strong>open-air museum</strong>.<br>
+                Reach the churches, discover their <strong>history</strong>, and answer quizzes on the App.<br>
+                <br>
+                <span class="categories-tag">Choose your mode: <strong>Competitive Challenge</strong> or <strong>Cultural Walk</strong>.</span>
+            </p>
+        </div>
 
-                <p style="font-size: 1.4rem; margin-bottom: 2rem;">17/05/2026 | Palazzo Farnese</p>
-                
-                <a href="javascript:void(0)" class="btn-fuchsia btn-disabled">
-                    <span class="lang-it">Iscrizioni a breve</span>
-                    <span class="lang-en">Registration Opening Soon</span>
-                </a>
-            </div>
-        </section>
+        <div class="event-info-box">
+            <span class="info-date">17 MAGGIO 2026</span>
+            <span class="info-divider">|</span>
+            <span class="info-place">PALAZZO FARNESE</span>
+        </div>
+        
+    </div>
+</section>
 
         <section class="concept-section">
             <div class="container">
@@ -531,8 +601,8 @@
                     <div class="timeline-item right">
                         <div class="content-box">
                             <h3>18:30</h3>
-                            <p class="lang-it">Festa e Premiazioni<br><small>Solo per la categoria Competitiva</small></p>
-                            <p class="lang-en">Party & Awards<br><small>Competitive Category only</small></p>
+                            <p class="lang-it">Premiazioni<br><small>Solo per la categoria Competitiva</small></p>
+                            <p class="lang-en">Awards<br><small>Competitive Category only</small></p>
                         </div>
                     </div>
                 </div>

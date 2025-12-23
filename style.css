@@ -1218,3 +1218,116 @@ hr {
   background: black; /* Sfondo nero dietro l'immagine */
   text-align: center;
 }
+
+/* ==========================================================================
+   NUOVI STILI HOME (Banner + Hero 50/50)
+   ========================================================================== */
+/* 2. HERO SECTION "SPLIT" (50/50) */
+/* Modifichiamo il contenitore interno per usare Flexbox */
+#hero-home .hero-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    gap: 40px;
+    text-align: left; /* Reset allineamento */
+}
+
+/* Colonna Sinistra (Istituzionale) */
+.hero-col-assoc {
+    flex: 1;
+    padding: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
+/* Colonna Destra (Evento) - Box in evidenza */
+.hero-col-event {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.6); /* Box scuro semitrasparente */
+    border: 2px solid var(--event-accent); /* Bordo Fucsia */
+    border-radius: 15px;
+    padding: 40px;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease;
+}
+
+.hero-col-event:hover {
+    transform: scale(1.02);
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* Titoli specifici per la Hero */
+.hero-col-event h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--event-accent);
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.hero-col-event p {
+    color: #fff;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Adattamento Mobile: Impila le colonne */
+@media(max-width: 900px) {
+    #hero-home .hero-content {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 40px; /* Spazio extra per il banner */
+    }
+    
+    .hero-col-assoc {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+/* BANNER PROMOZIONALE */
+.promo-banner {
+    /* Usiamo !important per essere sicuri al 100% che vinca questo colore solido */
+    background-color: #FF0099 !important;
+    color: #ffffff;
+    text-align: center;
+    padding: 12px 10px;
+    font-weight: 800;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    
+    /* Z-index alto per stare sopra al contenuto che scorre */
+    z-index: 990;
+    
+    /* Ombra solida per stacco netto */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+    /* --- TRUCCO TECNICO ANTI-GLITCH --- */
+    /* Forza l'accelerazione hardware per questo elemento. */
+    /* Risolve problemi di rendering e "falsa trasparenza" durante lo scroll */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0); /* Per Safari/iOS */
+    backface-visibility: hidden; /* Nasconde il retro durante rendering complessi */
+    opacity: 1 !important; /* Forza opacità massima */
+}
+
+.promo-banner a {
+    color: #ffffff;
+    text-decoration: underline;
+    margin-left: 10px;
+    transition: opacity 0.3s;
+    font-weight: 900; /* Link ancora più evidente */
+}
+
+.promo-banner a:hover {
+    opacity: 0.8;
+}

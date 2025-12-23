@@ -1331,3 +1331,35 @@ hr {
 .promo-banner a:hover {
     opacity: 0.8;
 }
+
+/* FIX MOBILE PER CARD GARE (Impedisce che escano dallo schermo) */
+@media (max-width: 768px) {
+    .featured-race-container {
+        flex-direction: column;
+        padding: 15px; /* Riduciamo il padding (era molto largo) */
+    }
+
+    .race-details, .race-flyer {
+        min-width: 0; /* FONDAMENTALE: rimuove il blocco che causava la fuoriuscita */
+        width: 100%;  /* Si adatta perfettamente alla larghezza disponibile */
+        padding: 0;   /* Rimuove padding extra interni se presenti */
+    }
+
+    /* Aggiunge un po' di spazio tra il testo e la foto quando sono impilati */
+    .race-details {
+        margin-bottom: 20px;
+    }
+}
+
+/* FIX MOBILE PER HERO TEAMBUILDING (e altre pagine lunghe) */
+@media screen and (max-width: 768px) {
+    #hero-teambuilding, 
+    #hero-corso, 
+    #hero-caccia-al-tesoro,
+    #hero-gare {
+        height: auto !important; /* Sblocca l'altezza fissa */
+        min-height: 100vh;       /* Assicura che copra comunque tutto lo schermo */
+        padding-bottom: 60px;    /* Aggiunge spazio sotto l'ultima riga di testo */
+        padding-top: 140px;      /* Assicura spazio per navbar + banner */
+    }
+}

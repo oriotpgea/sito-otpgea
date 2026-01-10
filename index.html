@@ -20,7 +20,7 @@
     <link rel="icon" href="images/favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="images/favicon.png">
     <meta name="google-site-verification" content="_vfyy1NnYdOEqaGrcHhKXxeRTq0i1BBJk97wpexekyo" />
-
+</head>
 <body>
     <header class="main-header">
         <nav class="navbar">
@@ -178,10 +178,7 @@
 
     <section id="contatti" class="content-section bg-dark">
     <div class="container">
-        <h2>Contatti e Community</h2>
-        <p>Hai domande o vuoi unirti a noi? Scrivici, seguici sui social o iscriviti alla nostra newsletter per non perdere nessun evento.</p>
-
-        <div class="contatti-box" id="contatti-newsletter-box">
+        <div class="contatti-box" id="contatti-newsletter-box" style="margin-top: 0;">
             <h3>Newsletter</h3>
             
             <style>
@@ -315,11 +312,11 @@
                         <div class="form__entry entry_mcq">
                           <div class="form__label-row ">
                             <label class="entry__label" style="font-weight: 700; text-align:left; font-size:16px; text-align:left; font-weight:700; font-family:Helvetica, sans-serif; color:#3c4858;" for="OPT_IN" data-required="*">Conferma</label>
-                            <div class="entry__choice" style="">
+                            <div class="entry__choice">
                               <label>
                                 <input type="checkbox" class="input_replaced" value="1" id="OPT_IN" name="OPT_IN" required />
                                 <span class="checkbox checkbox_tick_positive"
-                        style="margin-left:"
+                        style="margin-left: 0;"
                         ></span><span style="font-size:14px; text-align:left; font-family:Helvetica, sans-serif; color:#3C4858; background-color:transparent;"><p>Accetto le condizioni generali e di ricevere le newsletter</p></span> </label>
                             </div>
                           </div>
@@ -334,7 +331,7 @@
                     <div style="padding: 8px 0;">
                       <div class="sib-form-block" style="text-align: left">
                         <button class="sib-form-block__button sib-form-block__button-with-loader" style="font-size:16px; text-align:left; font-weight:700; font-family:Helvetica, sans-serif; color:#FFFFFF; background-color:#3E4857; border-radius:3px; border-width:0px;" form="sib-form" type="submit">
-                          <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512" style="">
+                          <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512">
                             <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
                           </svg>
                           ISCRIVITI
@@ -372,9 +369,7 @@
             <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 
             <script src="https://www.google.com/recaptcha/api.js?render=6Ldpdw8sAAAAAE5K37TQ9L5mnkDzsWo_CF_aAPHx&hl=it" async defer></script>
-            </div>
-
-        <div class="container">
+            </div></div></div><div style="margin-top: 3rem;">
             <h2>Seguici e Contattaci</h2>
             <p>Hai domande o vuoi unirti a noi? Scrivici o seguici sui nostri canali social!</p>
             <div class="contact-info">
@@ -388,12 +383,24 @@
             </div>
         </div>
 
-    </div>
-</section>
+    </div></section>
 
     <footer class="main-footer">
         <p>© 2025 OTP-GEA Orienteering ASD APS - C.F. 91130370330 - P.IVA 01877620334</p>
     </footer>
+
     <script src="script.js"></script>
+
+    <div id="newsletterAutoModal" class="newsletter-modal">
+    <div class="newsletter-modal-content">
+        <span class="close-newsletter">&times;</span>
+        <div class="modal-header-news">
+            <i class="fas fa-envelope-open-text"></i>
+            <h3>Resta Aggiornato!</h3>
+        </div>
+        <p>Non perdere i prossimi appuntamenti! Iscriviti alla nostra newsletter mensile.</p>
+        <button id="goToNewsletterBtn" class="cta-button" style="width: 100%; margin-top: 15px;">ISCRIVITI ORA</button>
+    </div>
+</div>
     </body>
 </html>

@@ -116,3 +116,44 @@ document.addEventListener('keydown', function(event) {
         closeUniversalModal();
     }
 });
+
+/* ==========================================================================
+   GESTIONE MODALE NEWSLETTER AUTOMATICO
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', function () {
+    const newsModal = document.getElementById('newsletterAutoModal');
+    const closeBtn = document.querySelector('.close-newsletter');
+    const goToBtn = document.getElementById('goToNewsletterBtn');
+    const footerForm = document.getElementById('contatti-newsletter-box');
+
+    // Mostra il modale dopo 1.5 secondi dal caricamento della pagina
+    setTimeout(() => {
+        newsModal.style.display = 'block';
+    }, 1500);
+
+    // Chiude il modale sulla X
+    closeBtn.addEventListener('click', function() {
+        newsModal.style.display = 'none';
+    });
+
+    // Chiude il modale cliccando fuori dal box
+    window.addEventListener('click', function(event) {
+        if (event.target == newsModal) {
+            newsModal.style.display = 'none';
+        }
+    });
+
+    // Azione bottone "Iscriviti Ora": porta al footer ed evidenzia il form
+    goToBtn.addEventListener('click', function() {
+        newsModal.style.display = 'none'; // Chiude il popup
+        
+        // Scorrimento fluido verso il form
+        footerForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // Aggiunge effetto visivo al form per 3 secondi
+        footerForm.classList.add('highlight-form');
+        setTimeout(() => {
+            footerForm.classList.remove('highlight-form');
+        }, 3000);
+    });
+});

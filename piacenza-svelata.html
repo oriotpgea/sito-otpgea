@@ -19,12 +19,12 @@
     <style>
         :root {
             /* COLORI ISTITUZIONALI */
-            --otp-green: #2E7D32;       /* Verde OTP per titoli e icone */
+            --otp-green: #2E7D32;       
             
             /* COLORI EVENTO */
-            --event-accent: #FF0099;    /* Fucsia per Titolo Hero e Bottoni */
-            --event-black: #050505;     /* Sfondo scuro */
-            --event-panel: #121212;     /* Sfondo card */
+            --event-accent: #FF0099;    
+            --event-black: #050505;     
+            --event-panel: #121212;     
         }
 
         /* --- GLOBAL DARK MODE --- */
@@ -38,8 +38,7 @@
         /* --- HERO SECTION --- */
         #hero-piacenza-svelata {
             height: 100vh;
-            /* Filtro alleggerito: immagine più visibile */
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('images/hero-piacenza-svelata-fucsia.jpg');
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('images/piacenza-svelata/hero-piacenza-svelata-fucsia.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -63,7 +62,7 @@
             background: rgba(0,0,0,0.8);
             border-radius: 30px;
             padding: 5px;
-            border: 1px solid var(--otp-green); /* Bordo verde istituzionale */
+            border: 1px solid var(--otp-green);
         }
 
         .lang-btn {
@@ -79,18 +78,18 @@
         }
 
         .lang-btn.active {
-            background-color: var(--otp-green); /* Attivo verde */
+            background-color: var(--otp-green);
             color: white;
         }
 
         /* --- Tipografia Hero --- */
         .event-logo-text {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 800; /* Bold ma font standard */
+            font-weight: 800;
             font-size: 4rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: var(--event-accent); /* Fucsia per identità evento */
+            color: var(--event-accent);
             text-shadow: 0 0 20px rgba(255, 0, 153, 0.4);
             margin-bottom: 0.5rem;
             line-height: 1.1;
@@ -108,7 +107,6 @@
             display: inline-block;
         }
 
-        /* Linee decorative: Verde OTP per richiamare il brand */
         .event-subtitle::before, .event-subtitle::after {
             content: '';
             position: absolute;
@@ -120,7 +118,6 @@
         .event-subtitle::before { left: -60px; }
         .event-subtitle::after { right: -60px; }
 
-        /* --- Countdown --- */
         .countdown-container {
             display: flex;
             gap: 15px;
@@ -133,9 +130,8 @@
             background: rgba(20, 20, 20, 0.8);
             backdrop-filter: blur(5px);
             padding: 15px 25px;
-            /* Clip path mantenuto per stile moderno */
             clip-path: polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%);
-            border: 1px solid var(--otp-green); /* Bordo verde */
+            border: 1px solid var(--otp-green);
             min-width: 100px;
         }
 
@@ -150,12 +146,11 @@
         .countdown-label {
             font-size: 0.8rem;
             text-transform: uppercase;
-            color: var(--otp-green); /* Label verde */
+            color: var(--otp-green);
             letter-spacing: 1px;
             font-weight: 700;
         }
 
-        /* --- Bottoni --- */
         .btn-fuchsia {
             background-color: var(--event-accent);
             color: white;
@@ -187,14 +182,12 @@
             transform: scale(1.05);
         }
 
-        /* --- SEZIONI SCURE --- */
-        .concept-section, .tech-section, .program-section, #iscriviti, #contatti {
+        .concept-section, .tech-section, .program-section, .info-section, .faq-section, .sponsor-section, #iscriviti, #contatti {
             background-color: var(--event-black) !important;
             color: #e0e0e0;
             border-bottom: 1px solid #222;
         }
 
-        /* TITOLI H2: Fucsia */
         h2 {
             font-family: 'Montserrat', sans-serif !important;
             color: var(--event-accent) !important;
@@ -203,9 +196,11 @@
             font-weight: 800 !important;
             margin-bottom: 2rem;
             letter-spacing: 1px;
+            border-left: 5px solid var(--event-accent);
+            padding-left: 20px;
+            text-align: left !important;
         }
 
-        /* --- Icons & Cards --- */
         .icon-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -213,7 +208,7 @@
             margin-top: 4rem;
         }
 
-        .icon-box, .card, .content-box {
+        .icon-box, .card, .content-box, .info-panel {
             background-color: var(--event-panel) !important;
             padding: 2rem;
             border: 1px solid #333;
@@ -221,12 +216,15 @@
             position: relative;
         }
 
-        .icon-box:hover, .card:hover {
-            border-color: var(--otp-green); /* Hover verde */
-            box-shadow: 0 0 15px rgba(46, 125, 50, 0.3); /* Ombra verde */
+        .info-panel {
+            border-left: 4px solid var(--otp-green);
         }
 
-        /* ICONE: VERDE OTP */
+        .icon-box:hover, .card:hover {
+            border-color: var(--otp-green);
+            box-shadow: 0 0 15px rgba(46, 125, 50, 0.3);
+        }
+
         .icon-box i {
             font-size: 3.5rem;
             color: var(--otp-green);
@@ -234,7 +232,7 @@
             text-shadow: 0 0 10px rgba(46, 125, 50, 0.4);
         }
 
-        .icon-box h3, .card h3 {
+        .icon-box h3, .card h3, .info-panel h3 {
             font-family: 'Montserrat', sans-serif;
             margin-bottom: 1rem;
             font-size: 1.4rem;
@@ -242,19 +240,11 @@
             color: #fff !important;
         }
 
-        /* --- Tech Section --- */
         .tech-section { padding: 5rem 0; }
         .tech-text { padding-right: 40px; }
         
-        .tech-text h2 {
-            border-left: 5px solid var(--event-accent); /* Qui lasciamo fucsia per richiamare la tecnologia/app */
-            padding-left: 20px;
-        }
-        
-        /* Lista Tech: Icone verdi */
         .tech-text i { color: var(--otp-green) !important; }
 
-        /* --- Timeline (Programma) --- */
         .timeline { position: relative; max-width: 800px; margin: 0 auto; }
         .timeline::after {
             content: ''; position: absolute; width: 2px; background-color: #333;
@@ -268,7 +258,7 @@
         .timeline-item::after {
             content: ''; position: absolute; width: 16px; height: 16px;
             background-color: var(--event-black); 
-            border: 2px solid var(--otp-green); /* Pallini verdi */
+            border: 2px solid var(--otp-green);
             top: 20px; border-radius: 50%; z-index: 1;
             box-shadow: 0 0 8px var(--otp-green);
         }
@@ -279,23 +269,80 @@
         .right::after { left: -9px; }
 
         .content-box {
-            border-left: 3px solid var(--otp-green); /* Bordo laterale verde */
+            border-left: 3px solid var(--otp-green);
             padding: 20px;
         }
         
         .content-box h3 { color: var(--event-accent) !important; margin-bottom: 5px; font-weight: 700; }
 
-        /* --- GESTIONE LINGUA --- */
+        /* --- FAQ Accordion --- */
+        details.faq-item {
+            background: var(--event-panel);
+            border: 1px solid #333;
+            margin-bottom: 10px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            color: #e0e0e0;
+        }
+        details.faq-item summary {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--otp-green);
+            list-style: none;
+            position: relative;
+            padding-right: 20px;
+            outline: none;
+        }
+        details.faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+        details.faq-item summary::after {
+            content: '+';
+            position: absolute;
+            right: 0;
+            top: 0;
+            color: var(--event-accent);
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+        details.faq-item[open] summary::after {
+            content: '-';
+        }
+        details.faq-item p {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+
+        /* --- Sponsor Grid --- */
+        .sponsor-grid {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        .sponsor-logo {
+            width: 150px;
+            height: 80px;
+            background: #222;
+            border: 1px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
         .lang-en { display: none !important; }
         body.is-lang-en .lang-it { display: none !important; }
         body.is-lang-en .lang-en { display: initial !important; }
         body.is-lang-en h1.lang-en, body.is-lang-en h2.lang-en, body.is-lang-en h3.lang-en, body.is-lang-en p.lang-en, body.is-lang-en div.lang-en { display: block !important; }
         body.is-lang-en span.event-subtitle.lang-en { display: inline-block !important; }
 
-
-        /* =========================================
-           MOBILE & RESPONSIVE FIXES
-           ========================================= */
         @media screen and (max-width: 768px) {
             .event-logo-text { font-size: 2.8rem; }
             .event-subtitle { font-size: 1.2rem; letter-spacing: 3px; }
@@ -303,29 +350,17 @@
             .lang-switch { top: 85px; right: 10px; }
 
             .tech-section { flex-direction: column; }
-            .tech-text { 
-                padding: 0 20px; 
-                margin-bottom: 2rem; 
-            }
+            .tech-text { padding: 0 20px; margin-bottom: 2rem; }
             .tech-image img { max-width: 100%; }
 
-            /* Timeline Mobile Fix */
             .timeline::after { left: 30px; } 
-            .timeline-item { 
-                width: 100%; 
-                padding-left: 60px; 
-                padding-right: 15px; 
-                margin-bottom: 20px;
-            }
+            .timeline-item { width: 100%; padding-left: 60px; padding-right: 15px; margin-bottom: 20px; }
             .timeline-item::after { left: 21px; } 
             .left { text-align: left; } 
             .right { left: 0; } 
             .content-box { text-align: left; }
         }
 
-        /* =========================================
-           NAVBAR DARK OVERRIDE
-           ========================================= */
         .main-header {
             background-color: rgba(5, 5, 5, 0.95);
             backdrop-filter: blur(10px);
@@ -333,7 +368,7 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
         .nav-links a { color: #ffffff !important; transition: color 0.3s ease; }
-        .nav-links a:hover { color: var(--otp-green) !important; } /* Hover verde nella nav */
+        .nav-links a:hover { color: var(--otp-green) !important; }
         
         .logo img { filter: brightness(0) invert(1); transition: transform 0.3s ease; }
         .logo img:hover { transform: scale(1.1); }
@@ -348,7 +383,6 @@
             .nav-links li { border-top: 1px solid #333; }
         }
 
-        /* --- DESCRIZIONE HERO AGGIORNATA --- */
         .hero-desc {
             font-size: 1.3rem;
             max-width: 800px;
@@ -359,36 +393,28 @@
             font-weight: 400;
         }
 
-        .hero-desc strong {
-            color: var(--event-accent); /* Fucsia per evidenziare */
-            font-weight: 700;
-        }
+        .hero-desc strong { color: var(--event-accent); font-weight: 700; }
 
-        /* Frase sulle categorie */
         .categories-tag {
             display: inline-block;
             margin-top: 10px;
             font-size: 1.1rem;
             color: #ddd;
-            border-top: 1px solid rgba(255,255,255,0.3); /* Linea sottile sopra */
+            border-top: 1px solid rgba(255,255,255,0.3);
             padding-top: 15px;
         }
 
-        /* --- NUOVO RIQUADRO DATA/LUOGO (Verde) --- */
         .event-info-box {
             display: inline-flex;
             align-items: center;
             gap: 15px;
             margin-top: 3rem;
             padding: 15px 30px;
-            background: rgba(0, 0, 0, 0.6); /* Sfondo scuro semitrasparente */
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
-            
-            /* BORDI LATERALI VERDI (Elemento richiesto) */
             border-left: 4px solid var(--otp-green);
             border-right: 4px solid var(--otp-green);
             border-radius: 4px;
-            
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
@@ -401,24 +427,19 @@
             text-transform: uppercase;
         }
 
-        .info-divider {
-            color: var(--event-accent); /* Divisore fucsia per contrasto */
-            font-size: 1.4rem;
-            font-weight: 300;
-        }
+        .info-divider { color: var(--event-accent); font-size: 1.4rem; font-weight: 300; }
 
-        /* Adattamento Mobile */
         @media screen and (max-width: 768px) {
             .event-info-box {
-                flex-direction: column; /* Uno sotto l'altro su mobile */
+                flex-direction: column;
                 gap: 5px;
                 padding: 10px 20px;
-                border-top: 2px solid var(--otp-green); /* Aggiunge bordo sopra/sotto su mobile */
+                border-top: 2px solid var(--otp-green);
                 border-bottom: 2px solid var(--otp-green);
                 border-left: none;
                 border-right: none;
             }
-            .info-divider { display: none; } /* Nasconde la stanghetta su mobile */
+            .info-divider { display: none; }
         }
     </style>
 </head>
@@ -464,42 +485,40 @@
 
     <main>
         <section id="hero-piacenza-svelata">
-    
-    <div class="lang-switch">
-        <button class="lang-btn active" onclick="setLang('it')">IT</button>
-        <button class="lang-btn" onclick="setLang('en')">EN</button>
-    </div>
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="setLang('it')">IT</button>
+                <button class="lang-btn" onclick="setLang('en')">EN</button>
+            </div>
 
-    <div class="hero-content">
-        <h1 class="event-logo-text lang-it">Piacenza Svelata</h1>
-        <h1 class="event-logo-text lang-en">Piacenza Revealed</h1>
-        
-        <span class="event-subtitle lang-it">OLTRE LA FACCIATA</span>
-        <span class="event-subtitle lang-en">BEYOND THE FACADE</span>
-        
-        <div class="hero-text-container">
-            <p class="hero-desc lang-it">
-                Il centro storico diventa un <strong>museo interattivo</strong> a cielo aperto.<br>
-                Raggiungi i luoghi indicati, scopri la loro <strong>storia</strong> e rispondi ai quiz sull'App.<br>
-                <br>
-                <span class="categories-tag">Scegli la tua modalità: <strong>Sfida Competitiva</strong> o <strong>Passeggiata Culturale</strong>.</span>
-            </p>
-            <p class="hero-desc lang-en">
-                The city center becomes an interactive <strong>open-air museum</strong>.<br>
-                Reach the indicated spots, discover their <strong>history</strong>, and answer quizzes on the App.<br>
-                <br>
-                <span class="categories-tag">Choose your mode: <strong>Competitive Challenge</strong> or <strong>Cultural Walk</strong>.</span>
-            </p>
-        </div>
+            <div class="hero-content">
+                <h1 class="event-logo-text lang-it">Piacenza Svelata</h1>
+                <h1 class="event-logo-text lang-en">Piacenza Revealed</h1>
+                
+                <span class="event-subtitle lang-it">OLTRE LA FACCIATA</span>
+                <span class="event-subtitle lang-en">BEYOND THE FACADE</span>
+                
+                <div class="hero-text-container">
+                    <p class="hero-desc lang-it">
+                        Il centro storico diventa un <strong>museo interattivo</strong> a cielo aperto.<br>
+                        Raggiungi i luoghi indicati, scopri la loro <strong>storia</strong> e rispondi ai quiz sull'App.<br>
+                        <br>
+                        <span class="categories-tag">Scegli la tua modalità: <strong>Sfida Competitiva</strong> o <strong>Passeggiata Culturale</strong>.</span>
+                    </p>
+                    <p class="hero-desc lang-en">
+                        The city center becomes an interactive <strong>open-air museum</strong>.<br>
+                        Reach the indicated spots, discover their <strong>history</strong>, and answer quizzes on the App.<br>
+                        <br>
+                        <span class="categories-tag">Choose your mode: <strong>Competitive Challenge</strong> or <strong>Cultural Walk</strong>.</span>
+                    </p>
+                </div>
 
-        <div class="event-info-box">
-            <span class="info-date">16 MAGGIO 2026</span>
-            <span class="info-divider">|</span>
-            <span class="info-place">PALAZZO FARNESE</span>
-        </div>
-        
-    </div>
-</section>
+                <div class="event-info-box">
+                    <span class="info-date">16 MAGGIO 2026</span>
+                    <span class="info-divider">|</span>
+                    <span class="info-place">PALAZZO FARNESE</span>
+                </div>
+            </div>
+        </section>
 
         <section class="concept-section">
             <div class="container">
@@ -529,8 +548,8 @@
                         <i class="fas fa-mobile-alt"></i>
                         <h3 class="lang-it">Gioca Smart</h3>
                         <h3 class="lang-en">Play Smart</h3>
-                        <p class="lang-it">Tutto sul tuo smartphone. Quiz direttamente in App. Niente bussole o strumenti tecnici.</p>
-                        <p class="lang-en">Everything on your phone. Quizzes in the App. No compasses or technical gear.</p>
+                        <p class="lang-it">WebApp dedicata su <strong>app.orienteeringpiacenza.it</strong>. È richiesta una connessione dati attiva (NO GPS). Assicurati di avere almeno 3 ore di autonomia della batteria.</p>
+                        <p class="lang-en">Dedicated WebApp on <strong>app.orienteeringpiacenza.it</strong>. Active data connection required (NO GPS). Ensure at least 3 hours of battery life.</p>
                     </div>
                     <div class="icon-box">
                         <i class="fas fa-users"></i>
@@ -543,35 +562,34 @@
             </div>
         </section>
 
-        <section class="tech-section container">
-            <div class="tech-text">
-                <h2 class="lang-it">Come funziona?</h2>
-                <h2 class="lang-en">How does it work?</h2>
-                
-                <p class="lang-it">È una moderna caccia al tesoro. La città è il tuo tabellone di gioco.</p>
-                <p class="lang-en">It's a modern treasure hunt. The city is your game board.</p>
-                
-                <ul style="list-style: none; margin-top: 1.5rem;">
-                    <li style="margin-bottom: 1.5rem;"><i class="fas fa-check-circle" style="color: var(--otp-green);"></i> 
-                        <strong class="lang-it">Trova il punto:</strong> <span class="lang-it">Leggi la mappa e raggiungi la posizione indicata.</span>
-                        <strong class="lang-en">Find the spot:</strong> <span class="lang-en">Read the map to reach the spot.</span>
-                    </li>
-                    <li style="margin-bottom: 1.5rem;"><i class="fas fa-check-circle" style="color: var(--otp-green);"></i> 
-                        <strong class="lang-it">Aguzza la vista:</strong> <span class="lang-it">L'App ti chiederà di trovare un dettaglio architettonico visibile solo lì.</span>
-                        <strong class="lang-en">Look closely:</strong> <span class="lang-en">The App will ask you to find an architectural detail visible only there.</span>
-                    </li>
-                    <li style="margin-bottom: 1.5rem;"><i class="fas fa-check-circle" style="color: var(--otp-green);"></i> 
-                        <strong class="lang-it">Conquista:</strong> <span class="lang-it">Rispondi o scatta un selfie di gruppo. Punti presi!</span>
-                        <strong class="lang-en">Conquer:</strong> <span class="lang-en">Answer or take a group selfie. Points earned!</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="tech-image">
-                <img src="images/screen-webapp.png" alt="Anteprima WebApp Piacenza Svelata">
+        <section class="tech-section content-section">
+            <div class="container">
+                <div class="tech-text">
+                    <h2 class="lang-it">Come funziona?</h2>
+                    <h2 class="lang-en">How does it work?</h2>
+                    
+                    <p class="lang-it">È una moderna caccia al tesoro. La città è il tuo tabellone di gioco.</p>
+                    <p class="lang-en">It's a modern treasure hunt. The city is your game board.</p>
+                    
+                    <ul style="list-style: none; margin-top: 1.5rem;">
+                        <li style="margin-bottom: 1.5rem;"><i class="fas fa-check-circle" style="color: var(--otp-green);"></i> 
+                            <strong class="lang-it">Trova il punto:</strong> <span class="lang-it">Leggi la mappa e raggiungi la posizione indicata.</span>
+                            <strong class="lang-en">Find the spot:</strong> <span class="lang-en">Read the map to reach the spot.</span>
+                        </li>
+                        <li style="margin-bottom: 1.5rem;"><i class="fas fa-check-circle" style="color: var(--otp-green);"></i> 
+                            <strong class="lang-it">Aguzza la vista:</strong> <span class="lang-it">La WebApp ti chiederà di trovare un dettaglio architettonico visibile solo lì.</span>
+                            <strong class="lang-en">Look closely:</strong> <span class="lang-en">The WebApp will ask you to find an architectural detail visible only there.</span>
+                        </li>
+                        <li style="margin-bottom: 1.5rem;"><i class="fas fa-check-circle" style="color: var(--otp-green);"></i> 
+                            <strong class="lang-it">Conquista:</strong> <span class="lang-it">Rispondi o scatta un selfie di gruppo. Punti presi!</span>
+                            <strong class="lang-en">Conquer:</strong> <span class="lang-en">Answer or take a group selfie. Points earned!</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
 
-        <section class="program-section">
+        <section class="program-section content-section">
             <div class="container">
                 <h2 style="text-align: center; margin-bottom: 3rem;">
                     <span class="lang-it">Il Programma</span><span class="lang-en">The Schedule</span>
@@ -580,8 +598,8 @@
                     <div class="timeline-item left">
                         <div class="content-box">
                             <h3>14:00</h3>
-                            <p class="lang-it">Apertura Villaggio Evento<br><small>Ritiro materiali e info</small></p>
-                            <p class="lang-en">Event Village Opening<br><small>Info & check-in</small></p>
+                            <p class="lang-it">Apertura Villaggio Evento presso Palazzo Farnese<br><small>Ritiro materiali e info</small></p>
+                            <p class="lang-en">Event Village Opening at Palazzo Farnese<br><small>Info & check-in</small></p>
                         </div>
                     </div>
                     <div class="timeline-item right">
@@ -609,10 +627,61 @@
             </div>
         </section>
 
+        <section class="info-section content-section">
+            <div class="container">
+                <h2 class="lang-it">Logistica e Regolamento</h2>
+                <h2 class="lang-en">Logistics and Rules</h2>
+                
+                <div style="width: 100%; height: 300px; margin-bottom: 30px; border-radius: 8px; overflow: hidden; border: 2px solid var(--otp-green);">
+                    <iframe src="https://www.google.com/maps/d/embed?mid=1oD1UaNMrBvXxqS2vUoc06kh85uT63xQ&ehbc=2E312F" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                
+                <div class="icon-grid" style="margin-top: 0;">
+                    <div class="info-panel" style="border-left-color: var(--otp-green);">
+                        <h3 class="lang-it" style="color: var(--otp-green); margin-bottom: 10px;">Accessibilità e Animali</h3>
+                        <h3 class="lang-en" style="color: var(--otp-green); margin-bottom: 10px;">Accessibility & Pets</h3>
+                        <p class="lang-it">Il percorso si sviluppa interamente per le strade del centro storico di Piacenza. È totalmente accessibile per sedie a rotelle e passeggini. Gli animali domestici sono ammessi.</p>
+                        <p class="lang-en">The route takes place entirely on the streets of the historic center of Piacenza. It is fully accessible for wheelchairs and strollers. Pets are allowed.</p>
+                    </div>
+                    <div class="info-panel" style="border-left-color: var(--event-accent);">
+                        <h3 class="lang-it" style="color: var(--event-accent); margin-bottom: 10px;">Sicurezza Stradale</h3>
+                        <h3 class="lang-en" style="color: var(--event-accent); margin-bottom: 10px;">Road Safety</h3>
+                        <p class="lang-it">L'urban game si svolge in strade aperte al traffico veicolare. È severamente obbligatorio il rispetto del Codice della Strada. Sono consigliate calzature comode.</p>
+                        <p class="lang-en">The urban game takes place on streets open to vehicular traffic. Strict compliance with traffic laws is mandatory. Comfortable footwear is recommended.</p>
+                    </div>
+                    <div class="info-panel" style="border-left-color: #fff;">
+                        <h3 class="lang-it" style="color: #fff; margin-bottom: 10px;">Maltempo</h3>
+                        <h3 class="lang-en" style="color: #fff; margin-bottom: 10px;">Bad Weather</h3>
+                        <p class="lang-it">In caso di maltempo, l'evento sarà posticipato a Domenica 17 Maggio. La partenza è prevista per le ore 10:00.</p>
+                        <p class="lang-en">In case of bad weather, the event will be postponed to Sunday, May 17. The start is scheduled for 10:00 AM.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="iscriviti" class="content-section">
             <div class="container" style="text-align: center;">
                 <h2 class="lang-it">Scegli la tua sfida</h2>
                 <h2 class="lang-en">Choose your Challenge</h2>
+
+                <div style="background-color: rgba(46, 125, 50, 0.1); border-left: 4px solid var(--otp-green); padding: 20px; text-align: left; margin: 0 auto 3rem auto; max-width: 800px;">
+                    <h3 class="lang-it" style="color: var(--otp-green); margin-bottom: 15px; font-weight: 700;">L'evento è completamente GRATUITO</h3>
+                    <h3 class="lang-en" style="color: var(--otp-green); margin-bottom: 15px; font-weight: 700;">The event is completely FREE</h3>
+                    
+                    <p class="lang-it" style="margin-bottom: 10px;">È possibile registrarsi sul posto, ma la <strong>pre-iscrizione online</strong> è caldamente consigliata e garantisce:</p>
+                    <p class="lang-en" style="margin-bottom: 10px;">On-site registration is available, but <strong>online pre-registration</strong> is highly recommended and guarantees:</p>
+                    
+                    <ul style="padding-left: 20px; margin-bottom: 0;">
+                        <li style="margin-bottom: 10px;">
+                            <strong class="lang-it">Salto della fila:</strong> <span class="lang-it">Ricezione dei moduli già precompilati con i propri dati.</span>
+                            <strong class="lang-en">Skip the line:</strong> <span class="lang-en">Pre-filled forms ready for pickup.</span>
+                        </li>
+                        <li>
+                            <strong class="lang-it">Mappa A3 ad alta qualità:</strong> <span class="lang-it">Certezza del formato A3 singolo. Chi si iscrive sul posto riceverà il formato A3 fino a esaurimento scorte, successivamente un doppio foglio A4.</span>
+                            <strong class="lang-en">High-quality A3 map:</strong> <span class="lang-en">Guaranteed A3 format. On-site registrations will receive A3 while supplies last, then a double A4 sheet.</span>
+                        </li>
+                    </ul>
+                </div>
 
                 <div class="cards-container" style="justify-content: center;">
                     
@@ -628,8 +697,8 @@
                         <ul style="text-align: left; margin: 1rem 0; list-style: circle; padding-left: 20px;">
                             <li class="lang-it">Sfida a punti (Score)</li>
                             <li class="lang-en">Points Challenge (Score)</li>
-                            <li class="lang-it">Classifica finale con premi</li>
-                            <li class="lang-en">Final ranking with prizes</li>
+                            <li class="lang-it">Classifica finale con premi garantiti (cesti gastronomici e materiale sportivo)</li>
+                            <li class="lang-en">Final ranking with guaranteed prizes (local food products and sports equipment)</li>
                             <li class="lang-it">Necessario certificato medico non agonistico o superiore</li>
                             <li class="lang-en">Medical certificate required</li>
                         </ul>
@@ -651,8 +720,8 @@
                         <ul style="text-align: left; margin: 1rem 0; list-style: circle; padding-left: 20px;">
                             <li class="lang-it">Nessuna classifica</li>
                             <li class="lang-en">No ranking</li>
-                            <li class="lang-it">Nessuna fretta (tempo libero)</li>
-                            <li class="lang-en">No rush (free time)</li>
+                            <li class="lang-it">Nessuna fretta</li>
+                            <li class="lang-en">No rush</li>
                             <li class="lang-it">Aperto a tutti (famiglie, amici, colleghi e curiosi)</li>
                             <li class="lang-en">Open to all (families, friends)</li>
                         </ul>
@@ -662,6 +731,55 @@
                         </a>
                     </div>
 
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section content-section">
+            <div class="container">
+                <h2 class="lang-it">Domande Frequenti (FAQ)</h2>
+                <h2 class="lang-en">Frequently Asked Questions (FAQ)</h2>
+                
+                <details class="faq-item">
+                    <summary class="lang-it">Età minima per partecipare?</summary>
+                    <summary class="lang-en">Minimum age to participate?</summary>
+                    <p class="lang-it">I minorenni possono partecipare solo se accompagnati da almeno un partecipante maggiorenne all'interno del team.</p>
+                    <p class="lang-en">Minors can only participate if accompanied by at least one adult participant within the team.</p>
+                </details>
+                
+                <details class="faq-item">
+                    <summary class="lang-it">Posso sostituire un membro del team all'ultimo minuto?</summary>
+                    <summary class="lang-en">Can I replace a team member at the last minute?</summary>
+                    <p class="lang-it">Sì, la composizione del team può essere modificata al momento del ritrovo, previa compilazione in loco del modulo di scarico responsabilità del nuovo membro.</p>
+                    <p class="lang-en">Yes, team composition can be changed at the meeting point upon completing the liability waiver for the new member.</p>
+                </details>
+                
+                <details class="faq-item">
+                    <summary class="lang-it">L'App consuma molti dati?</summary>
+                    <summary class="lang-en">Does the App consume a lot of data?</summary>
+                    <p class="lang-it">No, la WebApp è ottimizzata per un consumo dati estremamente ridotto. Non è necessario un dispositivo ad alte prestazioni, ma la batteria deve coprire le 3 ore di gara.</p>
+                    <p class="lang-en">No, the WebApp is optimized for extremely low data consumption. A high-performance device is not necessary, but the battery must cover the 3 hours of the race.</p>
+                </details>
+            </div>
+        </section>
+
+        <section class="sponsor-section content-section" style="border-top: 1px solid #222;">
+            <div class="container" style="text-align: center;">
+                <h2 class="lang-it" style="font-size: 1.5rem !important;">Evento finanziato da</h2>
+                <h2 class="lang-en" style="font-size: 1.5rem !important;">Event sponsored by</h2>
+                <div class="sponsor-grid">
+                    <div class="sponsor-logo" style="background: transparent; border: none;">
+                        <img src="images/piacenza-svelata/dipartimento.png" alt="Sponsor Dipartimento" style="width: 120%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="sponsor-logo" style="background: transparent; border: none;">
+                        <img src="images/piacenza-svelata/geco.png" alt="Sponsor Geco" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="sponsor-logo" style="background: transparent; border: none;">
+                        <img src="images/piacenza-svelata/piacenza 2030.png" alt="Piacenza 2030" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="sponsor-logo" style="background: transparent; border: none;">
+                        <img src="images/piacenza-svelata/rer.png" alt="Regione" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
                 </div>
             </div>
         </section>
@@ -699,7 +817,6 @@
     </footer>
 
     <script>
-        // 1. GESTIONE LINGUA
         function setLang(lang) {
             const body = document.body;
             
@@ -714,7 +831,6 @@
             document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
         }
 
-        // 2. GESTIONE MENU MOBILE
         document.addEventListener('DOMContentLoaded', function () {
             setLang('it');
 
@@ -735,7 +851,6 @@
                 });
             }
 
-            // 3. COUNTDOWN
             const eventDate = new Date("May 17, 2026 15:00:00").getTime();
             const x = setInterval(function() {
                 const now = new Date().getTime();
@@ -744,13 +859,18 @@
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 
-                document.getElementById("days").innerHTML = days < 10 ? '0'+days : days;
-                document.getElementById("hours").innerHTML = hours < 10 ? '0'+hours : hours;
-                document.getElementById("minutes").innerHTML = minutes < 10 ? '0'+minutes : minutes;
+                const daysEl = document.getElementById("days");
+                const hoursEl = document.getElementById("hours");
+                const minutesEl = document.getElementById("minutes");
+
+                if(daysEl) daysEl.innerHTML = days < 10 ? '0'+days : days;
+                if(hoursEl) hoursEl.innerHTML = hours < 10 ? '0'+hours : hours;
+                if(minutesEl) minutesEl.innerHTML = minutes < 10 ? '0'+minutes : minutes;
 
                 if (distance < 0) {
                     clearInterval(x);
-                    document.getElementById("countdown").innerHTML = "<h3 style='color:var(--event-accent)'>START!</h3>";
+                    const countdownEl = document.getElementById("countdown");
+                    if(countdownEl) countdownEl.innerHTML = "<h3 style='color:var(--event-accent)'>START!</h3>";
                 }
             }, 1000);
         });

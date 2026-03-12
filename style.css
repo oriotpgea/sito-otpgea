@@ -2,7 +2,7 @@
    IMPOSTAZIONI GLOBALI E VARIABILI
    ========================================================================== */
 :root {
-    --primary-color: #2E7D32; /* Verde scuro per titoli e dettagli */
+    --primary-color: #36685C; /*verde vecchio sito: 2E7D32. Verde scuro per titoli e dettagli */
     --secondary-color: #66BB6A; /* Verde più chiaro per bottoni e accenti */
     --background-light: #F1F8E9; /* Sfondo per sezioni alternate */
     --background-dark: #333; /* Sfondo scuro per contrasto (contatti) */

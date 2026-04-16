@@ -24,19 +24,22 @@ document.querySelectorAll('.video-due-click-container').forEach(container => {
         const videoId = this.dataset.videoId;
         const iframe = document.createElement('iframe');
         
-        // Sostituisci 'src' con 'data-cookieblock-src'
         iframe.setAttribute('data-cookieblock-src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
-        // Aggiungi la categoria di consenso
         iframe.setAttribute('data-cookieconsent', 'marketing');
         
         iframe.setAttribute('frameborder', '0');
         iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
         iframe.setAttribute('allowfullscreen', '');
 
+        // Creazione dinamica del messaggio di avviso
+        const warningDiv = document.createElement('div');
+        warningDiv.className = 'cookieconsent-optout-marketing';
+        warningDiv.innerHTML = '<p>Per visualizzare questo video, è necessario accettare i cookie di marketing.<br><br><a href="javascript:Cookiebot.renew()">Modifica il tuo consenso qui</a>.</p>';
+
         this.innerHTML = '';
+        this.appendChild(warningDiv);
         this.appendChild(iframe);
         
-        // Forza Cookiebot a controllare i nuovi elementi inseriti nel DOM
         if (typeof Cookiebot !== 'undefined') {
             Cookiebot.runScripts();
         }

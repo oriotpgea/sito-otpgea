@@ -1487,3 +1487,31 @@ hr {
 .cookieconsent-optin-marketing .cookieconsent-optout-marketing {
     display: none;
 }
+
+/* Stile per l'avviso Cookiebot dentro i contenitori video */
+.video-due-click-container .cookieconsent-optout-marketing {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    z-index: 10;
+}
+
+.video-due-click-container .cookieconsent-optout-marketing a {
+    color: var(--secondary-color);
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+/* Nasconde il messaggio se il consenso è stato dato */
+.cookieconsent-optin-marketing .cookieconsent-optout-marketing {
+    display: none !important;
+}

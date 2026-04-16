@@ -1482,3 +1482,8 @@ hr {
     70% { box-shadow: 0 0 0 20px rgba(255, 0, 153, 0); }
     100% { box-shadow: 0 0 0 0 rgba(255, 0, 153, 0); }
 }
+
+/* Nasconde il messaggio se il consenso è stato dato */
+.cookieconsent-optin-marketing .cookieconsent-optout-marketing {
+    display: none;
+}

@@ -17,21 +17,29 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /* ==========================================================================
-   GESTIONE VIDEO YOUTUBE A DUE CLICK
+   GESTIONE VIDEO YOUTUBE A DUE CLICK (Versione Cookiebot)
    ========================================================================== */
 document.querySelectorAll('.video-due-click-container').forEach(container => {
     container.addEventListener('click', function() {
         const videoId = this.dataset.videoId;
         const iframe = document.createElement('iframe');
         
-        iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
+        // Sostituisci 'src' con 'data-cookieblock-src'
+        iframe.setAttribute('data-cookieblock-src', `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`);
+        // Aggiungi la categoria di consenso
+        iframe.setAttribute('data-cookieconsent', 'marketing');
+        
         iframe.setAttribute('frameborder', '0');
         iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
         iframe.setAttribute('allowfullscreen', '');
 
-        // Sostituisce il contenuto del contenitore (immagine e play button) con l'iframe
         this.innerHTML = '';
         this.appendChild(iframe);
+        
+        // Forza Cookiebot a controllare i nuovi elementi inseriti nel DOM
+        if (typeof Cookiebot !== 'undefined') {
+            Cookiebot.runScripts();
+        }
     });
 });
 

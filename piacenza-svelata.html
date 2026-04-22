@@ -52,6 +52,12 @@
             padding-top: 80px;
             position: relative;
             border-bottom: 2px solid var(--event-accent);
+            padding-top: 130px; /* Riduce lo spazio superiore per far stare tutto a schermo */
+            justify-content: flex-start;
+        }
+
+        .hero-text-container p {
+            font-size: 1.0rem !important;
         }
 
         /* --- Language Switcher --- */
@@ -165,6 +171,27 @@
             box-shadow: 0 0 20px rgba(255, 0, 153, 0.4);
             display: inline-block;
             clip-path: polygon(5% 0, 100% 0, 100% 70%, 95% 100%, 0 100%, 0 30%);
+        }
+
+        .btn-green {
+            background-color: var(--otp-green);
+            color: white;
+            padding: 15px 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(46, 125, 50, 0.4);
+            display: inline-block;
+            clip-path: polygon(5% 0, 100% 0, 100% 70%, 95% 100%, 0 100%, 0 30%);
+        }
+
+        .btn-green:hover {
+            background-color: #fff;
+            color: var(--otp-green);
+            transform: scale(1.05);
         }
 
         .btn-disabled {
@@ -409,7 +436,7 @@
             display: inline-flex;
             align-items: center;
             gap: 15px;
-            margin-top: 3rem;
+            margin-top: 1rem;
             padding: 15px 30px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(5px);
@@ -441,6 +468,24 @@
                 border-right: none;
             }
             .info-divider { display: none; }
+        }
+
+        @media screen and (max-width: 768px) {
+            .countdown-container {
+                gap: 5px; /* Riduce lo spazio tra i blocchi */
+                flex-wrap: nowrap; /* Impedisce di andare a capo */
+            }
+            .countdown-item {
+                padding: 10px 10px; /* Riduce lo spazio interno */
+                min-width: 60px; /* Riduce la larghezza minima */
+                clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%); /* Adegua il taglio degli angoli alla nuova dimensione */
+            }
+            .countdown-number {
+                font-size: 1.5rem; /* Riduce la dimensione dei numeri */
+            }
+            .countdown-label {
+                font-size: 0.6rem; /* Riduce la dimensione delle etichette */
+            }
         }
     </style>
     <!-- Meta Pixel Code -->
@@ -514,7 +559,37 @@
                 
                 <span class="event-subtitle lang-it">OLTRE LA FACCIATA</span>
                 <span class="event-subtitle lang-en">BEYOND THE FACADE</span>
-                
+
+                <div class="countdown-container" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label lang-it">Giorni</span>
+                        <span class="countdown-label lang-en">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label lang-it">Ore</span>
+                        <span class="countdown-label lang-en">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label lang-it">Min</span>
+                        <span class="countdown-label lang-en">Min</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label lang-it">Sec</span>
+                        <span class="countdown-label lang-en">Sec</span>
+                    </div>
+                </div>
+
+                <div style="margin-top: 15px; margin-bottom: 30px;">
+                    <a href="#iscriviti" class="btn-fuchsia" style="font-size: 1rem; padding: 10px 30px;">
+                        <span class="lang-it">Iscriviti ora!</span>
+                        <span class="lang-en">Register now!</span>
+                    </a>
+                </div>
+
                 <div class="hero-text-container">
                     <p class="hero-desc lang-it">
                         Il centro storico diventa un <strong>museo interattivo</strong> a cielo aperto.<br>
@@ -662,7 +737,7 @@
                     <div class="info-panel" style="border-left-color: var(--otp-green);">
                         <h3 class="lang-it" style="color: var(--otp-green); margin-bottom: 10px;">Ritrovo e Parcheggi</h3>
                         <h3 class="lang-en" style="color: var(--otp-green); margin-bottom: 10px;">Arena and Parking</h3>
-                        <p class="lang-it">Il ritrovo è presso in cortile interno di <strong>Palazzo Farnese.</strong> Vi sono parcheggi nelle immediate vicinanze, alternativemente è possibile parchggiare in stazione (10 minuti a piedi).</p>
+                        <p class="lang-it">Il ritrovo è presso in cortile interno di <strong>Palazzo Farnese.</strong> Vi sono parcheggi nelle immediate vicinanze, alternativemente è possibile eggiare in stazione (10 minuti a piedi).</p>
                         <p class="lang-en">The meeting point is in the inner courtyard of <strong>Palazzo Farnese.</strong> There are parking spaces in the immediate vicinity; alternatively, it is possible to park at the station (a 10-minute walk).</p>
                     </div>
                     <div class="info-panel" style="border-left-color: var(--event-accent);">
@@ -680,7 +755,7 @@
                     <div class="info-panel" style="border-left-color: var(--otp-green);">
                         <h3 class="lang-it" style="color: var(--otp-green); margin-bottom: 10px;">WebApp, domande e classifica</h3>
                         <h3 class="lang-en" style="color: var(--otp-green); margin-bottom: 10px;">WebApp, questions, and ranking</h3>
-                        <p class="lang-it">Alla partenza ti verrà data la mappa con tutti i punti e ti sarà spiegato come accedere alla webapp. Quest'ultima è semplicemente un sito interattivo, non devi scaricare nulla. Con la mappa dovrai raggiungere i punti segnati, nell'ordine da deciso, e, una volta arrivato, rispondere a una domanda che troverai sulla webapp; è più facile a farsi che a dirsi!</p>
+                        <p class="lang-it">Alla partenza ti verrà data la mappa con tutti i punti e ti sarà spiegato come accedere alla webapp. Quest'ultima è semplicemente un sito interattivo, non devi scaricare nulla. Con la mappa dovrai raggiungere i punti segnati, nell'ordine deciso, e, una volta arrivato, rispondere a una domanda che troverai sulla webapp; è più facile a farsi che a dirsi!</p>
                         <p class="lang-en">At the start, you will be given the map with all the checkpoints and instructions on how to access the webapp. The latter is simply an interactive website; you do not need to download anything. Using the map, you must reach the marked points in the order you want and, once you arrive, answer a question found on the webapp; it is easier done than said!</p>
                     </div>
                     <div class="info-panel" style="border-left-color: var(--event-accent);">
@@ -731,6 +806,10 @@
                             <strong class="lang-en">Lottery:</strong> <span class="lang-en">Among non-competitive participants, 5 teams will be drawn at the end of the race to receive rich (and tasty) prizes!</span>
                         </li>
                     </ul>
+                    <div style="margin-top: 20px; text-align: center; border-top: 1px solid rgba(46, 125, 50, 0.3); padding-top: 15px;">
+                        <p class="lang-it" style="color: var(--event-accent); font-weight: 800; font-size: 1.2rem; margin: 0;">LE PRE-ISCRIZIONI CHIUDONO IL 13 MAGGIO ALLE ORE 12:00</p>
+                        <p class="lang-en" style="color: var(--event-accent); font-weight: 800; font-size: 1.2rem; margin: 0;">PRE-REGISTRATIONS CLOSE ON MAY 13TH AT 12:00 a.m.</p>
+                    </div>
                 </div>
 
                 <div class="cards-container" style="justify-content: center;">
@@ -752,9 +831,9 @@
                             <li class="lang-it">Necessario certificato medico non agonistico o superiore</li>
                             <li class="lang-en">Medical certificate required</li>
                         </ul>
-                        <a href="https://forms.gle/vpfN1JixgRFXjLmbA" class="btn-fuchsia">
-                            <span class="lang-it">Iscriviti qui</span>
-                            <span class="lang-en">Registrate here</span>
+                        <a href="https://forms.gle/vpfN1JixgRFXjLmbA" class="btn-green">
+                            <span class="lang-it">Modulo iscrizione competitiva</span>
+                            <span class="lang-en">Competitive registration Form</span>
                         </a>
                     </div>
 
@@ -776,8 +855,8 @@
                             <li class="lang-en">Open to all (families, friends)</li>
                         </ul>
                         <a href="https://forms.gle/1nXxtrnKwD32yh4N8" class="btn-fuchsia">
-                            <span class="lang-it">Iscriviti qui</span>
-                            <span class="lang-en">Registrate here</span>
+                            <span class="lang-it">Modulo iscrizione ludica</span>
+                            <span class="lang-en">Recreational registration form</span>
                         </a>
                     </div>
 
@@ -821,15 +900,15 @@
                 <details class="faq-item">
                     <summary class="lang-it">Devo saper leggere una mappa? Posso usare Google Maps?</summary>
                     <summary class="lang-en">Do I need to read a map? Can I use Google Maps?</summary>
-                    <p class="lang-it">Non devi necesariamente saper leggere  mappa e puoi usare Google Maps; tuttavia siamo sicuri che, una volta avuta la mappa in mano, troverai molto più semplice seguire quella!</p>
+                    <p class="lang-it">Non devi necessariamente saper leggere  mappa e puoi usare Google Maps; tuttavia siamo sicuri che, una volta avuta la mappa in mano, troverai molto più semplice seguire quella!</p>
                     <p class="lang-en">You do not necessarily need to know how to read a map and can use Google Maps; however, we are certain that once you have the map in hand, you will find it much simpler to follow. Prove us wrong!</p>
                 </details>
                 
                 <details class="faq-item">
                     <summary class="lang-it">Età minima per partecipare?</summary>
                     <summary class="lang-en">Minimum age to participate?</summary>
-                    <p class="lang-it">I minorenni possono partecipare solo se accompagnati da almeno un partecipante maggiorenne all'interno del team.</p>
-                    <p class="lang-en">Minors can only participate if accompanied by at least one adult participant within the team.</p>
+                    <p class="lang-it">Nell'orienteering i minorenni possono gareggiare da soli. Valgono però le regole dettate dal buonsenso, pertanto suggeriamo caldamente che i più piccoli siano seguiti da almeno un adulto.</p>
+                    <p class="lang-en">Minors can compete alone in orienteering. However, common sense rules apply, so we strongly recommend for younger participants to be supervised by at least one adult.</p>
                 </details>
                 
                 <details class="faq-item">
@@ -945,21 +1024,25 @@
                 });
             }
 
-            const eventDate = new Date("May 17, 2026 15:00:00").getTime();
+            const eventDate = new Date("May 13, 2026 12:00:00").getTime();
             const x = setInterval(function() {
                 const now = new Date().getTime();
                 const distance = eventDate - now;
+                
                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
                 const daysEl = document.getElementById("days");
                 const hoursEl = document.getElementById("hours");
                 const minutesEl = document.getElementById("minutes");
+                const secondsEl = document.getElementById("seconds");
 
                 if(daysEl) daysEl.innerHTML = days < 10 ? '0'+days : days;
                 if(hoursEl) hoursEl.innerHTML = hours < 10 ? '0'+hours : hours;
                 if(minutesEl) minutesEl.innerHTML = minutes < 10 ? '0'+minutes : minutes;
+                if(secondsEl) secondsEl.innerHTML = seconds < 10 ? '0'+seconds : seconds;
 
                 if (distance < 0) {
                     clearInterval(x);

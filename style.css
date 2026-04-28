@@ -126,7 +126,7 @@ body {
 }
 
 /* Hero a schermo pieno per le pagine principali */
-#hero-home, #hero-gare, #hero-corso, #hero-teambuilding, #hero-caccia-al-tesoro, #hero-promozione-territorio, #hero-mappe {
+#hero-home, #hero-eventi, #hero-teambuilding, #hero-caccia-al-tesoro, #hero-promozione-territorio, #hero-mappe {
     height: 100vh;
 }
 
@@ -134,11 +134,8 @@ body {
 #hero-home {
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/sfondo.jpg');
 }
-#hero-corso {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/sfondo-corso.jpg');
-}
-#hero-gare {
-    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/sfondo-gare.jpg');
+#hero-eventi {
+    background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/sfondo-eventi.jpg');
 }
 #hero-promozione-territorio {
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/sfondo-promozione-territorio.jpg');
@@ -373,67 +370,7 @@ hr {
     color: #aaa;
 }
 
-/* ==========================================================================
-   NUOVI STILI PAGINA CORSO
-   ========================================================================== */
-.course-details {
-    max-width: 800px;
-}
 
-.course-details h2, .course-details h3 {
-    font-family: var(--font-headings);
-    color: var(--primary-color);
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-}
-
-.course-schedule ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.course-schedule li {
-    background: var(--background-light);
-    padding: 10px;
-    margin-bottom: 8px;
-    border-left: 4px solid var(--secondary-color);
-}
-
-.course-info .sconto {
-    font-weight: bold;
-    color: var(--primary-color);
-}
-
-.course-info .cta-button {
-    margin-top: 1.5rem;
-}
-
-.course-flyer {
-    margin-top: 3rem;
-    text-align: center;
-    background: var(--background-light);
-    padding: 2rem;
-    border-radius: 8px;
-}
-
-.flyer-preview {
-    display: block;
-    max-width: 100%;
-    width: 400px;
-    margin: 1.5rem auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.flyer-preview:hover {
-    transform: scale(1.03);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-}
-
-.course-flyer .cta-button {
-    margin-top: 0;
-}
 
 /* ==========================================================================
    RESPONSIVE DESIGN (PER SMARTPHONE)
@@ -562,7 +499,7 @@ hr {
 }
 
 /* Assicurati che la regola per l'altezza a schermo pieno includa tutti gli ID corretti */
-#hero-home, #hero-gare, #hero-corso, #hero-teambuilding, #hero-caccia-al-tesoro, #hero-promozione-territorio, #hero-mappe, #hero-sostienici, #hero-trasparenza, #hero-storia {
+#hero-home, #hero-eventi, #hero-teambuilding, #hero-caccia-al-tesoro, #hero-promozione-territorio, #hero-mappe, #hero-sostienici, #hero-trasparenza, #hero-storia {
     height: 100vh;
 }
 
@@ -1356,9 +1293,8 @@ hr {
 @media screen and (max-width: 768px) {
     /* 1. Sblocco altezza e gestione spazi vitali per Navbar + Banner */
     #hero-teambuilding, 
-    #hero-corso, 
     #hero-caccia-al-tesoro,
-    #hero-gare,
+    #hero-eventi,
     #hero-home { 
         height: auto !important; /* Sblocca l'altezza fissa */
         min-height: 100vh;

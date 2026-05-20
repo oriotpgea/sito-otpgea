@@ -1451,3 +1451,39 @@ hr {
 .cookieconsent-optin-marketing .cookieconsent-optout-marketing {
     display: none !important;
 }
+
+/* ==========================================================================
+   STILI BANNER TRASFERTE INDIPENDENTI
+   ========================================================================== */
+.trasferta-banner {
+    background-color: #fff;
+    border-left: 4px solid var(--secondary-color);
+    padding: 15px 25px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.trasferta-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.trasferta-date {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.trasferta-name {
+    font-size: 1rem;
+    color: var(--text-color);
+    line-height: 1.4;
+}

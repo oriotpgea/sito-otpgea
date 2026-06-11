@@ -1,19 +1,39 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Menu hamburger — sito principale
     const menuToggle = document.getElementById('menu-toggle');
     const navLinks = document.querySelector('.nav-links');
 
-    menuToggle.addEventListener('click', function () {
-        navLinks.classList.toggle('active');
-        // Cambia l'icona da hamburger a "X" e viceversa
-        const icon = menuToggle.querySelector('i');
-        if (icon.classList.contains('fa-bars')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-times');
-        } else {
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-        }
-    });
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function () {
+            navLinks.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            if (icon.classList.contains('fa-bars')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
+
+    // Menu hamburger — pagine Piacenza Svelata
+    const menuTogglePS = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+
+    if (menuTogglePS && mainNav) {
+        menuTogglePS.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const icon = menuTogglePS.querySelector('i');
+            if (mainNav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+    }
 });
 
 /* ==========================================================================
@@ -168,3 +188,215 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 3000);
     });
 });
+
+/* ----------------------------------------------------------
+   Countdown — pagine Piacenza Svelata
+---------------------------------------------------------- */
+function initCountdown() {
+    const countdownEl = document.getElementById('countdown');
+    if (!countdownEl) return;
+    const targetDate = new Date('2026-09-20T10:00:00').getTime();
+    const valueElements = countdownEl.querySelectorAll('.countdown__value');
+    function update() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+        if (distance < 0) return;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        if (valueElements.length >= 3) {
+            valueElements[0].textContent = String(days).padStart(2, '0');
+            valueElements[1].textContent = String(hours).padStart(2, '0');
+            valueElements[2].textContent = String(minutes).padStart(2, '0');
+        }
+    }
+    update();
+    setInterval(update, 60000);
+}
+document.addEventListener('DOMContentLoaded', initCountdown);
+
+/* ----------------------------------------------------------
+   Accordion FAQ — pagine Piacenza Svelata
+---------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', function () {
+    const faqContainer = document.querySelector('.faq__container');
+    if (!faqContainer) return;
+    faqContainer.addEventListener('click', function (e) {
+        const summary = e.target.closest('summary');
+        if (!summary) return;
+        const item = summary.closest('.faq__item');
+        if (item) {
+            e.preventDefault();
+            item.open = !item.open;
+        }
+    });
+});
+
+/* ----------------------------------------------------------
+   Edition tabs — ps-edizioni.html
+---------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.edition-tab');
+    if (!tabs.length) return;
+    const contents = document.querySelectorAll('.edition-content');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.dataset.target;
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            tab.classList.add('active');
+            const targetContent = document.getElementById(target);
+            if (targetContent) targetContent.classList.add('active');
+        });
+    });
+});
+
+/**
+ * main.js
+ * Piacenza Svelata - Sottodominio
+ * Vanilla JS
+ */
+
+/* --------------------------------------------------------------------------
+   3. MODULO ACCORDION FAQ
+   -------------------------------------------------------------------------- */
+class Accordion {
+    constructor(containerSelector, itemSelector = 'details') {
+        this.container = document.querySelector(containerSelector);
+        this.itemSelector = itemSelector;
+    }
+
+    init() {
+        try {
+            if (!this.container) return;
+            this.addEventListeners();
+            console.log('[Accordion] Inizializzato');
+        } catch (error) {
+            console.error('[Accordion] Errore di inizializzazione:', error);
+        }
+    }
+
+    toggleItem(item) {
+        item.open = !item.open;
+    }
+
+    addEventListeners() {
+        this.container.addEventListener('click', (e) => {
+            const summary = e.target.closest('summary');
+            if (!summary) return;
+            
+            const item = summary.closest(this.itemSelector);
+            if (item) {
+                e.preventDefault(); 
+                this.toggleItem(item);
+            }
+        });
+    }
+}
+
+/* --------------------------------------------------------------------------
+   4. MODULO LAZY LOADING IMMAGINI
+   -------------------------------------------------------------------------- */
+function initLazyLoading() {
+    try {
+        const images = document.querySelectorAll('img[data-src]');
+        if (images.length === 0) return;
+
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        img.classList.add('loaded');
+                        obs.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '50px'
+            });
+
+            images.forEach(img => observer.observe(img));
+        } else {
+            images.forEach(img => {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+            });
+        }
+        console.log('[LazyLoading] Inizializzato');
+    } catch (error) {
+        console.error('[LazyLoading] Errore di inizializzazione:', error);
+    }
+}
+
+/* --------------------------------------------------------------------------
+   5b. MODULO SWITCHER EDIZIONI
+   -------------------------------------------------------------------------- */
+function initEditionTabs() {
+    const tabs = document.querySelectorAll('.edition-tab');
+    const contents = document.querySelectorAll('.edition-content');
+    
+    if (tabs.length === 0) return;
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.dataset.target;
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            tab.classList.add('active');
+            const targetContent = document.getElementById(target);
+            if (targetContent) {
+                targetContent.classList.add('active');
+            }
+        });
+    });
+    console.log('[EditionTabs] Inizializzato');
+}
+
+/* --------------------------------------------------------------------------
+   6. UTILITY: INIT GLOBALE
+   -------------------------------------------------------------------------- */
+function initPiacenzaSvelataApp() {
+    console.log('Piacenza Svelata App Initialized');
+    
+    try {
+        initCountdown();
+
+        if (document.querySelector('.slideshow__container')) {
+            const slideshow = new Slideshow(
+                '.slideshow__container',
+                '.slideshow__slide',
+                '.slideshow__nav--prev',
+                '.slideshow__nav--next'
+            );
+            slideshow.init();
+        }
+
+        if (document.querySelector('.modal')) {
+            const modal = new Modal(
+                '#galleryModal',
+                '.slideshow__image',
+                '.modal__close',
+                '.modal__nav--prev',
+                '.modal__nav--next'
+            );
+            modal.init();
+        }
+
+        if (document.querySelector('.faq__container')) {
+            const accordion = new Accordion('.faq__container', '.faq__item');
+            accordion.init();
+        }
+
+        initVideoWithCookiebot();
+        initEditionTabs();
+
+    } catch (error) {
+        console.error('Critical App Initialization Error:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initPiacenzaSvelataApp);

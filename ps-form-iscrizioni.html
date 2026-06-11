@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- 1. COOKIEBOT — DEVE essere primo, prima di tutto -->
+    <script id="Cookiebot"
+        src="https://consent.cookiebot.com/uc.js"
+        data-cbid="5834d037-724f-4812-b523-fc359acae2ce"
+        type="text/javascript">
+    </script>
+
+    <!-- 2. META CHARSET E VIEWPORT — subito dopo -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iscrizione a Piacenza Svelata</title>
+
+    <!-- 3. META PIXEL — wrappato, dopo charset -->
+    <script type="text/plain" data-cookieconsent="marketing">
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2113652142808348');
+    fbq('track', 'PageView');
+    </script>
+    <noscript data-cookieconsent="marketing"><img height="1" width="1"
+        style="display:none"
+        src="https://www.facebook.com/tr?id=2113652142808348&ev=PageView&noscript=1"
+    /></noscript>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-dark: #050505;
+            --bg-panel: #121212;
+            --text-light: #e0e0e0;
+            --text-white: #ffffff;
+            --accent-fucsia: #FF0099;
+            --accent-green: #2E7D32;
+            --border-dark: #333333;
+            --radius-default: 8px;
+            --transition-smooth: 0.3s ease;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; color: var(--text-white); }
+        
+        .form-container {
+            width: 100%;
+            max-width: 640px;
+        }
+
+        .header-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-fucsia);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-subtitle {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .panel {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-dark);
+            border-radius: var(--radius-default);
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .step { display: none; animation: fadeIn var(--transition-smooth); }
+        .step.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .progress-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .progress-step {
+            flex: 1;
+            height: 6px;
+            background: var(--border-dark);
+            border-radius: 3px;
+            position: relative;
+        }
+        .progress-step.active { background: var(--accent-fucsia); }
+        .progress-step.completed { background: var(--accent-green); }
+
+        .ps-form__label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-white);
+            margin-bottom: 8px;
+            margin-top: 18px;
+        }
+
+        .ps-form__input, select {
+            width: 100%;
+            padding: 13px 16px;
+            background-color: #000;
+            border: 1px solid var(--border-dark);
+            border-radius: 4px;
+            color: var(--text-white);
+            font-family: 'Roboto', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.25s ease;
+        }
+
+        .ps-form__input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-fucsia);
+        }
+        
+        select { cursor: pointer; appearance: none; }
+
+        .ps-form__checkbox-wrap {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .ps-form__checkbox {
+            margin-top: 3px;
+            accent-color: var(--accent-fucsia);
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .ps-form__checkbox-text {
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-smooth);
+        }
+
+        .btn--fuchsia { background-color: var(--accent-fucsia); color: #fff; width: 100%; }
+        .btn--fuchsia:hover { background-color: #d60080; transform: scale(1.02); }
+        .btn--green { background-color: var(--accent-green); color: #fff; width: 100%; }
+        .btn--green:hover { background-color: #236026; transform: scale(1.02); }
+        .btn--outline { background-color: transparent; border: 2px solid var(--border-dark); color: var(--text-white); }
+        .btn--outline:hover { border-color: var(--text-white); }
+        .btn--outline-fuchsia { background-color: transparent; border: 2px solid var(--accent-fucsia); color: var(--text-white); width: 100%; }
+        .btn--outline-fuchsia:hover { background-color: var(--accent-fucsia); transform: scale(1.02); }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .component-row {
+            background-color: var(--bg-dark);
+            border: 1px dashed var(--border-dark);
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .component-row h4 {
+            font-size: 1rem;
+            color: var(--accent-green);
+            margin-bottom: 10px;
+        }
+
+        .remove-component {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #ff4444;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .file-preview {
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            margin-top: 8px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .ps-form-message {
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+            display: none;
+        }
+
+        .ps-form-message--error { background-color: #2a0b0b; border: 1px solid #ff4949; color: #ff9999; }
+        
+        .summary-box { background-color: var(--bg-dark); padding: 20px; border-radius: 4px; border: 1px solid var(--border-dark); margin-bottom: 20px; }
+        .summary-item { margin-bottom: 10px; font-size: 0.95rem; border-bottom: 1px solid var(--border-dark); padding-bottom: 8px; }
+        .summary-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .summary-item strong { color: var(--accent-fucsia); display: inline-block; width: 140px; }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(5, 5, 5, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            flex-direction: column;
+        }
+        .spinner {
+            border: 4px solid var(--border-dark);
+            border-top: 4px solid var(--accent-fucsia);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div id="loadingText" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: white;">Elaborazione in corso...</div>
+</div>
+
+<div class="form-container">
+    <h1 class="header-title">Iscrizione a Piacenza Svelata</h1>
+    <p class="header-subtitle">Compila il modulo per registrare la tua squadra</p>
+    
+    <div class="progress-bar" id="progressBar">
+        <div class="progress-step active" data-step="0"></div>
+        <div class="progress-step" data-step="1"></div>
+        <div class="progress-step" data-step="2"></div>
+        <div class="progress-step" data-step="3"></div>
+    </div>
+
+    <div id="errorBox" class="ps-form-message ps-form-message--error"></div>
+
+    <div class="step active panel" id="step0">
+        <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: var(--accent-green);">Istruzioni Preliminari</h2>
+        <p>L'iscrizione richiede il pagamento anticipato tramite bonifico bancario.</p>
+        <div style="background: var(--bg-dark); padding: 15px; border: 1px solid var(--border-dark); border-radius: 4px; margin: 20px 0;">
+            <p><strong>IBAN:</strong> [IBAN_PLACEHOLDER]</p>
+            <p><strong>Causale:</strong> PIACENZA SVELATA 2026 - [Nome della squadra]</p>
+            <p><strong>Importo:</strong> 10€ a squadra fino al 16 settembre, poi 15€.</p>
+        </div>
+        <p style="margin-bottom: 25px; font-size: 0.9rem; color: #aaa;">Per la categoria competitiva è obbligatorio caricare i certificati medici di <strong>ogni singolo componente</strong> della squadra.</p>
+        
+        <button type="button" class="btn btn--fuchsia" onclick="nextStep(1)">Ho effettuato il bonifico, procedi <i class="fas fa-arrow-right" style="margin-left: 10px;"></i></button>
+    </div>
+
+    <div class="step panel" id="step1">
+        <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Dati Squadra</h2>
+        
+        <label class="ps-form__label" for="nomeSquadra">Nome Squadra *</label>
+        <input type="text" class="ps-form__input" id="nomeSquadra" required>
+
+        <label class="ps-form__label" for="emailReferente">Email di riferimento *</label>
+        <input type="email" class="ps-form__input" id="emailReferente" required>
+
+        <label class="ps-form__label" for="categoria">Categoria *</label>
+        <select class="ps-form__input" id="categoria" onchange="toggleCategoriaLogic()">
+            <option value="">Seleziona...</option>
+            <option value="competitiva">Competitiva (ROSSO) - Richiede Certificati</option>
+            <option value="ludica">Ludico-motoria (BIANCO)</option>
+        </select>
+
+        <div style="margin-top: 30px; border-top: 1px solid var(--border-dark); padding-top: 20px;">
+            <h3 style="font-size: 1.2rem;">Componenti (Max 4)</h3>
+            <div id="componentiContainer"></div>
+            <button type="button" class="btn btn--outline" id="btnAddUser" onclick="addComponente()" style="margin-top: 15px; width: auto; font-size: 0.8rem; padding: 8px 16px;">
+                <i class="fas fa-plus" style="margin-right: 5px;"></i> Aggiungi componente
+            </button>
+        </div>
+
+        <label class="ps-form__checkbox-wrap" id="certificatoCheckboxGroup" style="display: none;">
+            <input type="checkbox" class="ps-form__checkbox" id="dichiaraCertificato">
+            <span class="ps-form__checkbox-text">Dichiaro che tutti i componenti competitivi sono in possesso di certificato medico per attività sportiva non agonistica o superiore *</span>
+        </label>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn--outline" onclick="prevStep(0)">Indietro</button>
+            <button type="button" class="btn btn--fuchsia" onclick="validateAndNext(1)">Avanti</button>
+        </div>
+    </div>
+
+    <div class="step panel" id="step2">
+        <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Upload Documenti</h2>
+        
+        <div style="margin-bottom: 30px;">
+            <label class="ps-form__label" for="fileBonifico">Ricevuta Bonifico (JPG, PNG, PDF) *</label>
+            <input type="file" class="ps-form__input" id="fileBonifico" accept=".jpg,.jpeg,.png,.pdf" required onchange="handleFileSelect(event, 'bonifico')">
+            <div id="previewBonifico" class="file-preview"></div>
+        </div>
+
+        <div id="uploadCertificatiContainer" style="display: none; border-top: 1px solid var(--border-dark); padding-top: 20px;">
+            <h3 style="font-size: 1.2rem; color: var(--accent-fucsia); margin-bottom: 15px;">Certificati Medici</h3>
+            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 20px;">Carica un certificato medico per ogni membro della squadra.</p>
+            <div id="certificatiInputs"></div>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn--outline" onclick="prevStep(1)">Indietro</button>
+            <button type="button" class="btn btn--fuchsia" onclick="validateAndNext(2)">Avanti</button>
+        </div>
+    </div>
+
+    <div class="step panel" id="step3">
+        <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Riepilogo e Invio</h2>
+        
+        <div id="riepilogoDati" class="summary-box"></div>
+
+        <label class="ps-form__checkbox-wrap">
+            <input type="checkbox" class="ps-form__checkbox" id="accettoRegolamento" required>
+            <span class="ps-form__checkbox-text">Accetto il regolamento dell'evento *</span>
+        </label>
+
+        <label class="ps-form__checkbox-wrap">
+            <input type="checkbox" class="ps-form__checkbox" id="accettoPrivacy" required>
+            <span class="ps-form__checkbox-text">Accetto il trattamento dei dati personali ai sensi del GDPR *</span>
+        </label>
+
+        <div class="btn-group" style="grid-template-columns: 1fr 2fr;">
+            <button type="button" class="btn btn--outline" onclick="prevStep(2)">Indietro</button>
+            <button type="button" class="btn btn--green" onclick="submitForm()">Invia Iscrizione <i class="fas fa-check" style="margin-left: 8px;"></i></button>
+        </div>
+    </div>
+
+    <div class="step panel" id="successScreen" style="text-align: center; padding: 50px 20px;">
+        <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--accent-green); margin-bottom: 20px;"></i>
+        <h2 style="font-size: 2rem; margin-bottom: 10px;">Iscrizione Ricevuta!</h2>
+        <p style="font-size: 1.1rem;">La tua richiesta è stata registrata con successo.</p>
+        <p style="margin-top: 15px; color: #aaa;">Manderemo un'email all'indirizzo <strong id="successEmail" style="color: var(--text-white);"></strong> per la conferma definitiva non appena avremo verificato il bonifico.</p>
+    </div>
+
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, setDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCBm7KbqSuNFQgGm4V2ial9KjmVYQdm9sQ",
+        authDomain: "otpgea-iscrizioni.firebaseapp.com",
+        projectId: "otpgea-iscrizioni",
+        storageBucket: "otpgea-iscrizioni.firebasestorage.app",
+        messagingSenderId: "404522211919",
+        appId: "1:404522211919:web:dbce73bb8e2af9c510a83a"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    let currentStep = 0;
+    let componentiCount = 0;
+    const MAX_COMPONENTI = 4;
+    const MAX_FILE_SIZE_KB = 300;
+
+    let processedFiles = { bonifico: null, certificati: [] };
+
+    window.addComponente = function() {
+        if (componentiCount >= MAX_COMPONENTI) return;
+        componentiCount++;
+        
+        const div = document.createElement('div');
+        div.className = 'component-row';
+        div.id = `componente-${componentiCount}`;
+        
+        let removeBtn = componentiCount > 1 
+            ? `<button type="button" class="remove-component" onclick="removeComponente(${componentiCount})"><i class="fas fa-times"></i> Rimuovi</button>` 
+            : '';
+
+        div.innerHTML = `
+            ${removeBtn}
+            <h4>Componente ${componentiCount}</h4>
+            <label class="ps-form__label" style="margin-top:0;">Nome *</label>
+            <input type="text" class="ps-form__input comp-nome" required>
+            <label class="ps-form__label">Cognome *</label>
+            <input type="text" class="ps-form__input comp-cognome" required>
+        `;
+        document.getElementById('componentiContainer').appendChild(div);
+        
+        if (componentiCount >= MAX_COMPONENTI) {
+            document.getElementById('btnAddUser').style.display = 'none';
+        }
+    };
+
+    window.removeComponente = function(id) {
+        document.getElementById(`componente-${id}`).remove();
+        componentiCount--;
+        document.getElementById('btnAddUser').style.display = 'inline-flex';
+        aggiornaIndiciComponenti();
+    };
+
+    function aggiornaIndiciComponenti() {
+        const righe = document.querySelectorAll('.component-row');
+        righe.forEach((row, index) => {
+            const num = index + 1;
+            row.id = `componente-${num}`;
+            row.querySelector('h4').textContent = `Componente ${num}`;
+            const btn = row.querySelector('.remove-component');
+            if(btn) btn.setAttribute('onclick', `removeComponente(${num})`);
+        });
+        componentiCount = righe.length;
+    }
+
+    window.toggleCategoriaLogic = function() {
+        const cat = document.getElementById('categoria').value;
+        const certGroup = document.getElementById('certificatoCheckboxGroup');
+        
+        if (cat === 'competitiva') {
+            certGroup.style.display = 'flex';
+        } else {
+            certGroup.style.display = 'none';
+            document.getElementById('dichiaraCertificato').checked = false;
+        }
+    };
+
+    window.showError = function(msg) {
+        const errBox = document.getElementById('errorBox');
+        if (msg) {
+            errBox.textContent = msg;
+            errBox.style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            errBox.style.display = 'none';
+        }
+    };
+
+    function updateProgressBar(target) {
+        document.querySelectorAll('.progress-step').forEach((el, index) => {
+            el.classList.remove('active', 'completed');
+            if (index < target) el.classList.add('completed');
+            if (index === target) el.classList.add('active');
+        });
+    }
+
+    window.nextStep = function(target) {
+        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+        document.getElementById(`step${target}`).classList.add('active');
+        updateProgressBar(target);
+        currentStep = target;
+        showError('');
+
+        if (target === 2) buildCertificatiInputs();
+        if (target === 3) generateRiepilogo();
+    };
+
+    window.prevStep = function(target) {
+        showError('');
+        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+        document.getElementById(`step${target}`).classList.add('active');
+        updateProgressBar(target);
+        currentStep = target;
+    };
+
+    window.validateAndNext = async function(stepNumber) {
+        showError('');
+        if (stepNumber === 1) {
+            const nomeSquadra = document.getElementById('nomeSquadra').value.trim();
+            const email = document.getElementById('emailReferente').value.trim();
+            const cat = document.getElementById('categoria').value;
+            
+            if (!nomeSquadra || !email || !cat) return showError('Compila tutti i campi obbligatori della squadra.');
+            
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regexEmail.test(email)) return showError('Inserisci un indirizzo email valido.');
+
+            let compValidi = true;
+            document.querySelectorAll('.component-row').forEach(row => {
+                const n = row.querySelector('.comp-nome').value.trim();
+                const c = row.querySelector('.comp-cognome').value.trim();
+                if (!n || !c) compValidi = false;
+            });
+            if (!compValidi) return showError('Compila nome e cognome di tutti i componenti.');
+
+            if (cat === 'competitiva' && !document.getElementById('dichiaraCertificato').checked) {
+                return showError('Per la categoria competitiva è necessario dichiarare il possesso del certificato medico.');
+            }
+            nextStep(2);
+
+        } else if (stepNumber === 2) {
+            if (!processedFiles.bonifico) return showError('Carica la ricevuta del bonifico.');
+            
+            const cat = document.getElementById('categoria').value;
+            if (cat === 'competitiva') {
+                const componenti = document.querySelectorAll('.component-row');
+                for (let i = 0; i < componenti.length; i++) {
+                    if (!processedFiles.certificati[i]) {
+                        return showError(`Carica il certificato medico per il componente ${i + 1}.`);
+                    }
+                }
+            }
+            nextStep(3);
+        }
+    };
+
+    function buildCertificatiInputs() {
+        const cat = document.getElementById('categoria').value;
+        const container = document.getElementById('uploadCertificatiContainer');
+        const inputsDiv = document.getElementById('certificatiInputs');
+        
+        if (cat === 'ludica') {
+            container.style.display = 'none';
+            processedFiles.certificati = [];
+            return;
+        }
+
+        container.style.display = 'block';
+        inputsDiv.innerHTML = '';
+        
+        const componenti = document.querySelectorAll('.component-row');
+        
+        if (processedFiles.certificati.length !== componenti.length) {
+            processedFiles.certificati = new Array(componenti.length).fill(null);
+        }
+
+        componenti.forEach((row, index) => {
+            const nome = row.querySelector('.comp-nome').value.trim();
+            const cognome = row.querySelector('.comp-cognome').value.trim();
+            
+            const div = document.createElement('div');
+            div.style.marginBottom = '20px';
+            div.innerHTML = `
+                <label class="ps-form__label">Certificato Medico di ${nome} ${cognome} *</label>
+                <input type="file" class="ps-form__input" accept=".jpg,.jpeg,.png,.pdf" required onchange="handleFileSelect(event, 'certificato', ${index})">
+                <div id="previewCertificato_${index}" class="file-preview"></div>
+            `;
+            inputsDiv.appendChild(div);
+        });
+    }
+
+    window.handleFileSelect = async function(event, type, index = null) {
+        const file = event.target.files[0];
+        const previewId = type === 'bonifico' ? 'previewBonifico' : `previewCertificato_${index}`;
+        const previewEl = document.getElementById(previewId);
+        showError('');
+        
+        if (!file) {
+            previewEl.style.display = 'none';
+            if(type === 'bonifico') processedFiles.bonifico = null;
+            if(type === 'certificato') processedFiles.certificati[index] = null;
+            return;
+        }
+
+        try {
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            document.getElementById('loadingText').textContent = 'Ottimizzazione file in corso...';
+            
+            let processedFile = file;
+            if (file.type.startsWith('image/')) {
+                processedFile = await compressImage(file, MAX_FILE_SIZE_KB);
+            } else if (file.type === 'application/pdf') {
+                if (file.size > MAX_FILE_SIZE_KB * 1024) {
+                    throw new Error(`Il file ${file.name} supera ${MAX_FILE_SIZE_KB}KB. Comprimi il PDF prima di caricarlo.`);
+                }
+            } else {
+                throw new Error('Formato non supportato. Usa JPG, PNG o PDF.');
+            }
+
+            if(type === 'bonifico') processedFiles.bonifico = processedFile;
+            if(type === 'certificato') processedFiles.certificati[index] = processedFile;
+
+            previewEl.textContent = `✓ ${processedFile.name} (${(processedFile.size / 1024).toFixed(1)} KB)`;
+            previewEl.style.display = 'block';
+            
+        } catch (err) {
+            event.target.value = '';
+            previewEl.style.display = 'none';
+            if(type === 'bonifico') processedFiles.bonifico = null;
+            if(type === 'certificato') processedFiles.certificati[index] = null;
+            showError(err.message);
+        } finally {
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
+    };
+
+    function compressImage(file, maxKB) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = event => {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let scale = 1;
+                    if (file.size > maxKB * 1024) {
+                        scale = Math.sqrt((maxKB * 1024) / file.size);
+                    }
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    
+                    canvas.toBlob(blob => {
+                        if(blob) {
+                            const newFile = new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() });
+                            resolve(newFile);
+                        } else {
+                            reject(new Error('Errore durante la compressione.'));
+                        }
+                    }, 'image/jpeg', 0.8);
+                };
+                img.onerror = () => reject(new Error('File immagine non valido.'));
+            };
+            reader.onerror = () => reject(new Error('Errore in lettura file.'));
+        });
+    }
+
+    function generateRiepilogo() {
+        const container = document.getElementById('riepilogoDati');
+        const nome = document.getElementById('nomeSquadra').value;
+        const email = document.getElementById('emailReferente').value;
+        const cat = document.getElementById('categoria').value;
+        
+        let html = `
+            <div class="summary-item"><strong>Squadra:</strong> ${nome}</div>
+            <div class="summary-item"><strong>Email:</strong> ${email}</div>
+            <div class="summary-item"><strong>Categoria:</strong> ${cat === 'competitiva' ? 'Competitiva (ROSSO)' : 'Ludico-motoria (BIANCO)'}</div>
+            <div class="summary-item"><strong>Componenti:</strong><br>
+        `;
+        
+        document.querySelectorAll('.component-row').forEach((row) => {
+            const n = row.querySelector('.comp-nome').value;
+            const c = row.querySelector('.comp-cognome').value;
+            html += `<span style="padding-left: 140px; display: block; color: var(--text-light);">- ${n} ${c}</span>`;
+        });
+        html += `</div>`;
+
+        html += `<div class="summary-item"><strong>Ricevuta bonifico:</strong> ✓ Caricata</div>`;
+        if (cat === 'competitiva') {
+            html += `<div class="summary-item"><strong>Certificati medici:</strong> ✓ ${processedFiles.certificati.length} file caricati</div>`;
+        }
+
+        container.innerHTML = html;
+    }
+
+    function slugify(text) {
+        return text.toString().toLowerCase()
+            .replace(/\s+/g, '_')
+            .replace(/[^\w\-]+/g, '')
+            .replace(/\_\_+/g, '_')
+            .replace(/^-+/, '')
+            .replace(/-+$/, '');
+    }
+
+    window.submitForm = async function() {
+        showError('');
+        if (!document.getElementById('accettoRegolamento').checked || !document.getElementById('accettoPrivacy').checked) {
+            return showError('Devi accettare il regolamento e l\'informativa privacy.');
+        }
+
+        const overlay = document.getElementById('loadingOverlay');
+        const loadingText = document.getElementById('loadingText');
+        
+        try {
+            overlay.style.display = 'flex';
+            loadingText.textContent = 'Creazione identificativo...';
+
+            const squadraId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString() + Math.random().toString(36).substring(2);
+            const nomeSquadraRaw = document.getElementById('nomeSquadra').value.trim();
+            const safeFolder = slugify(nomeSquadraRaw) || squadraId;
+            const basePath = `iscrizioni/${safeFolder}`;
+
+            const cat = document.getElementById('categoria').value;
+
+            loadingText.textContent = 'Upload ricevuta bonifico...';
+            const bonificoExt = processedFiles.bonifico.name.split('.').pop();
+            const pathBonifico = `${basePath}/ricevuta_bonifico.${bonificoExt}`;
+            const bonificoRef = ref(storage, pathBonifico);
+            await uploadBytes(bonificoRef, processedFiles.bonifico);
+
+            const componentiData = [];
+            const rows = document.querySelectorAll('.component-row');
+            
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                const nome = row.querySelector('.comp-nome').value.trim();
+                const cognome = row.querySelector('.comp-cognome').value.trim();
+                let pathCertificato = null;
+
+                if (cat === 'competitiva' && processedFiles.certificati[i]) {
+                    loadingText.textContent = `Upload certificato ${i + 1}/${rows.length}...`;
+                    const fileCert = processedFiles.certificati[i];
+                    const certExt = fileCert.name.split('.').pop();
+                    const cleanNome = slugify(nome);
+                    const cleanCognome = slugify(cognome);
+                    pathCertificato = `${basePath}/certificato_${cleanNome}_${cleanCognome}.${certExt}`;
+                    const certRef = ref(storage, pathCertificato);
+                    await uploadBytes(certRef, fileCert);
+                }
+
+                componentiData.push({ nome, cognome, pathCertificato });
+            }
+
+            loadingText.textContent = 'Salvataggio dati finali...';
+            const docData = {
+                squadraId: squadraId,
+                cartellaStorage: safeFolder,
+                nomeSquadra: nomeSquadraRaw,
+                categoria: cat,
+                email: document.getElementById('emailReferente').value.trim(),
+                componenti: componentiData,
+                certificatoMedicoConfermato: cat === 'competitiva' ? document.getElementById('dichiaraCertificato').checked : false,
+                pathRicevuta: pathBonifico,
+                timestamp: serverTimestamp(),
+                status: "in_attesa"
+            };
+
+            await setDoc(doc(collection(db, "iscrizioni"), squadraId), docData);
+
+            loadingText.textContent = 'Accodamento email di conferma...';
+            const mailData = {
+                to: docData.email,
+                message: {
+                    subject: `Conferma registrazione Piacenza Svelata - ${docData.nomeSquadra}`,
+                    html: `
+                        <div style="background-color: #050505; padding: 40px 20px; font-family: Arial, sans-serif; color: #e0e0e0; line-height: 1.6;">
+                            <div style="max-width: 600px; margin: 0 auto; background-color: #121212; border: 1px solid #333333; border-radius: 8px; padding: 30px;">
+                                <h2 style="color: #FF0099; font-size: 24px; font-weight: 800; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #333333; padding-bottom: 10px;">Iscrizione Ricevuta</h2>
+                                <p style="font-size: 16px; margin-bottom: 20px;">Ciao, la richiesta per la squadra <strong style="color: #ffffff;">${docData.nomeSquadra}</strong> è stata registrata nei nostri sistemi.</p>
+                                <p style="font-size: 16px; margin-bottom: 20px;">La tua iscrizione è attualmente <strong style="color: #e67e22;">in attesa di conferma</strong>.</p>
+                                <p style="font-size: 16px; margin-bottom: 20px;">Verificheremo a breve l'accredito del bonifico e, per la categoria competitiva, la validità dei certificati medici caricati. In caso di problemi ci faremo sentire, altrimenti... ci vediamo il 20!</p>
+                                <p style="font-size: 16px; margin-bottom: 0;">A presto,<br><strong style="color: #FF0099;">Il team di Piacenza Svelata</strong></p>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            await setDoc(doc(collection(db, "mail"), squadraId), mailData);
+
+            document.getElementById('progressBar').style.display = 'none';
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+            document.getElementById('successScreen').classList.add('active');
+            document.getElementById('successEmail').textContent = docData.email;
+            // Pixel Meta — evento conversione iscrizione completata
+                if (typeof fbq === 'function') {
+                    fbq('track', 'CompleteRegistration', {
+                        content_name: 'Piacenza Svelata 2026',
+                        status: docData.categoria
+                    });
+                }
+
+        } catch (error) {
+            console.error(error);
+            showError(`Errore durante l'invio: ${error.message}. Riprova.`);
+        } finally {
+            overlay.style.display = 'none';
+        }
+    };
+
+    addComponente();
+</script>
+</body>
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- 1. COOKIEBOT — DEVE essere primo, prima di tutto -->
+    <script id="Cookiebot"
+        src="https://consent.cookiebot.com/uc.js"
+        data-cbid="5834d037-724f-4812-b523-fc359acae2ce"
+        type="text/javascript">
+    </script>
+
+    <!-- 2. META CHARSET E VIEWPORT — subito dopo -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Riservata | Piacenza Svelata</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-ps">
+
+    <!-- =====================================================================
+         LOGIN SCREEN
+         ===================================================================== -->
+    <div id="loginScreen" class="admin-login-screen">
+        <div class="admin-login-box card">
+            <a href="ps-home.html" style="position: absolute; top: 15px; left: 15px; color: var(--text-light); text-decoration: none; font-size: 0.9rem;">
+                <i class="fas fa-arrow-left"></i> Torna al sito
+            </a>
+            <div class="admin-login-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h1 class="admin-login-title">Area Riservata</h1>
+            <p class="admin-login-subtitle">Accesso riservato agli organizzatori</p>
+
+            <div id="loginError" class="ps-form-message ps-form-message--error" style="display:none;"></div>
+
+            <div class="ps-form__field">
+                <label class="ps-form__label" for="loginEmail">Email</label>
+                <input type="email" class="ps-form__input" id="loginEmail"
+                       placeholder="organizzatore@email.it" autocomplete="username">
+            </div>
+            <div class="ps-form__field">
+                <label class="ps-form__label" for="loginPassword">Password</label>
+                <input type="password" class="ps-form__input" id="loginPassword"
+                       placeholder="••••••••" autocomplete="current-password">
+            </div>
+
+            <button class="btn btn--fuchsia admin-login-btn" id="loginBtn" onclick="doLogin()">
+                <i class="fas fa-sign-in-alt"></i>&nbsp; Accedi
+            </button>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         DASHBOARD
+         ===================================================================== -->
+    <div id="dashboardScreen" style="display:none;">
+
+        <!-- TOPBAR -->
+        <header class="admin-topbar">
+            <div class="admin-topbar__left">
+                <span class="admin-topbar__brand">
+                    <i class="fas fa-shield-alt"></i> Admin
+                </span>
+                <a href="ps-home.html" class="admin-topbar__site" style="color: var(--text-light); text-decoration: none; margin-left: 15px; font-size: 0.9rem;">
+                    <i class="fas fa-arrow-left"></i> Torna al sito
+                </a>
+            </div>
+            <div class="admin-topbar__right">
+                <span class="admin-topbar__user" id="topbarUser"></span>
+                <button class="btn btn--outline-fuchsia admin-topbar__logout" onclick="doLogout()">
+                    <i class="fas fa-sign-out-alt"></i> Esci
+                </button>
+            </div>
+        </header>
+
+        <main class="admin-main">
+
+            <!-- STATISTICHE -->
+            <section class="admin-section">
+                <h2 class="section-title admin-section__title">Panoramica</h2>
+                <div class="statistics__grid admin-stats-grid">
+                    <div class="stat-card admin-stat">
+                        <span class="stat-card__number" id="statTotale">—</span>
+                        <span class="stat-card__label">Squadre Totali</span>
+                    </div>
+                    <div class="stat-card admin-stat">
+                        <span class="stat-card__number" id="statCompetitive">—</span>
+                        <span class="stat-card__label">Competitive</span>
+                    </div>
+                    <div class="stat-card admin-stat">
+                        <span class="stat-card__number" id="statLudiche">—</span>
+                        <span class="stat-card__label">Ludico-motorie</span>
+                    </div>
+                    <div class="stat-card admin-stat admin-stat--green">
+                        <span class="stat-card__number" id="statBonificiOk">—</span>
+                        <span class="stat-card__label">Bonifici Confermati</span>
+                    </div>
+                    <div class="stat-card admin-stat admin-stat--warn">
+                        <span class="stat-card__number" id="statBonificiPending">—</span>
+                        <span class="stat-card__label">Bonifici in Attesa</span>
+                    </div>
+                    <div class="stat-card admin-stat">
+                        <span class="stat-card__number" id="statPartecipanti">—</span>
+                        <span class="stat-card__label">Partecipanti Totali</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TOOLBAR FILTRI -->
+            <section class="admin-section">
+                <div class="admin-toolbar">
+                    <div class="admin-search-wrap">
+                        <i class="fas fa-search admin-search-icon"></i>
+                        <input type="text" class="ps-form__input admin-search-input"
+                               id="searchInput" placeholder="Cerca squadra o email…"
+                               oninput="filterSquadre()">
+                    </div>
+                    <select class="ps-form__input admin-filter-select" id="filterCategoria" onchange="filterSquadre()">
+                        <option value="">Tutte le categorie</option>
+                        <option value="competitiva">Competitiva</option>
+                        <option value="ludica">Ludico-motoria</option>
+                    </select>
+                    <select class="ps-form__input admin-filter-select" id="filterStatus" onchange="filterSquadre()">
+                        <option value="">Tutti gli stati</option>
+                        <option value="confermata">Bonifico confermato</option>
+                        <option value="in_attesa">In attesa</option>
+                    </select>
+                    <button class="btn btn--outline-fuchsia admin-refresh-btn" onclick="loadSquadre()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="btn btn--green admin-refresh-btn" id="btnBulkEmail" onclick="sendBulkEmails()" style="display:none; margin-left: auto;">
+                        <i class="fas fa-paper-plane"></i> Invia Conferme (<span id="bulkEmailCount">0</span>)
+                    </button>
+                </div>
+            </section>
+
+            <!-- LISTA SQUADRE -->
+            <section class="admin-section">
+                <h2 class="section-title admin-section__title">
+                    Squadre Iscritte
+                    <span class="admin-count-badge" id="listCount">0</span>
+                </h2>
+
+                <div id="loadingMsg" class="admin-state-msg">
+                    <i class="fas fa-circle-notch fa-spin"></i> Caricamento…
+                </div>
+                <div id="emptyMsg" class="admin-state-msg" style="display:none;">
+                    <i class="fas fa-inbox"></i>
+                    <p>Nessuna squadra trovata.</p>
+                </div>
+
+                <div class="admin-table-wrap" id="tableWrap" style="display:none;">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 40px;"><input type="checkbox" id="cbSelectAll" onchange="toggleAllCheckboxes()"></th>
+                                <th>Squadra</th>
+                                <th>Email</th>
+                                <th>Conferma</th>
+                                <th>Categoria</th>
+                                <th>N.</th>
+                                <th>Iscrizione</th>
+                                <th>Bonifico ✓</th>
+                                <th>Certificati ✓</th>
+                                <th>File</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody id="squadreTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL DETTAGLIO -->
+    <div id="detailModal" class="ps-modal" onclick="closeModal('detailModal', event)">
+        <div class="ps-modal__content admin-modal-box card">
+            <button class="ps-modal__close" onclick="document.getElementById('detailModal').classList.remove('active')">
+                &times;
+            </button>
+            <h3 id="modalTitle" class="admin-modal-title"></h3>
+            <div id="modalContent" class="admin-modal-body"></div>
+            <button class="btn btn--outline" onclick="document.getElementById('detailModal').classList.remove('active')">
+                <i class="fas fa-arrow-left"></i> Indietro
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL NOTE -->
+    <div id="noteModal" class="ps-modal" onclick="closeModal('noteModal', event)">
+        <div class="ps-modal__content admin-modal-box card" style="width: 100%; max-width: 700px;">
+            <button class="ps-modal__close" onclick="document.getElementById('noteModal').classList.remove('active')">
+                &times;
+            </button>
+            <h3 class="admin-modal-title">Nota interna</h3>
+            <div class="ps-form__field">
+                <label class="ps-form__label" for="noteTextarea">Visibile solo agli organizzatori</label>
+                <textarea class="ps-form__input admin-textarea" id="noteTextarea"
+                          rows="5" placeholder="Es: bonifico verificato il 12/09…"></textarea>
+            </div>
+            <input type="hidden" id="noteSquadraId">
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="btn btn--outline" onclick="document.getElementById('noteModal').classList.remove('active')">
+                    Annulla
+                </button>
+                <button class="btn btn--green admin-save-note-btn" onclick="saveNote()" style="margin-top: 0;">
+                    <i class="fas fa-save"></i> Salva nota
+                </button>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, getDocs, doc, updateDoc, addDoc }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getStorage, ref, getDownloadURL }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+
+        const firebaseConfig = {
+            apiKey:            "AIzaSyCBm7KbqSuNFQgGm4V2ial9KjmVYQdm9sQ",
+            authDomain:        "otpgea-iscrizioni.firebaseapp.com",
+            projectId:         "otpgea-iscrizioni",
+            storageBucket:     "otpgea-iscrizioni.firebasestorage.app",
+            messagingSenderId: "404522211919",
+            appId:             "1:404522211919:web:dbce73bb8e2af9c510a83a"
+        };
+
+        const app     = initializeApp(firebaseConfig);
+        const auth    = getAuth(app);
+        const db      = getFirestore(app);
+        const storage = getStorage(app);
+
+        let allSquadre = [];
+
+        /* ---- AUTH ---- */
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                document.getElementById('loginScreen').style.display    = 'none';
+                document.getElementById('dashboardScreen').style.display = 'block';
+                document.getElementById('topbarUser').textContent        = user.email;
+                loadSquadre();
+            } else {
+                document.getElementById('loginScreen').style.display    = 'flex';
+                document.getElementById('dashboardScreen').style.display = 'none';
+            }
+        });
+
+        window.doLogin = async function () {
+            const email    = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errEl    = document.getElementById('loginError');
+            const btn      = document.getElementById('loginBtn');
+
+            errEl.style.display = 'none';
+            btn.disabled        = true;
+            btn.innerHTML       = '<i class="fas fa-circle-notch fa-spin"></i> Accesso…';
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+            } catch (err) {
+                const msgs = {
+                    'auth/invalid-credential': 'Credenziali non valide.',
+                    'auth/user-not-found':     'Nessun account con questa email.',
+                    'auth/wrong-password':     'Password errata.',
+                    'auth/too-many-requests':  'Troppi tentativi. Riprova tra qualche minuto.',
+                };
+                errEl.textContent   = msgs[err.code] || `Errore: ${err.message}`;
+                errEl.style.display = 'block';
+                btn.disabled        = false;
+                btn.innerHTML       = '<i class="fas fa-sign-in-alt"></i>&nbsp; Accedi';
+            }
+        };
+
+        document.getElementById('loginPassword').addEventListener('keydown', e => {
+            if (e.key === 'Enter') window.doLogin();
+        });
+
+        window.doLogout = () => signOut(auth);
+
+        /* ---- CARICAMENTO ---- */
+        window.loadSquadre = async function () {
+            document.getElementById('loadingMsg').style.display = 'flex';
+            document.getElementById('tableWrap').style.display  = 'none';
+            document.getElementById('emptyMsg').style.display   = 'none';
+            try {
+                const snap = await getDocs(collection(db, 'iscrizioni'));
+                allSquadre = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                updateStats();
+                filterSquadre();
+            } catch (err) {
+                document.getElementById('loadingMsg').innerHTML =
+                    `<i class="fas fa-exclamation-triangle"></i> Errore: ${err.message}`;
+            }
+        };
+
+        /* ---- STATISTICHE ---- */
+        function updateStats() {
+            const tot         = allSquadre.length;
+            const competitive = allSquadre.filter(s => s.categoria === 'competitiva').length;
+            const ludiche     = allSquadre.filter(s => s.categoria === 'ludica').length;
+            const bonOk       = allSquadre.filter(s => s.bonificoOk).length;
+            const partec      = allSquadre.reduce((a, s) =>
+                a + (Array.isArray(s.componenti) ? s.componenti.length : 0), 0);
+
+            document.getElementById('statTotale').textContent         = tot;
+            document.getElementById('statCompetitive').textContent    = competitive;
+            document.getElementById('statLudiche').textContent        = ludiche;
+            document.getElementById('statBonificiOk').textContent     = bonOk;
+            document.getElementById('statBonificiPending').textContent = tot - bonOk;
+            document.getElementById('statPartecipanti').textContent   = partec;
+        }
+
+        /* ---- FILTRI ---- */
+        window.filterSquadre = function () {
+            const q    = document.getElementById('searchInput').value.toLowerCase();
+            const cat  = document.getElementById('filterCategoria').value;
+            const stat = document.getElementById('filterStatus').value;
+
+            const filtered = allSquadre.filter(s => {
+                const matchQ  = !q   || s.nomeSquadra?.toLowerCase().includes(q) || s.email?.toLowerCase().includes(q);
+                const matchC  = !cat || s.categoria === cat;
+                const matchS  = !stat
+                    || (stat === 'confermata' && s.bonificoOk)
+                    || (stat === 'in_attesa'  && !s.bonificoOk);
+                return matchQ && matchC && matchS;
+            });
+
+            renderTable(filtered);
+        };
+
+        /* ---- RENDER TABELLA ---- */
+        function renderTable(list) {
+            document.getElementById('loadingMsg').style.display = 'none';
+            document.getElementById('listCount').textContent    = list.length;
+
+            if (list.length === 0) {
+                document.getElementById('tableWrap').style.display = 'none';
+                document.getElementById('emptyMsg').style.display  = 'flex';
+                return;
+            }
+            document.getElementById('emptyMsg').style.display   = 'none';
+            document.getElementById('tableWrap').style.display  = 'block';
+
+            const tbody = document.getElementById('squadreTableBody');
+            tbody.innerHTML = '';
+
+            // Pending prima, poi per nome
+            const sorted = [...list].sort((a, b) => {
+                if (!!a.bonificoOk !== !!b.bonificoOk) return a.bonificoOk ? 1 : -1;
+                return (a.nomeSquadra || '').localeCompare(b.nomeSquadra || '');
+            });
+
+            sorted.forEach(s => {
+                const tr = document.createElement('tr');
+                if (!s.bonificoOk) tr.classList.add('admin-row-pending');
+
+                const data = s.timestamp?.toDate
+                    ? s.timestamp.toDate().toLocaleDateString('it-IT',
+                        { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+                    : '—';
+
+                const numComp  = Array.isArray(s.componenti) ? s.componenti.length : 0;
+            const catBadge = s.categoria === 'competitiva'
+                ? '<span class="admin-badge admin-badge--fucsia">Competitiva</span>'
+                : '<span class="admin-badge admin-badge--green">Ludico-mot.</span>';
+
+            const bonToggle = toggleHTML(s.id, 'bonificoOk', s.bonificoOk);
+            const certToggle = s.categoria === 'competitiva'
+                ? toggleHTML(s.id, 'certificatiOk', s.certificatiOk)
+                : '<span class="admin-na">—</span>';
+
+            const emailBadge = s.emailConfermaInviata
+                ? '<span class="admin-badge admin-badge--green">Inviata</span>'
+                : '<span class="admin-badge" style="color: #ff4444; border-color: #ff4444; background: rgba(255,68,68,0.1);">Da inviare</span>';
+
+            tr.innerHTML = `
+                <td class="admin-cell-center">
+                    <input type="checkbox" class="cb-squadra" value="${s.id}" onchange="updateBulkEmailBtn()">
+                </td>
+                <td class="admin-cell-name">
+                    <button class="admin-link-btn" onclick="openDetail('${s.id}')">
+                        ${escHtml(s.nomeSquadra || '—')}
+                    </button>
+                </td>
+                <td class="admin-cell-secondary">${escHtml(s.email || '—')}</td>
+                <td class="admin-cell-center">${emailBadge}</td>
+                <td>${catBadge}</td>
+                <td class="admin-cell-center">${numComp}</td>
+                <td class="admin-cell-secondary">${data}</td>
+                <td class="admin-cell-center">${bonToggle}</td>
+                <td class="admin-cell-center">${certToggle}</td>
+                <td class="admin-cell-center">
+                    <button class="btn btn--outline-fuchsia admin-icon-btn"
+                            title="Apri file"
+                            onclick="openFiles('${s.id}')">
+                        <i class="fas fa-folder-open"></i>
+                    </button>
+                </td>
+                <td class="admin-cell-center">
+                    <button class="btn btn--outline-fuchsia admin-icon-btn ${s.nota ? 'admin-icon-btn--noted' : ''}"
+                            title="${s.nota ? 'Modifica nota' : 'Aggiungi nota'}"
+                            onclick="openNote('${s.id}', \`${(s.nota || '').replace(/`/g, '\\`')}\`)">
+                        <i class="fas fa-${s.nota ? 'sticky-note' : 'plus'}"></i>
+                    </button>
+                </td>`;
+            tbody.appendChild(tr);
+            });
+        }
+
+        function toggleHTML(id, field, checked) {
+            return `<label class="admin-toggle">
+                <input type="checkbox" ${checked ? 'checked' : ''}
+                       onchange="toggleFlag('${id}','${field}',this.checked)">
+                <span class="admin-toggle__slider"></span>
+            </label>`;
+        }
+
+        function escHtml(t) {
+            return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+
+        /* ---- TOGGLE FLAG ---- */
+        window.toggleFlag = async function (id, field, value) {
+            try {
+                await updateDoc(doc(db, 'iscrizioni', id), { [field]: value });
+                const idx = allSquadre.findIndex(s => s.id === id);
+                if (idx !== -1) allSquadre[idx][field] = value;
+                updateStats();
+            } catch (err) {
+                alert('Errore nel salvataggio: ' + err.message);
+                loadSquadre();
+            }
+        };
+
+        /* ---- MODAL DETTAGLIO ---- */
+        window.openDetail = function (id) {
+            const s = allSquadre.find(s => s.id === id);
+            if (!s) return;
+
+            document.getElementById('modalTitle').textContent = s.nomeSquadra || 'Dettaglio';
+
+            const componenti = Array.isArray(s.componenti) && s.componenti.length
+                ? s.componenti.map((c, i) => `
+                    <div class="admin-member-row">
+                        <span class="admin-member-num">${i + 1}</span>
+                        <span>${escHtml(c.nome)} ${escHtml(c.cognome)}</span>
+                    </div>`).join('')
+                : '<p>Nessun componente.</p>';
+
+            const detailRows = [
+                ['Email',      s.email || '—'],
+                ['Categoria',  s.categoria === 'competitiva' ? 'Competitiva' : 'Ludico-motoria'],
+                ['Bonifico',   s.bonificoOk    ? '<span class="admin-badge admin-badge--green">✓ Confermato</span>' : '<span class="admin-badge admin-badge--warn">In attesa</span>'],
+                ...(s.categoria === 'competitiva'
+                    ? [['Certificati', s.certificatiOk ? '<span class="admin-badge admin-badge--green">✓ Verificati</span>' : '<span class="admin-badge admin-badge--warn">In attesa</span>']]
+                    : []),
+                ['ID Firestore', `<code class="admin-mono">${s.id}</code>`],
+                ...(s.nota ? [['Nota', escHtml(s.nota)]] : []),
+            ];
+
+            document.getElementById('modalContent').innerHTML = `
+                <div class="admin-detail-grid">
+                    ${detailRows.map(([k, v]) => `
+                        <div class="admin-detail-item">
+                            <span class="admin-detail-label">${k}</span>
+                            <span class="admin-detail-value">${v}</span>
+                        </div>`).join('')}
+                </div>
+                <h4 class="admin-members-title">Componenti</h4>
+                <div class="admin-members-list">${componenti}</div>`;
+
+            document.getElementById('detailModal').classList.add('active');
+        };
+
+        /* ---- MODAL FILE ---- */
+        window.openFiles = async function (id) {
+            const s = allSquadre.find(s => s.id === id);
+            if (!s) return;
+
+            document.getElementById('modalTitle').textContent = `File — ${s.nomeSquadra}`;
+            document.getElementById('modalContent').innerHTML =
+                '<p><i class="fas fa-circle-notch fa-spin"></i> Recupero link…</p>';
+            document.getElementById('detailModal').classList.add('active');
+
+            const base = `iscrizioni/${s.cartellaStorage || s.id}`;
+            let html   = '<div class="admin-files-list">';
+
+            // Bonifico — prova le estensioni più comuni
+            const bonExt = ['jpg', 'jpeg', 'png', 'pdf'];
+            let bonUrl = null;
+            for (const ext of bonExt) {
+                try { bonUrl = await getDownloadURL(ref(storage, `${base}/ricevuta_bonifico.${ext}`)); break; }
+                catch {}
+            }
+            html += bonUrl ? fileRow('Ricevuta Bonifico', bonUrl) : fileRowMissing('Ricevuta Bonifico');
+
+            // Certificati
+            if (s.categoria === 'competitiva' && Array.isArray(s.componenti)) {
+                for (const c of s.componenti) {
+                    const label = `Certificato ${c.nome} ${c.cognome}`;
+                    if (!c.pathCertificato) { html += fileRowMissing(label); continue; }
+                    try {
+                        const url = await getDownloadURL(ref(storage, c.pathCertificato));
+                        html += fileRow(label, url);
+                    } catch { html += fileRowMissing(label); }
+                }
+            }
+
+            html += '</div>';
+            document.getElementById('modalContent').innerHTML = html;
+        };
+
+        function fileRow(label, url) {
+            return `<div class="admin-file-row">
+                <span class="admin-file-label"><i class="fas fa-file-alt"></i> ${label}</span>
+                <a href="${url}" target="_blank" class="btn btn--fuchsia admin-file-btn">
+                    <i class="fas fa-external-link-alt"></i> Apri
+                </a>
+            </div>`;
+        }
+        function fileRowMissing(label) {
+            return `<div class="admin-file-row admin-file-row--missing">
+                <span class="admin-file-label"><i class="fas fa-file-excel"></i> ${label}</span>
+                <span class="admin-badge admin-badge--warn">Non trovato</span>
+            </div>`;
+        }
+
+        /* ---- MODAL NOTE ---- */
+        window.openNote = function (id, nota) {
+            document.getElementById('noteSquadraId').value      = id;
+            document.getElementById('noteTextarea').value       = nota || '';
+            document.getElementById('noteModal').classList.add('active');
+        };
+
+        window.saveNote = async function () {
+            const id   = document.getElementById('noteSquadraId').value;
+            const nota = document.getElementById('noteTextarea').value.trim();
+            try {
+                await updateDoc(doc(db, 'iscrizioni', id), { nota });
+                const idx = allSquadre.findIndex(s => s.id === id);
+                if (idx !== -1) allSquadre[idx].nota = nota;
+                document.getElementById('noteModal').classList.remove('active');
+                filterSquadre();
+            } catch (err) {
+                alert('Errore nel salvataggio: ' + err.message);
+            }
+        };
+
+        /* ---- CHIUDI MODAL CLICCANDO OVERLAY ---- */
+        window.closeModal = function (modalId, event) {
+            if (event.target === document.getElementById(modalId)) {
+                document.getElementById(modalId).classList.remove('active');
+            }
+        };
+
+        /* ---- GESTIONE SELEZIONE EMAIL ---- */
+        window.toggleAllCheckboxes = function() {
+            const master = document.getElementById('cbSelectAll');
+            const cbs = document.querySelectorAll('.cb-squadra');
+            cbs.forEach(cb => cb.checked = master.checked);
+            updateBulkEmailBtn();
+        };
+
+        window.updateBulkEmailBtn = function() {
+            const checked = document.querySelectorAll('.cb-squadra:checked').length;
+            const btn = document.getElementById('btnBulkEmail');
+            if(checked > 0) {
+                btn.style.display = 'inline-flex';
+                document.getElementById('bulkEmailCount').textContent = checked;
+            } else {
+                btn.style.display = 'none';
+            }
+        };
+
+        window.sendBulkEmails = async function() {
+            const cbs = document.querySelectorAll('.cb-squadra:checked');
+            const selectedIds = Array.from(cbs).map(cb => cb.value);
+            if (selectedIds.length === 0) return;
+
+            const selectedSquadre = allSquadre.filter(s => selectedIds.includes(s.id));
+
+            const incomplete = selectedSquadre.filter(s => {
+                if (s.categoria === 'ludica') return !s.bonificoOk;
+                if (s.categoria === 'competitiva') return !(s.bonificoOk && s.certificatiOk);
+                return true;
+            });
+
+            if (incomplete.length > 0) {
+                const incompleteNames = incomplete.map(s => s.nomeSquadra).join(', ');
+                const msg = `ATTENZIONE: Stai per inviare l'email di conferma a ${incomplete.length} squadre con documenti non validati:\n\n${incompleteNames}\n\nProcedere ugualmente?`;
+                if (!confirm(msg)) return;
+            }
+
+            if (!confirm(`Confermi l'invio dell'email a ${selectedIds.length} squadre?`)) return;
+
+            const btn = document.getElementById('btnBulkEmail');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Invio in corso...';
+            btn.disabled = true;
+
+            try {
+                for (const s of selectedSquadre) {
+                    const mailData = {
+                        to: s.email,
+                        message: {
+                            subject: `Iscrizione Confermata Piacenza Svelata - ${s.nomeSquadra}`,
+                            html: `
+                                <div style="background-color: #050505; padding: 40px 20px; font-family: Arial, sans-serif; color: #e0e0e0; line-height: 1.6;">
+                                    <div style="max-width: 600px; margin: 0 auto; background-color: #121212; border: 1px solid #333333; border-radius: 8px; padding: 30px;">
+                                        <h2 style="color: #FF0099; font-size: 24px; font-weight: 800; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #2E7D32; padding-bottom: 10px;">Iscrizione Confermata!</h2>
+                                        <p style="font-size: 16px; margin-bottom: 20px;">Ciao, ti comunichiamo che abbiamo verificato i tuoi documenti e l'iscrizione per la squadra <strong style="color: #ffffff;">${s.nomeSquadra}</strong> è ufficialmente <strong style="color: #2E7D32;">CONFERMATA</strong>.</p>
+                                        <p style="font-size: 16px; margin-bottom: 20px;">Ci vediamo il 20 Settembre a Castell'Arquato!</p>
+                                        <p style="font-size: 16px; margin-bottom: 0;">A presto,<br><strong style="color: #FF0099;">Il team di Piacenza Svelata</strong></p>
+                                    </div>
+                                </div>
+                            `
+                        }
+                    };
+                    
+                    await addDoc(collection(db, "mail"), mailData);
+                    await updateDoc(doc(db, 'iscrizioni', s.id), { emailConfermaInviata: true });
+                    s.emailConfermaInviata = true;
+                }
+                alert(`Email inviate con successo a ${selectedIds.length} squadre.`);
+                document.getElementById('cbSelectAll').checked = false;
+                filterSquadre();
+                updateBulkEmailBtn();
+            } catch (error) {
+                alert('Errore durante l\'invio: ' + error.message);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        };
+
+    </script>
+</body>
+</html>

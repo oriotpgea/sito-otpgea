@@ -164,6 +164,7 @@
                                 <th>Categoria</th>
                                 <th>N.</th>
                                 <th>Iscrizione</th>
+                                <th>Importo €</th>
                                 <th>Bonifico ✓</th>
                                 <th>Certificati ✓</th>
                                 <th>File</th>
@@ -385,6 +386,10 @@
                 ? '<span class="admin-badge admin-badge--green">Inviata</span>'
                 : '<span class="admin-badge" style="color: #ff4444; border-color: #ff4444; background: rgba(255,68,68,0.1);">Da inviare</span>';
 
+            const importoLabel = typeof s.importoDovuto === 'number'
+                ? `<span style="font-family:'Montserrat',sans-serif; font-weight:700; color: var(--accent-green);">€${s.importoDovuto}</span>`
+                : '<span style="color:#888;">—</span>';
+
             tr.innerHTML = `
                 <td class="admin-cell-center">
                     <input type="checkbox" class="cb-squadra" value="${s.id}" onchange="updateBulkEmailBtn()">
@@ -399,6 +404,7 @@
                 <td>${catBadge}</td>
                 <td class="admin-cell-center">${numComp}</td>
                 <td class="admin-cell-secondary">${data}</td>
+                <td class="admin-cell-center">${importoLabel}</td>
                 <td class="admin-cell-center">${bonToggle}</td>
                 <td class="admin-cell-center">${certToggle}</td>
                 <td class="admin-cell-center">
@@ -456,12 +462,14 @@
                     <div class="admin-member-row">
                         <span class="admin-member-num">${i + 1}</span>
                         <span>${escHtml(c.nome)} ${escHtml(c.cognome)}</span>
+                        ${c.natoDopoGennaio2014 ? '<span class="admin-badge admin-badge--green" style="margin-left:auto;">Gratuito</span>' : ''}
                     </div>`).join('')
                 : '<p>Nessun componente.</p>';
 
             const detailRows = [
                 ['Email',      s.email || '—'],
                 ['Categoria',  s.categoria === 'competitiva' ? 'Competitiva' : 'Ludico-motoria'],
+                 ['Importo dovuto', typeof s.importoDovuto === 'number' ? `<span style="color:var(--accent-green);font-weight:700;">€${s.importoDovuto}</span>` : '—'],
                 ['Bonifico',   s.bonificoOk    ? '<span class="admin-badge admin-badge--green">✓ Confermato</span>' : '<span class="admin-badge admin-badge--warn">In attesa</span>'],
                 ...(s.categoria === 'competitiva'
                     ? [['Certificati', s.certificatiOk ? '<span class="admin-badge admin-badge--green">✓ Verificati</span>' : '<span class="admin-badge admin-badge--warn">In attesa</span>']]

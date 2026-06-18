@@ -278,7 +278,6 @@
 
 <div class="form-container">
     <h1 class="header-title">Iscrizione a Piacenza Svelata</h1>
-    <p class="header-subtitle">Compila il modulo per registrare la tua squadra</p>
     
     <div class="progress-bar" id="progressBar">
         <div class="progress-step active" data-step="0"></div>
@@ -295,7 +294,8 @@
         <div style="background: var(--bg-dark); padding: 15px; border: 1px solid var(--border-dark); border-radius: 4px; margin: 20px 0;">
             <p><strong>IBAN:</strong> [IBAN_PLACEHOLDER]</p>
             <p><strong>Causale:</strong> PIACENZA SVELATA 2026 - [Nome della squadra]</p>
-            <p><strong>Importo:</strong> 10€ a squadra fino al 16 settembre, poi 15€.</p>
+            <p><strong>Importo:</strong> 5€ a persona fino al 16 settembre, poi 10€.</p>
+            <p>Si consiglia di fare un bonifico per ogni squadra. Se un bonifico copre più squadre indicarlo chiaramente nella causale.</p>
         </div>
         <p style="margin-bottom: 25px; font-size: 0.9rem; color: #aaa;">Per la categoria competitiva è obbligatorio caricare i certificati medici di <strong>ogni singolo componente</strong> della squadra.</p>
         
@@ -432,6 +432,10 @@
             <input type="text" class="ps-form__input comp-nome" required>
             <label class="ps-form__label">Cognome *</label>
             <input type="text" class="ps-form__input comp-cognome" required>
+            <label class="ps-form__check-label" style="margin-top: 12px;">
+                <input type="checkbox" class="ps-form__checkbox comp-minore">
+                <span class="ps-form__check-text">Nato/a dopo il 1 gennaio 2014 (ingresso gratuito)</span>
+            </label>
         `;
         document.getElementById('componentiContainer').appendChild(div);
         
@@ -670,6 +674,15 @@
         const email = document.getElementById('emailReferente').value;
         const cat = document.getElementById('categoria').value;
         
+        const righe = document.querySelectorAll('.component-row');
+        let paganti = 0;
+        let gratuiti = 0;
+        righe.forEach(row => {
+            if (row.querySelector('.comp-minore').checked) gratuiti++;
+            else paganti++;
+        });
+        const importo = paganti * 5;
+
         let html = `
             <div class="summary-item"><strong>Squadra:</strong> ${nome}</div>
             <div class="summary-item"><strong>Email:</strong> ${email}</div>
@@ -677,13 +690,15 @@
             <div class="summary-item"><strong>Componenti:</strong><br>
         `;
         
-        document.querySelectorAll('.component-row').forEach((row) => {
+        righe.forEach((row) => {
             const n = row.querySelector('.comp-nome').value;
             const c = row.querySelector('.comp-cognome').value;
-            html += `<span style="padding-left: 140px; display: block; color: var(--text-light);">- ${n} ${c}</span>`;
+            const minore = row.querySelector('.comp-minore').checked;
+            html += `<span style="padding-left: 140px; display: block; color: var(--text-light);">- ${n} ${c}${minore ? ' <span style="color: var(--accent-green); font-size:0.85rem;">(gratuito)</span>' : ''}</span>`;
         });
         html += `</div>`;
 
+        html += `<div class="summary-item"><strong>Importo dovuto:</strong> <span style="color: var(--accent-green); font-weight: 700; font-size: 1.1rem;">€${importo}</span> (${paganti} paganti × €5${gratuiti > 0 ? `, ${gratuiti} gratuiti` : ''})</div>`;
         html += `<div class="summary-item"><strong>Ricevuta bonifico:</strong> ✓ Caricata</div>`;
         if (cat === 'competitiva') {
             html += `<div class="summary-item"><strong>Certificati medici:</strong> ✓ ${processedFiles.certificati.length} file caricati</div>`;
@@ -747,10 +762,15 @@
                     await uploadBytes(certRef, fileCert);
                 }
 
-                componentiData.push({ nome, cognome, pathCertificato });
+                const isMinore = row.querySelector('.comp-minore').checked;
+                componentiData.push({ nome, cognome, pathCertificato, natoDopoGennaio2014: isMinore });
             }
 
             loadingText.textContent = 'Salvataggio dati finali...';
+            
+            const paganti = componentiData.filter(c => !c.natoDopoGennaio2014).length;
+            const importoDovuto = paganti * 5;
+
             const docData = {
                 squadraId: squadraId,
                 cartellaStorage: safeFolder,
@@ -761,7 +781,8 @@
                 certificatoMedicoConfermato: cat === 'competitiva' ? document.getElementById('dichiaraCertificato').checked : false,
                 pathRicevuta: pathBonifico,
                 timestamp: serverTimestamp(),
-                status: "in_attesa"
+                status: "in_attesa",
+                importoDovuto: importoDovuto
             };
 
             await setDoc(doc(collection(db, "iscrizioni"), squadraId), docData);
@@ -777,7 +798,7 @@
                                 <h2 style="color: #FF0099; font-size: 24px; font-weight: 800; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #333333; padding-bottom: 10px;">Iscrizione Ricevuta</h2>
                                 <p style="font-size: 16px; margin-bottom: 20px;">Ciao, la richiesta per la squadra <strong style="color: #ffffff;">${docData.nomeSquadra}</strong> è stata registrata nei nostri sistemi.</p>
                                 <p style="font-size: 16px; margin-bottom: 20px;">La tua iscrizione è attualmente <strong style="color: #e67e22;">in attesa di conferma</strong>.</p>
-                                <p style="font-size: 16px; margin-bottom: 20px;">Verificheremo a breve l'accredito del bonifico e, per la categoria competitiva, la validità dei certificati medici caricati. In caso di problemi ci faremo sentire, altrimenti... ci vediamo il 20!</p>
+                                <p style="font-size: 16px; margin-bottom: 20px;">Verificheremo a breve l'accredito del bonifico e, per la categoria competitiva, la validità dei certificati medici caricati.</p>
                                 <p style="font-size: 16px; margin-bottom: 0;">A presto,<br><strong style="color: #FF0099;">Il team di Piacenza Svelata</strong></p>
                             </div>
                         </div>

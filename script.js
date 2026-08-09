@@ -153,6 +153,7 @@ document.addEventListener('keydown', function(event) {
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', function () {
     const newsModal = document.getElementById('newsletterAutoModal');
+    if (!newsModal) return;
     const closeBtn = document.querySelector('.close-newsletter');
     const goToBtn = document.getElementById('goToNewsletterBtn');
     const footerForm = document.getElementById('contatti-newsletter-box');
@@ -214,23 +215,6 @@ function initCountdown() {
     setInterval(update, 60000);
 }
 document.addEventListener('DOMContentLoaded', initCountdown);
-
-/* ----------------------------------------------------------
-   Accordion FAQ — pagine Piacenza Svelata
----------------------------------------------------------- */
-document.addEventListener('DOMContentLoaded', function () {
-    const faqContainer = document.querySelector('.faq__container');
-    if (!faqContainer) return;
-    faqContainer.addEventListener('click', function (e) {
-        const summary = e.target.closest('summary');
-        if (!summary) return;
-        const item = summary.closest('.faq__item');
-        if (item) {
-            e.preventDefault();
-            item.open = !item.open;
-        }
-    });
-});
 
 /* ----------------------------------------------------------
    Edition tabs — ps-edizioni.html
@@ -391,7 +375,6 @@ function initPiacenzaSvelataApp() {
             accordion.init();
         }
 
-        initVideoWithCookiebot();
         initEditionTabs();
 
     } catch (error) {

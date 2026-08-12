@@ -1526,6 +1526,11 @@ body.page-ps {
    1. RESET E IMPOSTAZIONI BASE — Piacenza Svelata
    -------------------------------------------------------------------------- */
 
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
 body.page-ps {
     background-color: var(--bg-dark);
     color: var(--text-light);
@@ -1752,12 +1757,6 @@ body.page-ps input:focus-visible, body.page-ps details:focus-visible {
             "left right";
         row-gap: 10px;
     }
-
-    @media screen and (max-width: 768px) {
-        .hero-light {
-            padding-top: 160px;
-        }
-    }
     
     .header__brand {
         grid-area: brand;
@@ -1969,13 +1968,13 @@ body.page-ps .hero {
 .hero__title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 800;
-    font-size: 4rem;
+    font-size: clamp(1.5rem, 7vw, 2.7rem);
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     color: var(--accent-fucsia);
     text-shadow: 0 0 20px rgba(255,0,153,0.4);
     margin-bottom: 0.5rem;
-    line-height: 1.1;
+    line-height: 1.15;
 }
 
 .hero__subtitle {
@@ -2020,7 +2019,9 @@ body.page-ps .hero {
         padding-top: 100px;
     }
     .hero__title {
-        font-size: 2.8rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        hyphens: auto;
     }
     .hero__subtitle {
         font-size: 1.1rem;
@@ -2030,6 +2031,18 @@ body.page-ps .hero {
     .hero__subtitle-line-left,
     .hero__subtitle-line-right {
         display: none;
+    }
+}
+
+body.page-ps .hero.hero--home {
+    padding-top: 80px;
+    padding-bottom: 40px;
+    border-bottom: 2px solid var(--accent-fucsia);
+}
+
+@media screen and (max-width: 768px) {
+    body.page-ps .hero.hero--home {
+        padding-top: 140px; /* libera lo spazio dell'header a 2 righe su mobile */
     }
 }
 
@@ -2183,9 +2196,6 @@ body.page-ps .stat-card__label {
 @media screen and (max-width: 768px) {
     .newsletter-banner__form {
         flex-direction: column;
-    }
-    .hero__title {
-        font-size: 3rem;
     }
 }
 
@@ -2894,6 +2904,12 @@ body.page-ps .card:hover, body.page-ps .category-card:hover {
     background-color: var(--bg-panel);
     border-bottom: 1px solid var(--border-dark);
     padding: 120px 20px 40px 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .hero-light {
+        padding-top: 185px;
+    }
 }
 
 .hero-light__title {
@@ -4212,4 +4228,14 @@ body.page-ps .card:hover, body.page-ps .category-card:hover {
 
     .admin-file-row { flex-direction: column; align-items: flex-start; gap: 10px; }
     .admin-file-btn { width: 100%; justify-content: center; }
+}
+
+@media screen and (max-width: 768px) {
+    .hero__cta-wrapper .btn {
+        width: 100%;
+        max-width: 100%;
+        white-space: normal;
+        text-align: center;
+        box-sizing: border-box;
+    }
 }

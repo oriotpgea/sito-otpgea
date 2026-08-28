@@ -292,7 +292,7 @@
         <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: var(--accent-green);">Istruzioni Preliminari</h2>
         <p>L'iscrizione richiede il pagamento anticipato tramite bonifico bancario.</p>
         <div style="background: var(--bg-dark); padding: 15px; border: 1px solid var(--border-dark); border-radius: 4px; margin: 20px 0;">
-            <p><strong>IBAN:</strong> [IBAN_PLACEHOLDER]</p>
+            <p><strong>IBAN:</strong> IT81J0306909606100000199060 </p>
             <p><strong>Causale:</strong> PIACENZA SVELATA 2026 - [Nome della squadra]</p>
             <p><strong>Importo:</strong> 5€ a persona fino al 16 settembre, poi 10€.</p>
             <p>Si consiglia di fare un bonifico per ogni squadra. Se un bonifico copre più squadre indicarlo chiaramente nella causale.</p>
@@ -410,6 +410,7 @@
     let componentiCount = 0;
     const MAX_COMPONENTI = 4;
     const MAX_FILE_SIZE_KB = 300;
+    const MAX_PDF_SIZE_KB = 2000;
 
     let processedFiles = { bonifico: null, certificati: [] };
 
@@ -610,8 +611,8 @@
             if (file.type.startsWith('image/')) {
                 processedFile = await compressImage(file, MAX_FILE_SIZE_KB);
             } else if (file.type === 'application/pdf') {
-                if (file.size > MAX_FILE_SIZE_KB * 1024) {
-                    throw new Error(`Il file ${file.name} supera ${MAX_FILE_SIZE_KB}KB. Comprimi il PDF prima di caricarlo.`);
+                if (file.size > MAX_PDF_SIZE_KB * 1024) {
+                    throw new Error(`Il file ${file.name} supera ${MAX_PDF_SIZE_KB / 1000}MB. Comprimi il PDF prima di caricarlo.`);
                 }
             } else {
                 throw new Error('Formato non supportato. Usa JPG, PNG o PDF.');

@@ -135,6 +135,9 @@
                     <button class="btn btn--green admin-refresh-btn" id="btnBulkEmail" onclick="sendBulkEmails()" style="display:none; margin-left: auto;">
                         <i class="fas fa-paper-plane"></i> Invia Conferme (<span id="bulkEmailCount">0</span>)
                     </button>
+                    <button class="btn btn--outline-fuchsia admin-refresh-btn" onclick="exportCSV()">
+                        <i class="fas fa-file-csv"></i> Esporta CSV
+                    </button>
                 </div>
             </section>
 
@@ -163,6 +166,7 @@
                                 <th>Conferma</th>
                                 <th>Categoria</th>
                                 <th>N.</th>
+                                <th>Under 12</th>
                                 <th>Iscrizione</th>
                                 <th>Importo €</th>
                                 <th>Bonifico ✓</th>
@@ -373,6 +377,9 @@
                     : '—';
 
                 const numComp  = Array.isArray(s.componenti) ? s.componenti.length : 0;
+                const numUnder12 = Array.isArray(s.componenti)
+                ? s.componenti.filter(c => c.natoDopoGennaio2014).length
+                : 0;
             const catBadge = s.categoria === 'competitiva'
                 ? '<span class="admin-badge admin-badge--fucsia">Competitiva</span>'
                 : '<span class="admin-badge admin-badge--green">Ludico-mot.</span>';
@@ -403,6 +410,7 @@
                 <td class="admin-cell-center">${emailBadge}</td>
                 <td>${catBadge}</td>
                 <td class="admin-cell-center">${numComp}</td>
+                <td class="admin-cell-center">${numUnder12}</td>
                 <td class="admin-cell-secondary">${data}</td>
                 <td class="admin-cell-center">${importoLabel}</td>
                 <td class="admin-cell-center">${bonToggle}</td>
@@ -432,6 +440,73 @@
                 <span class="admin-toggle__slider"></span>
             </label>`;
         }
+
+        window.exportCSV = function () {
+            // Prende la lista attualmente filtrata/visibile (rispetta i filtri attivi)
+            const q    = document.getElementById('searchInput').value.toLowerCase();
+            const cat  = document.getElementById('filterCategoria').value;
+            const stat = document.getElementById('filterStatus').value;
+
+            const list = allSquadre.filter(s => {
+                const matchQ  = !q   || s.nomeSquadra?.toLowerCase().includes(q) || s.email?.toLowerCase().includes(q);
+                const matchC  = !cat || s.categoria === cat;
+                const matchS  = !stat
+                    || (stat === 'confermata' && s.bonificoOk)
+                    || (stat === 'in_attesa'  && !s.bonificoOk);
+                return matchQ && matchC && matchS;
+            });
+
+            if (list.length === 0) {
+                alert('Nessuna squadra da esportare con i filtri attuali.');
+                return;
+            }
+
+            const headers = ['Nome Squadra', 'Email', 'Categoria', 'N. Componenti', 'Under 12', 'Importo Dovuto', 'Bonifico Confermato', 'Certificati Verificati', 'Note'];
+
+            const rows = list.map(s => {
+                const numComp    = Array.isArray(s.componenti) ? s.componenti.length : 0;
+                const numUnder12 = Array.isArray(s.componenti)
+                    ? s.componenti.filter(c => c.natoDopoGennaio2014).length
+                    : 0;
+                return [
+                    s.nomeSquadra || '',
+                    s.email || '',
+                    s.categoria === 'competitiva' ? 'Competitiva' : 'Ludico-motoria',
+                    numComp,
+                    numUnder12,
+                    typeof s.importoDovuto === 'number' ? s.importoDovuto : '',
+                    s.bonificoOk ? 'Sì' : 'No',
+                    s.categoria === 'competitiva' ? (s.certificatiOk ? 'Sì' : 'No') : 'N/A',
+                    s.nota || ''
+                ];
+            });
+
+            // Escaping CSV base (racchiude in virgolette se contiene virgola, virgolette o a capo)
+            const escCsv = v => {
+                const str = String(v);
+                if (/[",\n;]/.test(str)) {
+                    return '"' + str.replace(/"/g, '""') + '"';
+                }
+                return str;
+            };
+
+            const csvContent = [headers, ...rows]
+                .map(row => row.map(escCsv).join(';'))
+                .join('\n');
+
+            // BOM per far aprire correttamente gli accenti in Excel
+            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            const oggi = new Date().toISOString().slice(0, 10);
+
+            a.href = url;
+            a.download = `iscrizioni-piacenza-svelata-${oggi}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
 
         function escHtml(t) {
             return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');

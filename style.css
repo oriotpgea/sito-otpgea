@@ -2209,7 +2209,7 @@ body.page-ps .hero {
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-image: linear-gradient(var(--overlay-dark), var(--overlay-dark)), url('images/piacenza-svelata/hero-piacenza-svelata-fucsia.jpg');
+    background-image: linear-gradient(var(--overlay-dark), var(--overlay-dark));
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -2450,7 +2450,6 @@ body.page-ps .card:hover, body.page-ps .category-card:hover {
     object-fit: contain; /* Per non tagliare le foto */
     display: block;
     cursor: zoom-in;
-    background-image: url('images/placeholder.jpg'); /* fallback per lazyloading */
 }
 
 .slideshow__nav, .slideshow__prev, .slideshow__next {
@@ -3226,8 +3225,7 @@ body.page-ps .card:hover, body.page-ps .category-card:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    background-image: url('images/piacenza-svelata/hero-edizioni-bg.jpg');
+    text-align: center;
     background-size: cover;
     background-position: center;
     padding-top: 60px;

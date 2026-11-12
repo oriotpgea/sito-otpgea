@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Area Riservata | Piacenza Svelata</title>
+    <meta name="robots" content="noindex, nofollow">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -306,7 +307,7 @@
                 filterSquadre();
             } catch (err) {
                 document.getElementById('loadingMsg').innerHTML =
-                    `<i class="fas fa-exclamation-triangle"></i> Errore: ${err.message}`;
+                    `<i class="fas fa-exclamation-triangle"></i> Errore: ${escHtml(err.message)}`;
             }
         };
 
@@ -399,10 +400,10 @@
 
             tr.innerHTML = `
                 <td class="admin-cell-center">
-                    <input type="checkbox" class="cb-squadra" value="${s.id}" onchange="updateBulkEmailBtn()">
+                    <input type="checkbox" class="cb-squadra" value="${escHtml(s.id)}" onchange="updateBulkEmailBtn()">
                 </td>
                 <td class="admin-cell-name">
-                    <button class="admin-link-btn" onclick="openDetail('${s.id}')">
+                    <button class="admin-link-btn" onclick="openDetail(${jsArg(s.id)})">
                         ${escHtml(s.nomeSquadra || '—')}
                     </button>
                 </td>
@@ -418,14 +419,14 @@
                 <td class="admin-cell-center">
                     <button class="btn btn--outline-fuchsia admin-icon-btn"
                             title="Apri file"
-                            onclick="openFiles('${s.id}')">
+                            onclick="openFiles(${jsArg(s.id)})">
                         <i class="fas fa-folder-open"></i>
                     </button>
                 </td>
                 <td class="admin-cell-center">
                     <button class="btn btn--outline-fuchsia admin-icon-btn ${s.nota ? 'admin-icon-btn--noted' : ''}"
                             title="${s.nota ? 'Modifica nota' : 'Aggiungi nota'}"
-                            onclick="openNote('${s.id}', \`${(s.nota || '').replace(/`/g, '\\`')}\`)">
+                            onclick="openNote(${jsArg(s.id)})">
                         <i class="fas fa-${s.nota ? 'sticky-note' : 'plus'}"></i>
                     </button>
                 </td>`;
@@ -436,7 +437,7 @@
         function toggleHTML(id, field, checked) {
             return `<label class="admin-toggle">
                 <input type="checkbox" ${checked ? 'checked' : ''}
-                       onchange="toggleFlag('${id}','${field}',this.checked)">
+                       onchange="toggleFlag(${jsArg(id)},'${field}',this.checked)">
                 <span class="admin-toggle__slider"></span>
             </label>`;
         }
@@ -509,7 +510,12 @@
         };
 
         function escHtml(t) {
-            return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                            .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
+        // Argomento sicuro per funzioni chiamate da attributi onclick/onchange
+        function jsArg(v) {
+            return escHtml(JSON.stringify(String(v)));
         }
 
         /* ---- TOGGLE FLAG ---- */
@@ -542,14 +548,14 @@
                 : '<p>Nessun componente.</p>';
 
             const detailRows = [
-                ['Email',      s.email || '—'],
+                ['Email',      escHtml(s.email || '—')],
                 ['Categoria',  s.categoria === 'competitiva' ? 'Competitiva' : 'Ludico-motoria'],
                  ['Importo dovuto', typeof s.importoDovuto === 'number' ? `<span style="color:var(--accent-green);font-weight:700;">€${s.importoDovuto}</span>` : '—'],
                 ['Bonifico',   s.bonificoOk    ? '<span class="admin-badge admin-badge--green">✓ Confermato</span>' : '<span class="admin-badge admin-badge--warn">In attesa</span>'],
                 ...(s.categoria === 'competitiva'
                     ? [['Certificati', s.certificatiOk ? '<span class="admin-badge admin-badge--green">✓ Verificati</span>' : '<span class="admin-badge admin-badge--warn">In attesa</span>']]
                     : []),
-                ['ID Firestore', `<code class="admin-mono">${s.id}</code>`],
+                ['ID Firestore', `<code class="admin-mono">${escHtml(s.id)}</code>`],
                 ...(s.nota ? [['Nota', escHtml(s.nota)]] : []),
             ];
 
@@ -607,21 +613,25 @@
 
         function fileRow(label, url) {
             return `<div class="admin-file-row">
-                <span class="admin-file-label"><i class="fas fa-file-alt"></i> ${label}</span>
-                <a href="${url}" target="_blank" class="btn btn--fuchsia admin-file-btn">
+                <span class="admin-file-label"><i class="fas fa-file-alt"></i> ${escHtml(label)}</span>
+                <a href="${escHtml(url)}" target="_blank" rel="noopener noreferrer" class="btn btn--fuchsia admin-file-btn">
                     <i class="fas fa-external-link-alt"></i> Apri
                 </a>
             </div>`;
         }
         function fileRowMissing(label) {
             return `<div class="admin-file-row admin-file-row--missing">
-                <span class="admin-file-label"><i class="fas fa-file-excel"></i> ${label}</span>
+                <span class="admin-file-label"><i class="fas fa-file-excel"></i> ${escHtml(label)}</span>
                 <span class="admin-badge admin-badge--warn">Non trovato</span>
             </div>`;
         }
 
         /* ---- MODAL NOTE ---- */
         window.openNote = function (id, nota) {
+            if (nota === undefined) {
+                const s = allSquadre.find(s => s.id === id);
+                nota = s ? s.nota : '';
+            }
             document.getElementById('noteSquadraId').value      = id;
             document.getElementById('noteTextarea').value       = nota || '';
             document.getElementById('noteModal').classList.add('active');
@@ -703,7 +713,7 @@
                                 <div style="background-color: #050505; padding: 40px 20px; font-family: Arial, sans-serif; color: #e0e0e0; line-height: 1.6;">
                                     <div style="max-width: 600px; margin: 0 auto; background-color: #121212; border: 1px solid #333333; border-radius: 8px; padding: 30px;">
                                         <h2 style="color: #FF0099; font-size: 24px; font-weight: 800; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #2E7D32; padding-bottom: 10px;">Iscrizione Confermata!</h2>
-                                        <p style="font-size: 16px; margin-bottom: 20px;">Ciao, ti comunichiamo che abbiamo verificato i tuoi documenti e l'iscrizione per la squadra <strong style="color: #ffffff;">${s.nomeSquadra}</strong> è ufficialmente <strong style="color: #2E7D32;">CONFERMATA</strong>.</p>
+                                        <p style="font-size: 16px; margin-bottom: 20px;">Ciao, ti comunichiamo che abbiamo verificato i tuoi documenti e l'iscrizione per la squadra <strong style="color: #ffffff;">${escHtml(s.nomeSquadra)}</strong> è ufficialmente <strong style="color: #2E7D32;">CONFERMATA</strong>.</p>
                                         <p style="font-size: 16px; margin-bottom: 20px;">Ci vediamo il 20 Settembre a Castell'Arquato!</p>
                                         <p style="font-size: 16px; margin-bottom: 0;">A presto,<br><strong style="color: #FF0099;">Il team di Piacenza Svelata</strong></p>
                                     </div>

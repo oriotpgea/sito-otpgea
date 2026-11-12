@@ -12,6 +12,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iscrizione a Piacenza Svelata</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Modulo di iscrizione delle squadre a Piacenza Svelata, l'urban game culturale di OTP-GEA Orienteering.">
+    <meta property="og:title" content="Iscrizione a Piacenza Svelata">
+    <meta property="og:description" content="Iscrivi la tua squadra a Piacenza Svelata, l'urban game culturale di OTP-GEA Orienteering.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.orienteeringpiacenza.it/ps-form-iscrizioni.html">
+    <meta property="og:image" content="https://www.orienteeringpiacenza.it/images/piacenza-svelata-2026/hero-piacenza-svelata-fucsia.jpg">
 
     <!-- 3. META PIXEL — wrappato, dopo charset -->
     <script type="text/plain" data-cookieconsent="marketing">
@@ -26,10 +33,6 @@
     fbq('init', '2696778567425565');
     fbq('track', 'PageView');
     </script>
-    <noscript data-cookieconsent="marketing"><img height="1" width="1"
-        style="display:none"
-        src="https://www.facebook.com/tr?id=2696778567425565&ev=PageView&noscript=1"
-    /></noscript>
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -670,6 +673,11 @@
         });
     }
 
+    function escHtml(t) {
+        return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+
     function generateRiepilogo() {
         const container = document.getElementById('riepilogoDati');
         const nome = document.getElementById('nomeSquadra').value;
@@ -686,8 +694,8 @@
         const importo = paganti * 5;
 
         let html = `
-            <div class="summary-item"><strong>Squadra:</strong> ${nome}</div>
-            <div class="summary-item"><strong>Email:</strong> ${email}</div>
+            <div class="summary-item"><strong>Squadra:</strong> ${escHtml(nome)}</div>
+            <div class="summary-item"><strong>Email:</strong> ${escHtml(email)}</div>
             <div class="summary-item"><strong>Categoria:</strong> ${cat === 'competitiva' ? 'Competitiva (ROSSO)' : 'Ludico-motoria (BIANCO)'}</div>
             <div class="summary-item"><strong>Componenti:</strong><br>
         `;
@@ -696,7 +704,7 @@
             const n = row.querySelector('.comp-nome').value;
             const c = row.querySelector('.comp-cognome').value;
             const minore = row.querySelector('.comp-minore').checked;
-            html += `<span style="padding-left: 140px; display: block; color: var(--text-light);">- ${n} ${c}${minore ? ' <span style="color: var(--accent-green); font-size:0.85rem;">(gratuito)</span>' : ''}</span>`;
+            html += `<span style="padding-left: 140px; display: block; color: var(--text-light);">- ${escHtml(n)} ${escHtml(c)}${minore ? ' <span style="color: var(--accent-green); font-size:0.85rem;">(gratuito)</span>' : ''}</span>`;
         });
         html += `</div>`;
 
@@ -798,7 +806,7 @@
                         <div style="background-color: #050505; padding: 40px 20px; font-family: Arial, sans-serif; color: #e0e0e0; line-height: 1.6;">
                             <div style="max-width: 600px; margin: 0 auto; background-color: #121212; border: 1px solid #333333; border-radius: 8px; padding: 30px;">
                                 <h2 style="color: #FF0099; font-size: 24px; font-weight: 800; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #333333; padding-bottom: 10px;">Iscrizione Ricevuta</h2>
-                                <p style="font-size: 16px; margin-bottom: 20px;">Ciao, la richiesta per la squadra <strong style="color: #ffffff;">${docData.nomeSquadra}</strong> è stata registrata nei nostri sistemi.</p>
+                                <p style="font-size: 16px; margin-bottom: 20px;">Ciao, la richiesta per la squadra <strong style="color: #ffffff;">${escHtml(docData.nomeSquadra)}</strong> è stata registrata nei nostri sistemi.</p>
                                 <p style="font-size: 16px; margin-bottom: 20px;">La tua iscrizione è attualmente <strong style="color: #e67e22;">in attesa di conferma</strong>.</p>
                                 <p style="font-size: 16px; margin-bottom: 20px;">Verificheremo a breve l'accredito del bonifico e, per la categoria competitiva, la validità dei certificati medici caricati.</p>
                                 <p style="font-size: 16px; margin-bottom: 0;">A presto,<br><strong style="color: #FF0099;">Il team di Piacenza Svelata</strong></p>

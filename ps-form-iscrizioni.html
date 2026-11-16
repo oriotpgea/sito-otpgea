@@ -65,6 +65,7 @@
             line-height: 1.6;
             padding: 40px 20px;
             display: flex;
+            flex-wrap: wrap;
             justify-content: center;
         }
 
@@ -374,6 +375,19 @@
         .spinner--inline { margin: 0 auto 15px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* Piè di pagina */
+        .form-footer {
+            flex-basis: 100%;
+            max-width: 640px;
+            margin: 10px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-dark);
+            text-align: center;
+            font-size: 0.85rem;
+            color: #999;
+        }
+        .form-footer p + p { margin-top: 6px; }
+
         .skip-link { position: absolute; left: -9999px; top: 10px; z-index: 10000; padding: 10px 16px; background: var(--accent-fucsia); color: #fff; font-weight: 700; border-radius: 4px; text-decoration: none; }
         .skip-link:focus { left: 10px; }
         #contenuto:focus { outline: none; }
@@ -417,6 +431,11 @@
     <form class="panel step" id="passo" novalidate hidden></form>
 
 </main>
+
+<footer class="form-footer">
+    <p>&copy; 2026 OTP-GEA Orienteering ASD APS - C.F. 91130370330 - P.IVA 01877620334</p>
+    <p class="form-footer__links"><a href="privacy.html" target="_blank" rel="noopener">Privacy</a> &middot; <a href="cookie-policy.html" target="_blank" rel="noopener">Cookie policy</a> &middot; <a href="javascript:Cookiebot.renew()">Gestisci preferenze cookie</a></p>
+</footer>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";

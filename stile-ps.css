@@ -798,6 +798,13 @@ body.page-ps .card:hover, body.page-ps .category-card:hover {
     padding: 0 20px;
 }
 
+.footer__links {
+    font-size: 0.9rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
 /* --------------------------------------------------------------------------
    14. MEDIA QUERIES (RESPONSIVE)
    -------------------------------------------------------------------------- */

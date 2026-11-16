@@ -33,6 +33,11 @@ function progetto() {
     try { return JSON.parse(process.env.FIREBASE_CONFIG || '{}').projectId; } catch { return ''; }
 }
 
+// Dipendenze senza SumUp (funzioni che non usano i pagamenti)
+function dipendenzeBase() {
+    return { db, bucket: getStorage().bucket(), ora: () => new Date(), log: logger };
+}
+
 function dipendenze() {
     return {
         db,
@@ -115,4 +120,14 @@ export const pulizia = onSchedule({
     timeoutSeconds: 300
 }, async () => {
     await L.pulizia(dipendenze());
+});
+
+// Ogni notte: documenti con dati sanitari (preavviso agli admin e cancellazione
+// 60 giorni dopo l'evento, come previsto dall'informativa privacy)
+export const cancellaCertificati = onSchedule({
+    schedule: '15 3 * * *',
+    timeZone: 'Europe/Rome',
+    timeoutSeconds: 540
+}, async () => {
+    await L.cancellaCertificati(dipendenzeBase());
 });

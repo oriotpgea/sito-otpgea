@@ -148,6 +148,16 @@ document.querySelectorAll('.video-due-click-container').forEach(container => {
         iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
         iframe.setAttribute('allowfullscreen', '');
 
+        // Consenso ai cookie di marketing già dato: il video parte subito, senza avviso
+        if (typeof Cookiebot !== 'undefined' && Cookiebot.consent && Cookiebot.consent.marketing) {
+            iframe.removeAttribute('data-cookieblock-src');
+            iframe.removeAttribute('data-cookieconsent');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            this.innerHTML = '';
+            this.appendChild(iframe);
+            return;
+        }
+
         // Creazione dinamica del messaggio di avviso
         const warningDiv = document.createElement('div');
         warningDiv.className = 'cookieconsent-optout-marketing';

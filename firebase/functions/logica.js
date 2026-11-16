@@ -11,7 +11,7 @@
 // =============================================================================
 
 import * as R from './comune.js';
-import { emailConferma, emailAvvisoAdmin, fmtEuro } from './email.js';
+import { emailConferma, emailAvvisoAdmin, fmtEuro, fmtDataStr } from './email.js';
 
 export const SITO = 'https://www.orienteeringpiacenza.it';
 // Indirizzi da cui può arrivare il form (il ritorno da SumUp torna allo stesso indirizzo)
@@ -620,5 +620,179 @@ export async function pulizia(dep) {
         }
     }
     dep.log.info('Pulizia completata', resoconto);
+    return resoconto;
+}
+
+/* ----------------------------------------------------------------- documenti sanitari */
+
+// Informativa privacy: i documenti con dati sanitari (es. certificati medici) si
+// cancellano entro 60 giorni dalla data dell'evento. Gli organizzatori ricevono un
+// preavviso 7 giorni prima (la cancellazione è definitiva) e un riepilogo dopo.
+export const GIORNI_CONSERVAZIONE_SANITARI = 60;
+export const GIORNI_PREAVVISO_SANITARI = 7;
+
+// Data 'AAAA-MM-GG' spostata di n giorni
+export function aggiungiGiorni(s, n) {
+    const [y, m, d] = s.split('-').map(Number);
+    return new Date(Date.UTC(y, m - 1, d + n)).toISOString().slice(0, 10);
+}
+
+const plurale = (n, uno, molti) => `${n} ${n === 1 ? uno : molti}`;
+
+// Id e nomi dei documenti sanitari dell'evento, per categoria
+function documentiSanitari(evento) {
+    const perCategoria = new Map();
+    const tutti = new Set();
+    const nomi = new Set();
+    for (const c of evento.categorie || []) {
+        const ids = new Set();
+        for (const d of c.documenti || []) {
+            if (d.sanitario !== true) continue;
+            ids.add(d.id);
+            tutti.add(d.id);
+            nomi.add(d.nome || d.id);
+        }
+        perCategoria.set(c.id, ids);
+    }
+    return { perCategoria, tutti, nomi: [...nomi] };
+}
+
+// File sanitari ancora presenti, iscrizione per iscrizione (anche annullate)
+async function raccogliSanitari(dep, eventoId, evento) {
+    const { perCategoria, tutti, nomi } = documentiSanitari(evento);
+    const elenco = [];
+    if (!tutti.size) return { elenco, nomi };
+    const snap = await dep.db.collection(`eventi/${eventoId}/iscrizioni`).get();
+    for (const d of snap.docs) {
+        const iscr = d.data();
+        const ids = perCategoria.get(iscr.categoriaId) || tutti;
+        const percorsi = [
+            ...Object.entries(iscr.documentiSquadra || {}),
+            ...(iscr.componenti || []).flatMap(c => Object.entries(c.documenti || {}))
+        ].filter(([k, p]) => ids.has(k) && typeof p === 'string' && p).map(([, p]) => p);
+        if (percorsi.length) elenco.push({ id: d.id, ids, percorsi });
+    }
+    return { elenco, nomi };
+}
+
+// Toglie da una mappa {idDoc: percorso} i documenti cancellati e li annota in {idDoc: data}
+function togliCancellati(mappa, giaCancellati, ids, eliminati, adesso) {
+    const restano = {};
+    const cancellati = { ...(giaCancellati || {}) };
+    for (const [k, p] of Object.entries(mappa || {})) {
+        if (ids.has(k) && eliminati.has(p)) cancellati[k] = adesso;
+        else restano[k] = p;
+    }
+    return { restano, cancellati };
+}
+
+// Conta i documenti sanitari risultanti cancellati (per il riepilogo)
+async function contaCancellati(dep, eventoId) {
+    const snap = await dep.db.collection(`eventi/${eventoId}/iscrizioni`).get();
+    let file = 0, squadre = 0;
+    for (const d of snap.docs) {
+        const iscr = d.data();
+        const n = Object.keys(iscr.documentiSquadraCancellati || {}).length
+            + (iscr.componenti || []).reduce((a, c) => a + Object.keys(c.documentiCancellati || {}).length, 0);
+        file += n;
+        if (n) squadre++;
+    }
+    return { file, squadre };
+}
+
+/**
+ * Ogni notte. Per ogni evento non ancora trattato:
+ * - da 7 giorni prima della scadenza (data evento + 60 giorni): preavviso agli admin
+ *   e data di cancellazione annotata sull'evento (certificatiPreavvisoIl, certificatiCancellazioneDal);
+ * - dalla data di cancellazione: elimina da Storage i documenti sanitari di tutte le
+ *   iscrizioni, li toglie dalle iscrizioni annotandoli in documentiCancellati /
+ *   documentiSquadraCancellati, segna l'evento (certificatiCancellatiIl) e invia il riepilogo.
+ * Se la scadenza è già passata quando parte il preavviso (es. funzione pubblicata dopo),
+ * la cancellazione avviene comunque 7 giorni dopo il preavviso.
+ */
+export async function cancellaCertificati(dep) {
+    const { db } = dep;
+    const adesso = dep.ora();
+    const oggi = R.oggiRoma(adesso);
+    const resoconto = { preavvisi: 0, eventiCompletati: 0, file: 0, errori: 0 };
+
+    const eventi = await db.collection('eventi').get();
+    for (const ev of eventi.docs) {
+        const e = ev.data();
+        if (!R.dataValida(e.data) || e.certificatiCancellatiIl) continue;
+        const scadenza = aggiungiGiorni(e.data, GIORNI_CONSERVAZIONE_SANITARI);
+        if (oggi < aggiungiGiorni(scadenza, -GIORNI_PREAVVISO_SANITARI)) continue;
+        const evRef = db.doc(`eventi/${ev.id}`);
+        const titolo = e.titolo || ev.id;
+
+        try {
+            const { elenco, nomi } = await raccogliSanitari(dep, ev.id, e);
+            const nFile = elenco.reduce((a, x) => a + x.percorsi.length, 0);
+            const descrizione = `${plurale(nFile, 'documento', 'documenti')} con dati sanitari (${nomi.join(', ')}) di ${plurale(elenco.length, 'squadra', 'squadre')} dell'evento "${titolo}" del ${fmtDataStr(e.data)}`;
+
+            // --- Preavviso
+            if (!e.certificatiPreavvisoIl) {
+                const dal = oggi < scadenza ? scadenza : aggiungiGiorni(oggi, GIORNI_PREAVVISO_SANITARI);
+                if (nFile) {
+                    await avvisaAdmin(dep, `Documenti sanitari da cancellare il ${fmtDataStr(dal)} – ${titolo}`,
+                        `Il ${fmtDataStr(dal)} verranno cancellati definitivamente ${descrizione}.\n\n`
+                        + `La cancellazione è automatica e prevista dall'informativa privacy (entro ${GIORNI_CONSERVAZIONE_SANITARI} giorni dall'evento). `
+                        + "Dopo non sarà più possibile recuperarli: se servono ancora, scaricali prima dall'area riservata "
+                        + '(ps-admin → Iscrizioni → dettaglio della squadra → Documenti).');
+                }
+                await evRef.update({ certificatiPreavvisoIl: adesso, certificatiCancellazioneDal: dal });
+                resoconto.preavvisi++;
+                continue;
+            }
+
+            // --- Cancellazione
+            if (oggi < (R.dataValida(e.certificatiCancellazioneDal) ? e.certificatiCancellazioneDal : scadenza)) continue;
+            let errori = 0;
+            for (const x of elenco) {
+                try {
+                    const eliminati = new Set();
+                    for (const p of x.percorsi) {
+                        await dep.bucket.file(p).delete({ ignoreNotFound: true });
+                        eliminati.add(p);
+                    }
+                    const iRef = db.doc(`eventi/${ev.id}/iscrizioni/${x.id}`);
+                    await db.runTransaction(async tx => {
+                        const s = await tx.get(iRef);
+                        if (!s.exists) return;
+                        const iscr = s.data();
+                        const sq = togliCancellati(iscr.documentiSquadra, iscr.documentiSquadraCancellati, x.ids, eliminati, adesso);
+                        const componenti = (iscr.componenti || []).map(c => {
+                            const r = togliCancellati(c.documenti, c.documentiCancellati, x.ids, eliminati, adesso);
+                            return { ...c, documenti: r.restano, ...(Object.keys(r.cancellati).length ? { documentiCancellati: r.cancellati } : {}) };
+                        });
+                        tx.update(iRef, {
+                            componenti,
+                            documentiSquadra: sq.restano,
+                            ...(Object.keys(sq.cancellati).length ? { documentiSquadraCancellati: sq.cancellati } : {})
+                        });
+                    });
+                    resoconto.file += eliminati.size;
+                } catch (err) {
+                    errori++;
+                    dep.log.error(`Documenti sanitari: iscrizione ${ev.id}/${x.id} non elaborata (si riprova la notte successiva)`, err);
+                }
+            }
+            if (errori) { resoconto.errori += errori; continue; }
+
+            const tot = await contaCancellati(dep, ev.id);
+            await evRef.update({ certificatiCancellatiIl: adesso });
+            resoconto.eventiCompletati++;
+            if (tot.file) {
+                await avvisaAdmin(dep, `Documenti sanitari cancellati – ${titolo}`,
+                    `Come previsto dall'informativa privacy, sono stati cancellati ${plurale(tot.file, 'documento', 'documenti')} con dati sanitari `
+                    + `(${nomi.join(', ')}) di ${plurale(tot.squadre, 'squadra', 'squadre')} dell'evento "${titolo}" del ${fmtDataStr(e.data)}.\n\n`
+                    + "Gli altri dati delle iscrizioni restano invariati; nell'area riservata i documenti risultano \"Cancellato per scadenza\".");
+            }
+        } catch (err) {
+            resoconto.errori++;
+            dep.log.error(`Documenti sanitari: evento ${ev.id} non elaborato (si riprova la notte successiva)`, err);
+        }
+    }
+    dep.log.info('Controllo documenti sanitari completato', resoconto);
     return resoconto;
 }

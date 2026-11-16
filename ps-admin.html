@@ -1586,13 +1586,19 @@
             if (v === null || v === undefined || v === '') return '—';
             return String(v);
         }
-        function righeDocumenti(mappa, nomi, prefisso = '') {
+        function righeDocumenti(mappa, nomi, prefisso = '', cancellati = {}) {
             return Object.entries(mappa || {}).map(([idDoc, path]) => `
                 <div class="admin-file-row">
                     <span class="admin-file-label"><i class="fas fa-file-alt"></i> ${escHtml(prefisso + (nomi[idDoc] || idDoc))}</span>
                     <button type="button" class="btn btn--fuchsia admin-file-btn" data-azione="apri-doc" data-path="${escHtml(path)}">
                         <i class="fas fa-external-link-alt"></i>&nbsp; Apri
                     </button>
+                </div>`).join('')
+                // Documenti con dati sanitari cancellati dalla funzione cancellaCertificati
+                + Object.entries(cancellati || {}).map(([idDoc, ts]) => `
+                <div class="admin-file-row admin-file-row--missing">
+                    <span class="admin-file-label"><i class="fas fa-file-alt"></i> ${escHtml(prefisso + (nomi[idDoc] || idDoc))}</span>
+                    <span class="admin-cell-secondary">Cancellato per scadenza (${fmtTs(ts)})</span>
                 </div>`).join('');
         }
 
@@ -1639,8 +1645,8 @@
                 </div>`;
             }).join('') || '<p>Nessun componente.</p>';
 
-            const documenti = righeDocumenti(s.documentiSquadra, nomiDoc)
-                + (s.componenti || []).map(c => righeDocumenti(c.documenti, nomiDoc, `${c.nome} ${c.cognome} – `)).join('');
+            const documenti = righeDocumenti(s.documentiSquadra, nomiDoc, '', s.documentiSquadraCancellati)
+                + (s.componenti || []).map(c => righeDocumenti(c.documenti, nomiDoc, `${c.nome} ${c.cognome} – `, c.documentiCancellati)).join('');
 
             $('modalTitle').textContent = s.nomeSquadra || 'Dettaglio';
             $('modalContent').innerHTML = `
@@ -1881,9 +1887,9 @@
             const list = listaFiltrata();
             if (!list.length) { toast('Nessuna squadra da esportare con i filtri attuali.', true); return; }
             const campi = colonne('campiSquadra', 'etichetta', s => Object.keys(s.campiSquadra || {}));
-            const docs  = colonne('documenti', 'nome', s => Object.keys(s.documentiSquadra || {}))
+            const docs  = colonne('documenti', 'nome', s => [...Object.keys(s.documentiSquadra || {}), ...Object.keys(s.documentiSquadraCancellati || {})])
                 .filter(([id]) => (evCorrente()?.categorie || []).some(c => (c.documenti || []).some(d => d.id === id && d.per === 'squadra'))
-                                  || list.some(s => s.documentiSquadra?.[id]));
+                                  || list.some(s => s.documentiSquadra?.[id] || s.documentiSquadraCancellati?.[id]));
             const head = ['Squadra', 'Email', 'Categoria', 'Stato', 'Importo €', 'N. componenti', 'Gratuiti',
                           'Iscritta il', 'Pagata il', ...campi.map(([, l]) => l), ...docs.map(([, l]) => `Documento: ${l}`),
                           'Componenti', 'Documenti verificati', 'Email conferma inviata', 'Transazione SumUp', 'Nota'];
@@ -1893,7 +1899,7 @@
                 nComp(s), (s.componenti || []).filter(c => c.gratuito).length,
                 fmtTs(s.creataIl), s.pagataIl ? fmtTs(s.pagataIl) : '',
                 ...campi.map(([k]) => valoreCampo(s.campiSquadra?.[k]).replace(/^—$/, '')),
-                ...docs.map(([k]) => s.documentiSquadra?.[k] ? 'Sì' : 'No'),
+                ...docs.map(([k]) => s.documentiSquadra?.[k] ? 'Sì' : s.documentiSquadraCancellati?.[k] ? 'Cancellato per scadenza' : 'No'),
                 (s.componenti || []).map(c => `${c.nome} ${c.cognome}`).join(', '),
                 s.verifiche?.documentiOk ? 'Sì' : 'No',
                 s.emailConfermaInviata ? 'Sì' : 'No',
@@ -1907,9 +1913,9 @@
             const list = listaFiltrata();
             if (!list.length) { toast('Nessuna squadra da esportare con i filtri attuali.', true); return; }
             const campi = colonne('campiComponente', 'etichetta', s => (s.componenti || []).flatMap(c => Object.keys(c.campi || {})));
-            const docs  = colonne('documenti', 'nome', s => (s.componenti || []).flatMap(c => Object.keys(c.documenti || {})))
+            const docs  = colonne('documenti', 'nome', s => (s.componenti || []).flatMap(c => [...Object.keys(c.documenti || {}), ...Object.keys(c.documentiCancellati || {})]))
                 .filter(([id]) => (evCorrente()?.categorie || []).some(c => (c.documenti || []).some(d => d.id === id && d.per === 'componente'))
-                                  || list.some(s => (s.componenti || []).some(c => c.documenti?.[id])));
+                                  || list.some(s => (s.componenti || []).some(c => c.documenti?.[id] || c.documentiCancellati?.[id])));
             const head = ['Squadra', 'Email referente', 'Categoria', 'Stato', 'N.', 'Nome', 'Cognome', 'Data di nascita', 'Gratuito',
                           ...campi.map(([, l]) => l), ...docs.map(([, l]) => `Documento: ${l}`)];
             const righe = list.flatMap(s => (s.componenti || []).map((c, i) => [
@@ -1917,7 +1923,7 @@
                 c.nome, c.cognome, c.dataNascita ? c.dataNascita.split('-').reverse().join('/') : '',
                 c.gratuito ? 'Sì' : 'No',
                 ...campi.map(([k]) => valoreCampo(c.campi?.[k]).replace(/^—$/, '')),
-                ...docs.map(([k]) => c.documenti?.[k] ? 'Sì' : 'No')
+                ...docs.map(([k]) => c.documenti?.[k] ? 'Sì' : c.documentiCancellati?.[k] ? 'Cancellato per scadenza' : 'No')
             ]));
             scaricaCsv(nomeFileCsv('partecipanti'), head, righe);
         }

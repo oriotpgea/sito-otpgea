@@ -24,9 +24,11 @@
 
 # ---------------------------------------------------------------------------
 # Header di sicurezza (tutte le pagine)
-# Content-Security-Policy in modalità "Report-Only": NON blocca nulla, segnala
-# soltanto in console (F12) cosa verrebbe bloccato. Dopo le verifiche si rinomina
-# l'header in "Content-Security-Policy" per renderla attiva.
+# Content-Security-Policy ATTIVA (dal 16/11/2026, dopo le verifiche in modalità
+# "Report-Only"): il browser blocca tutto ciò che non è elencato qui sotto.
+# Per aggiungere un nuovo servizio esterno va aggiunto il suo dominio, altrimenti
+# non funziona. In caso di problemi si può tornare alla prova rinominando l'header
+# in "Content-Security-Policy-Report-Only".
 # ---------------------------------------------------------------------------
 [[headers]]
   for = "/*"
@@ -35,7 +37,7 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=()"
-    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline' https://consent.cookiebot.com https://consentcdn.cookiebot.com https://consent.cookiebot.eu https://consentcdn.cookiebot.eu https://connect.facebook.net https://sibforms.com https://www.google.com/recaptcha/ https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://sibforms.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com https://assets.brevo.com; img-src 'self' data: blob: https://www.facebook.com https://*.cookiebot.com https://*.cookiebot.eu https://www.google.com https://www.gstatic.com; connect-src 'self' https://*.cookiebot.com https://*.cookiebot.eu https://www.facebook.com https://connect.facebook.net https://sibforms.com https://*.sibforms.com https://www.google.com/recaptcha/ https://firestore.googleapis.com https://firebasestorage.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://europe-west1-otpgea-iscrizioni.cloudfunctions.net; frame-src https://consentcdn.cookiebot.com https://consentcdn.cookiebot.eu https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com https://recaptcha.google.com https://otpgea-iscrizioni.firebaseapp.com; form-action 'self' https://sibforms.com https://*.sibforms.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://consent.cookiebot.com https://consentcdn.cookiebot.com https://consent.cookiebot.eu https://consentcdn.cookiebot.eu https://connect.facebook.net https://sibforms.com https://www.google.com/recaptcha/ https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://sibforms.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com https://assets.brevo.com; img-src 'self' data: blob: https://www.facebook.com https://*.cookiebot.com https://*.cookiebot.eu https://www.google.com https://www.gstatic.com; connect-src 'self' https://*.cookiebot.com https://*.cookiebot.eu https://www.facebook.com https://connect.facebook.net https://sibforms.com https://*.sibforms.com https://www.google.com/recaptcha/ https://firestore.googleapis.com https://firebasestorage.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://europe-west1-otpgea-iscrizioni.cloudfunctions.net; frame-src https://consentcdn.cookiebot.com https://consentcdn.cookiebot.eu https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com https://recaptcha.google.com https://otpgea-iscrizioni.firebaseapp.com; form-action 'self' https://sibforms.com https://*.sibforms.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
 
 # Pagine riservate: esclusione dai motori di ricerca anche via header
 [[headers]]

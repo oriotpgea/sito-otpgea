@@ -44,6 +44,7 @@ Id leggibile scelto alla creazione (minuscole, numeri, trattini; es.
 | `email` | mappa | `oggettoConferma`, `testoConferma` con segnaposto `{squadra}` `{categoria}` `{data}` `{luogo}` `{importo}` |
 | `categorie` | lista di mappe | vedi sotto |
 | `creatoIl`, `aggiornatoIl` | Timestamp | |
+| `certificatiPreavvisoIl`, `certificatiCancellazioneDal`, `certificatiCancellatiIl` | Timestamp, `AAAA-MM-GG`, Timestamp | scritti solo dalla funzione `cancellaCertificati`: preavviso inviato, giorno della cancellazione dei documenti sanitari, cancellazione completata |
 
 **Categoria** (elemento di `categorie`):
 
@@ -72,8 +73,9 @@ Creata **solo** dalla Cloud Function `creaIscrizione` (id automatico).
 | `nomeSquadra`, `nomeSlug` | nome come scritto e nome normalizzato (id in `nomiSquadre`) |
 | `email`, `emailNorm` | email come scritta e normalizzata (trim + minuscolo) |
 | `categoriaId`, `categoria` | id e copia di nome e quota al momento dell'iscrizione |
-| `componenti` | lista `{nome, cognome, dataNascita?, gratuito, campi: {…}, documenti: {idDoc: percorsoStorage}}` |
+| `componenti` | lista `{nome, cognome, dataNascita?, gratuito, campi: {…}, documenti: {idDoc: percorsoStorage}, documentiCancellati?: {idDoc: Timestamp}}` |
 | `campiSquadra`, `documentiSquadra` | mappe `{idCampo: valore}`, `{idDoc: percorsoStorage}` |
+| `documentiSquadraCancellati` | facoltativo, `{idDoc: Timestamp}` |
 | `importo`, `dettaglioImporto` | calcolati dal server: `{tipo, euroUnitario, paganti, gratuiti}` |
 | `stato` | `in_attesa_pagamento` \| `pagata` \| `confermata_gratuita` \| `annullata` |
 | `uid` | uid dell'accesso anonimo di chi ha compilato (gli permette di leggere solo questa iscrizione) |
@@ -81,6 +83,12 @@ Creata **solo** dalla Cloud Function `creaIscrizione` (id automatico).
 | `sumup` | `{checkoutId, checkoutReference, transactionCode, ultimoStato}` |
 | `creataIl`, `scadeIl`, `pagataIl`, `annullataIl`, `aggiornataIl` | Timestamp; `scadeIl` = creazione + 2 ore (solo non pagate) |
 | `notaAdmin`, `verifiche` (`{documentiOk}`), `emailConfermaInviata` | gestiti da ps-admin |
+
+Documenti con dati sanitari (`sanitario: true` nella categoria): 60 giorni dopo la data
+dell'evento la funzione `cancellaCertificati` elimina il file da Storage, toglie la voce da
+`documenti` / `documentiSquadra` e la annota con la data in `documentiCancellati` /
+`documentiSquadraCancellati`. ps-admin mostra "Cancellato per scadenza (data)" e nei CSV
+"Cancellato per scadenza". Gli altri documenti e tutti gli altri dati restano.
 
 Gli admin possono modificare solo `notaAdmin`, `verifiche`, `emailConfermaInviata`,
 `stato`, `annullataIl`, `aggiornataIl`.
@@ -107,6 +115,7 @@ Collezione letta dall'estensione Trigger Email. Scrivono le Cloud Functions e gl
   funzione; leggibili solo dagli admin.
 - La pulizia automatica elimina i caricamenti più vecchi di 3 ore e i file delle
   iscrizioni non pagate scadute.
+- I documenti con dati sanitari si eliminano 60 giorni dopo l'evento (`cancellaCertificati`).
 
 ---
 
@@ -158,12 +167,29 @@ Errore `details.motivo = "scaduta"` se l'iscrizione non esiste più.
   temporanei di `caricamenti/` più vecchi di 3 ore.
 - Anomalie (pagamento con importo diverso, pagamento su iscrizione annullata o già
   cancellata): l'iscrizione non viene confermata e arriva un'email a tutti gli admin.
+- `cancellaCertificati` (ogni notte alle 3:15, ora italiana): mantiene l'impegno
+  dell'informativa privacy di cancellare i documenti con dati sanitari **entro 60 giorni
+  dalla data dell'evento**.
+  - 7 giorni prima (data evento + 53 giorni): email di preavviso a tutti gli admin con il
+    numero di documenti e squadre e il giorno della cancellazione (per scaricare ciò che
+    serve ancora: la cancellazione è definitiva, Storage non ha cestino). Sull'evento
+    vengono scritti `certificatiPreavvisoIl` e `certificatiCancellazioneDal`.
+  - Dal giorno indicato (data evento + 60 giorni): elimina i documenti sanitari di **tutte**
+    le iscrizioni dell'evento, anche annullate, scrive `certificatiCancellatiIl` sull'evento
+    e invia un'email di riepilogo agli admin. Un evento già trattato non viene più toccato.
+  - Se il preavviso parte quando la scadenza è già passata (es. evento vecchio), la
+    cancellazione avviene 7 giorni dopo il preavviso.
+  - In caso di errore (es. Storage non disponibile) l'evento non viene segnato e si
+    riprova la notte successiva; il riepilogo arriva solo a lavoro completo.
+  - Se si cambia la data di un evento già preavvisato, la data di cancellazione annunciata
+    non cambia: in caso servisse, cancellare a mano i campi `certificati…` dell'evento dalla
+    console Firebase.
 
 ### Come sono fatte
 - `index.js`: collegamento con Firebase (regione, segreti, tipi di funzione).
 - `logica.js`: tutta la logica; `sumup.js`: chiamate alle API SumUp; `email.js`: testi email.
 - `comune.js`: copia automatica di `iscrizioni-comune.js` (non modificarla, non è nel repository).
-- `test/`: 29 test automatici con Firestore, Storage e SumUp simulati (`npm test`).
+- `test/`: 37 test automatici con Firestore, Storage e SumUp simulati (`npm test`).
 
 ---
 
@@ -183,7 +209,7 @@ In PowerShell:
    npm install
    npm test
    ```
-   `npm test` deve chiudersi con `# pass 29` e `# fail 0`.
+   `npm test` deve chiudersi con `# pass 37` e `# fail 0`.
 
 ### Una volta sola: credenziali SumUp di prova (sandbox)
 1. Entrare in SumUp (me.sumup.com) e aprire Impostazioni → Sviluppatore

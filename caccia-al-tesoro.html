@@ -14,7 +14,8 @@
     <meta property="og:url" content="https://www.orienteeringpiacenza.it/caccia-al-tesoro.html">
     <meta property="og:image" content="https://www.orienteeringpiacenza.it/images/sfondo-caccia-al-tesoro.jpg">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stile-comune.css">
+    <link rel="stylesheet" href="stile-principale.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -37,29 +38,31 @@
     <!-- End Meta Pixel Code -->
 </head>
 <body>
+    <a class="skip-link" href="#contenuto">Vai al contenuto</a>
 
     <header class="main-header">
         <nav class="navbar">
             <div class="logo">
-                <a href="index.html"><img src="images/logo.png" alt="Logo OTP-GEA Orienteering"></a>
+                <a href="index.html"><img width="2125" height="522" src="images/logo.png" alt="Logo OTP-GEA Orienteering"></a>
             </div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li>
-                    <a href="ps-home.html" style="color: #FF0099; font-weight: 800; border: 2px solid #FF0099; padding: 8px 15px; border-radius: 4px; text-transform: uppercase; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#FF0099'; this.style.color='#fff'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#FF0099'">
+                    <a href="ps-home.html" class="nav-ps-link">
                         Piacenza Svelata
                     </a>
                 </li>
                 <li class="dropdown">
-                    <a href="#">Le Nostre Attività <i class="fas fa-caret-down"></i></a>
+                    <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Le Nostre Attività <i class="fas fa-caret-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-content">
                         <li><a href="eventi.html">Eventi</a></li>
                         <li><a href="teambuilding.html">Teambuilding</a></li>
                         <li><a href="caccia-al-tesoro.html" class="active">Caccia al tesoro</a></li>
+                        <li><a href="web-app.html">Web app per le scuole</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">L'Associazione <i class="fas fa-caret-down"></i></a>
+                    <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">L'Associazione <i class="fas fa-caret-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-content">
                         <li><a href="storia.html">La Nostra Storia</a></li>
                         <li><a href="promozione-territorio.html">Promozione Territorio</a></li>
@@ -70,13 +73,13 @@
                     </ul>
                 </li>
             </ul>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Apri menu">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-links">
                 <i class="fas fa-bars"></i>
             </button>
         </nav>
     </header>
 
-    <main>
+    <main id="contenuto" tabindex="-1">
         <section id="hero-caccia-al-tesoro" class="hero-section">
             <div class="hero-content">
                 <h1>Un Compleanno Fuori dal Comune</h1>
@@ -94,17 +97,17 @@
 
                 <div class="cards-container" style="margin-top: 3rem;">
                     <div class="card">
-                        <i class="fas fa-gift fa-3x" style="color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-gift fa-3x icona-card"></i>
                         <h3>Un'Idea Originale</h3>
                         <p>Sorprendi tutti con una festa che si distingue, piena di mistero, esplorazione e piccole grandi conquiste.</p>
                     </div>
                     <div class="card">
-                        <i class="fas fa-running fa-3x" style="color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-running fa-3x icona-card"></i>
                         <h3>Movimento e Natura</h3>
                         <p>Un'occasione perfetta per far muovere i ragazzi all'aria aperta, lontano dagli schermi, in parchi cittadini o aree verdi sicure.</p>
                     </div>
                     <div class="card">
-                        <i class="fas fa-shield-alt fa-3x" style="color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-shield-alt fa-3x icona-card"></i>
                         <h3>Tutto Organizzato e Sicuro</h3>
                         <p>I nostri istruttori qualificati gestiscono ogni dettaglio, dall'insegnamento delle basi alla supervisione, garantendo divertimento in totale sicurezza.</p>
                     </div>
@@ -121,17 +124,17 @@
 
                 <div class="cards-container">
                     <div class="card">
-                        <i class="fas fa-map-signs fa-3x" style="color: var(--secondary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-map-signs fa-3x icona-card icona-card--secondaria"></i>
                         <h3>Fase 1: Il Briefing</h3>
                         <p>Spieghiamo le regole del gioco e i segreti della mappa in modo semplice e divertente. Ogni squadra riceve il suo kit da esploratore.</p>
                     </div>
                     <div class="card">
-                        <i class="fas fa-flag-checkered fa-3x" style="color: var(--secondary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-flag-checkered fa-3x icona-card icona-card--secondaria"></i>
                         <h3>Fase 2: L'Avventura</h3>
                         <p>Inizia la caccia! I team collaborano per trovare i punti nascosti, timbrando un testimone ad ogni conquista. I nostri istruttori supervisionano con discrezione.</p>
                     </div>
                     <div class="card">
-                        <i class="fas fa-trophy fa-3x" style="color: var(--secondary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-trophy fa-3x icona-card icona-card--secondaria"></i>
                         <h3>Fase 3: Il Gran Finale</h3>
                         <p>Trovati tutti i punti, si arriva al tesoro! L'attività si conclude con la premiazione e, se vuoi, con il taglio della torta.</p>
                     </div>
@@ -148,17 +151,17 @@
 
                 <div class="cards-container">
                     <div class="card">
-                        <i class="fas fa-crosshairs fa-3x" style="color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-crosshairs fa-3x icona-card"></i>
                         <h3>Sfida a Punteggio</h3>
                         <p>Non tutti i punti sono uguali! Le squadre devono elaborare la strategia migliore per raccogliere più punti possibili in un tempo limite. Vince chi pianifica meglio.</p>
                     </div>
                     <div class="card">
-                        <i class="fas fa-puzzle-piece fa-3x" style="color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-puzzle-piece fa-3x icona-card"></i>
                         <h3>Prove Speciali e Enigmi</h3>
                         <p>Possiamo inserire prove di abilità o enigmi da risolvere ad alcuni punti di controllo, per rendere la sfida non solo fisica ma anche mentale.</p>
                     </div>
                     <div class="card">
-                        <i class="fas fa-moon fa-3x" style="color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-moon fa-3x icona-card"></i>
                         <h3>Opzione Notturna</h3>
                         <p>Per un'esperienza davvero indimenticabile, organizziamo l'adventure race di notte, con l'uso di lampade frontali. Massima concentrazione e adrenalina pura.</p>
                     </div>
@@ -172,11 +175,11 @@
                 <p class="lead-paragraph" style="max-width: 800px; margin: 0 auto 2rem auto;">
                     Ogni festa è unica. Ci adattiamo alle tue esigenze per età dei partecipanti, numero di invitati e location (parchi cittadini, boschi, borghi). Il nostro pacchetto base include sempre:
                 </p>
-                <ul style="list-style: none; padding: 0; display: inline-block; text-align: left;">
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-color); margin-right: 10px;"></i>Istruttori Federali FISO a completa disposizione</li>
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-color); margin-right: 10px;"></i>Materiale tecnico (mappe, bussole, lanterne, testimoni)</li>
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-color); margin-right: 10px;"></i>Mappe di gara personalizzate per l'evento</li>
-                    <li style="margin-bottom: 1rem;"><i class="fas fa-check-circle" style="color: var(--primary-color); margin-right: 10px;"></i>Massima flessibilità su durata e difficoltà</li>
+                <ul class="lista-pacchetto" style="list-style: none; padding: 0; display: inline-block; text-align: left;">
+                    <li><i class="fas fa-check-circle icona-check"></i>Istruttori Federali FISO a completa disposizione</li>
+                    <li><i class="fas fa-check-circle icona-check"></i>Materiale tecnico (mappe, bussole, lanterne, testimoni)</li>
+                    <li><i class="fas fa-check-circle icona-check"></i>Mappe di gara personalizzate per l'evento</li>
+                    <li><i class="fas fa-check-circle icona-check"></i>Massima flessibilità su durata e difficoltà</li>
                 </ul>
                 <div style="margin-top: 2rem;">
                     <a href="mailto:info@orienteeringpiacenza.it" class="cta-button">Richiedi un Preventivo Gratuito</a>

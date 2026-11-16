@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.orienteeringpiacenza.it/</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-11-14</lastmod>
   </url>
   <url>
     <loc>https://www.orienteeringpiacenza.it/ps-home.html</loc>
@@ -29,6 +29,10 @@
     <lastmod>2026-09-02</lastmod>
   </url>
   <url>
+    <loc>https://www.orienteeringpiacenza.it/web-app.html</loc>
+    <lastmod>2026-11-14</lastmod>
+  </url>
+  <url>
     <loc>https://www.orienteeringpiacenza.it/storia.html</loc>
     <lastmod>2026-09-02</lastmod>
   </url>
@@ -51,5 +55,13 @@
   <url>
     <loc>https://www.orienteeringpiacenza.it/safeguarding.html</loc>
     <lastmod>2026-06-09</lastmod>
+  </url>
+  <url>
+    <loc>https://www.orienteeringpiacenza.it/privacy.html</loc>
+    <lastmod>2026-11-16</lastmod>
+  </url>
+  <url>
+    <loc>https://www.orienteeringpiacenza.it/cookie-policy.html</loc>
+    <lastmod>2026-11-16</lastmod>
   </url>
 </urlset>

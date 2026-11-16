@@ -1,0 +1,9 @@
+# Cartella di appoggio con file non più usati dal sito: non va pubblicata né salvata nel repository
+_to_delete/
+
+# Firebase: dipendenze delle Cloud Functions, log e cache della CLI
+firebase/functions/node_modules/
+firebase/.firebase/
+firebase/*.log
+firebase/functions/*.log
+firebase/functions/comune.js

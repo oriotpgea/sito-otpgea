@@ -39,10 +39,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stile-comune.css">
+    <link rel="stylesheet" href="stile-ps.css">
     <script src="script.js" defer></script>
 </head>
 <body class="page-ps">
+    <a class="skip-link" href="#contenuto">Vai al contenuto</a>
 
     <header class="header">
         <div class="header__container">
@@ -50,10 +52,10 @@
                 <a href="index.html" class="header__main-site">orienteeringpiacenza.it</a>
             </div>
             <a href="index.html" class="header__brand" aria-label="Torna al sito principale OTP-GEA Orienteering">
-                <img src="images/logo.png" alt="Logo OTP-GEA Orienteering" class="header__logo">
+                <img width="2125" height="522" src="images/logo.png" alt="Logo OTP-GEA Orienteering" class="header__logo">
             </a>
             <div class="header__right">
-                <button class="header__toggle" id="menuToggle" aria-label="Apri menu">
+                <button class="header__toggle" id="menuToggle" aria-label="Apri menu" aria-expanded="false" aria-controls="mainNav">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -67,7 +69,7 @@
         </div>
     </header>
 
-    <main class="main-content">
+    <main class="main-content" id="contenuto" tabindex="-1">
         
        <section class="hero hero--home" style="justify-content: center; text-align: center; align-items: center;">
 
@@ -141,31 +143,31 @@
 
             <div class="filmstrip">
                     <div class="filmstrip__track" style="padding: 0 20px;">
-                        <img src="images/piacenza-svelata-2026/1 (1).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (2).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (3).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (4).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (5).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (6).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (7).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (8).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (9).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (10).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (11).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (12).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (13).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (14).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (15).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (16).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (17).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (18).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (19).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (20).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (21).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (22).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (23).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (24).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
-                        <img src="images/piacenza-svelata-2026/1 (25).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="925" height="617" src="images/piacenza-svelata-2026/1 (1).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="894" height="595" src="images/piacenza-svelata-2026/1 (2).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1199" height="799" src="images/piacenza-svelata-2026/1 (3).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1224" height="816" src="images/piacenza-svelata-2026/1 (4).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1102" height="735" src="images/piacenza-svelata-2026/1 (5).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1224" height="816" src="images/piacenza-svelata-2026/1 (6).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1124" height="749" src="images/piacenza-svelata-2026/1 (7).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1078" height="718" src="images/piacenza-svelata-2026/1 (8).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1043" height="695" src="images/piacenza-svelata-2026/1 (9).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1144" height="762" src="images/piacenza-svelata-2026/1 (10).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1122" height="748" src="images/piacenza-svelata-2026/1 (11).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1141" height="761" src="images/piacenza-svelata-2026/1 (12).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="704" height="1056" src="images/piacenza-svelata-2026/1 (13).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="807" height="538" src="images/piacenza-svelata-2026/1 (14).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="919" height="613" src="images/piacenza-svelata-2026/1 (15).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1034" height="689" src="images/piacenza-svelata-2026/1 (16).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="931" height="621" src="images/piacenza-svelata-2026/1 (17).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="954" height="637" src="images/piacenza-svelata-2026/1 (18).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="905" height="603" src="images/piacenza-svelata-2026/1 (19).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1068" height="712" src="images/piacenza-svelata-2026/1 (20).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1150" height="767" src="images/piacenza-svelata-2026/1 (21).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1101" height="734" src="images/piacenza-svelata-2026/1 (22).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1055" height="703" src="images/piacenza-svelata-2026/1 (23).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="879" height="586" src="images/piacenza-svelata-2026/1 (24).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
+                        <img width="1062" height="708" src="images/piacenza-svelata-2026/1 (25).jpg" alt="Foto Edizione 2026" class="filmstrip__img" loading="lazy">
                     </div>
                 </div>
 
@@ -219,46 +221,56 @@
             </div>
     
             <!-- Form Brevo / Sendinblue -->
-            <div class="ps-newsletter__form-wrap">
-    
-                <div id="ps-error-message" class="ps-form-message ps-form-message--error" style="display:none;">
-                    La tua iscrizione non può essere convalidata.
+            <!-- Struttura richiesta dallo script di Brevo (main.js): id e classi sib-* non vanno rinominati -->
+            <div class="ps-newsletter__form-wrap" id="sib-form-container">
+
+                <div id="error-message" class="sib-form-message-panel ps-form-message ps-form-message--error">
+                    <span class="sib-form-message-panel__inner-text">La tua iscrizione non può essere convalidata.</span>
                 </div>
-                <div id="ps-success-message" class="ps-form-message ps-form-message--success" style="display:none;">
-                    La tua iscrizione è avvenuta correttamente.
+                <div id="success-message" class="sib-form-message-panel ps-form-message ps-form-message--success">
+                    <span class="sib-form-message-panel__inner-text">La tua iscrizione è avvenuta correttamente.</span>
                 </div>
-    
-                <form id="sib-form" method="POST"
-                      action="https://170f5049.sibforms.com/serve/MUIFAJG-H7jcT6rvG7cPNuYb_2Aq4tTXhIEggPZ8Fqz7g1D8cuqlGTo9a6OhvDpjyPlZEm1oal-A3W-1dLlHRCxT1ANSK8r0X5hOjPmtIwYXI4OmJsUpAM28xbDMNFJ1BQV7FcLcBSrk2-HS5PduPUdVq7UD-eqwE8S0AsQGAeCjROCOudxFlBzFjn1C6Yo8ofD1Cim7d3ehftlFtQ=="
-                      data-type="subscription">
-    
-                    <div class="ps-form__field">
-                        <label class="ps-form__label" for="PS_EMAIL">
-                            Indirizzo email
-                        </label>
-                        <input class="ps-form__input" type="email" id="PS_EMAIL" name="EMAIL"
-                              autocomplete="off" placeholder="la-tua@email.it"
-                              data-required="true" required />
+
+                <form id="sib-form" method="POST" action="https://170f5049.sibforms.com/serve/MUIFAJG-H7jcT6rvG7cPNuYb_2Aq4tTXhIEggPZ8Fqz7g1D8cuqlGTo9a6OhvDpjyPlZEm1oal-A3W-1dLlHRCxT1ANSK8r0X5hOjPmtIwYXI4OmJsUpAM28xbDMNFJ1BQV7FcLcBSrk2-HS5PduPUdVq7UD-eqwE8S0AsQGAeCjROCOudxFlBzFjn1C6Yo8ofD1Cim7d3ehftlFtQ==" data-type="subscription">
+
+                    <div class="ps-form__field sib-input sib-form-block">
+                        <div class="form__entry entry_block">
+                            <label class="ps-form__label entry__label" for="PS_EMAIL" data-required="*">
+                                Indirizzo email
+                            </label>
+                            <input class="ps-form__input input" type="email" id="PS_EMAIL" name="EMAIL"
+                                  autocomplete="off" placeholder="la-tua@email.it"
+                                  data-required="true" required />
+                            <label class="entry__error entry__error--primary ps-form__error"></label>
+                        </div>
                     </div>
-    
+
                     <div class="ps-form__consent">
                         <p class="ps-form__brevo-notice">
                             Utilizziamo Brevo come piattaforma di marketing. Inviando questo modulo accetti che i dati forniti vengano trasferiti a Brevo in conformità alla
                             <a href="https://www.brevo.com/it/legal/privacypolicy/" target="_blank" rel="noopener noreferrer">loro Informativa sulla Privacy</a>.
                         </p>
-                        <label class="ps-form__check-label">
-                            <input type="checkbox" class="ps-form__checkbox" value="1"
-                                  id="PS_OPT_IN" name="OPT_IN" required />
-                            <span class="ps-form__check-text">
-                                Accetto le condizioni generali e di ricevere la newsletter.
-                            </span>
-                        </label>
+                        <div class="sib-optin sib-form-block" data-required="true">
+                            <div class="form__entry entry_mcq">
+                                <label class="ps-form__check-label">
+                                    <input type="checkbox" class="ps-form__checkbox input_replaced" value="1"
+                                          id="PS_OPT_IN" name="OPT_IN" required />
+                                    <span class="ps-form__check-text">
+                                        Accetto le condizioni generali e di ricevere la newsletter.
+                                    </span>
+                                </label>
+                                <label class="entry__error entry__error--primary ps-form__error"></label>
+                            </div>
+                        </div>
                     </div>
-    
+
+                    <div class="g-recaptcha-v3" data-sitekey="6Ldpdw8sAAAAAE5K37TQ9L5mnkDzsWo_CF_aAPHx" style="display: none"></div>
+
                     <button class="ps-form__submit btn btn--fuchsia" type="submit" form="sib-form">
                         <i class="fas fa-paper-plane" style="margin-right: 8px;"></i>ISCRIVITI
+                        <svg class="ps-form__spinner sib-hide-loader-icon" viewBox="0 0 512 512" aria-hidden="true"><path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" /></svg>
                     </button>
-    
+
                     <input type="text" name="email_address_check" value="" class="input--hidden"
                           style="display:none;" aria-hidden="true">
                     <input type="hidden" name="locale" value="it">
@@ -331,6 +343,7 @@
     </footer>
 
     <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6Ldpdw8sAAAAAE5K37TQ9L5mnkDzsWo_CF_aAPHx&hl=it" async defer></script>
     <script>
     (function () {
         window.REQUIRED_CODE_ERROR_MESSAGE = 'Scegli un prefisso paese';

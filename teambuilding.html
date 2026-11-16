@@ -14,7 +14,8 @@
     <meta property="og:url" content="https://www.orienteeringpiacenza.it/teambuilding.html">
     <meta property="og:image" content="https://www.orienteeringpiacenza.it/images/sfondo-teambuilding.jpg">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stile-comune.css">
+    <link rel="stylesheet" href="stile-principale.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -66,29 +67,31 @@
     <!-- End Meta Pixel Code -->
 </head>
 <body>
+    <a class="skip-link" href="#contenuto">Vai al contenuto</a>
 
     <header class="main-header">
         <nav class="navbar">
             <div class="logo">
-                <a href="index.html"><img src="images/logo.png" alt="Logo OTP-GEA Orienteering"></a>
+                <a href="index.html"><img width="2125" height="522" src="images/logo.png" alt="Logo OTP-GEA Orienteering"></a>
             </div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li>
-                    <a href="ps-home.html" style="color: #FF0099; font-weight: 800; border: 2px solid #FF0099; padding: 8px 15px; border-radius: 4px; text-transform: uppercase; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#FF0099'; this.style.color='#fff'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#FF0099'">
+                    <a href="ps-home.html" class="nav-ps-link">
                         Piacenza Svelata
                     </a>
                 </li>
                 <li class="dropdown">
-                    <a href="#">Le Nostre Attività <i class="fas fa-caret-down"></i></a>
+                    <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Le Nostre Attività <i class="fas fa-caret-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-content">
                         <li><a href="eventi.html">Eventi</a></li>
                         <li><a href="teambuilding.html" class="active">Teambuilding</a></li>
                         <li><a href="caccia-al-tesoro.html">Caccia al tesoro</a></li>
+                        <li><a href="web-app.html">Web app per le scuole</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">L'Associazione <i class="fas fa-caret-down"></i></a>
+                    <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">L'Associazione <i class="fas fa-caret-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-content">
                         <li><a href="storia.html">La Nostra Storia</a></li>
                         <li><a href="promozione-territorio.html">Promozione Territorio</a></li>
@@ -99,13 +102,13 @@
                     </ul>
                 </li>
             </ul>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Apri menu">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-links">
                 <i class="fas fa-bars"></i>
             </button>
         </nav>
     </header>
 
-    <main>
+    <main id="contenuto" tabindex="-1">
         <section id="hero-teambuilding" class="hero-section">
             <div class="hero-content">
                 <h1>Orienteering: il Team Building che unisce Mente e Azione</h1>
@@ -124,19 +127,19 @@
                 <div class="cards-container" style="margin-top: 3rem;">
                     
                     <div class="card">
-                        <i class="fas fa-comments fa-3x" style="color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-comments fa-3x icona-card"></i>
                         <h3>Migliora la Comunicazione</h3>
                         <p>I partecipanti imparano ad ascoltarsi attivamente e a esprimere le proprie idee, rafforzando la comunicazione interna.</p>
                     </div>
                     
                     <div class="card">
-                        <i class="fas fa-handshake fa-3x" style="color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-handshake fa-3x icona-card"></i>
                         <h3>Rafforza Fiducia e Coesione</h3>
                         <p>Le sfide condivise creano connessione e accrescono la fiducia tra i membri del team e verso la leadership.</p>
                     </div>
                     
                     <div class="card">
-                        <i class="fas fa-users-cog fa-3x" style="color: var(--primary-color); margin-bottom: 1rem;"></i>
+                        <i class="fas fa-users-cog fa-3x icona-card"></i>
                         <h3>Sviluppa Collaborazione e Strategia</h3>
                         <p>Le attività sviluppano la capacità di integrare i punti di forza e le debolezze individuali per un obiettivo comune.</p>
                     </div>

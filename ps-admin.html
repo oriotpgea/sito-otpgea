@@ -18,12 +18,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stile-comune.css">
+    <link rel="stylesheet" href="stile-ps.css">
 </head>
 <body class="page-ps">
+    <a class="skip-link" href="#contenuto">Vai al contenuto</a>
 
     <!-- =====================================================================
-         LOGIN SCREEN
+         LOGIN
          ===================================================================== -->
     <div id="loginScreen" class="admin-login-screen">
         <div class="admin-login-box card">
@@ -49,18 +51,17 @@
                        placeholder="••••••••" autocomplete="current-password">
             </div>
 
-            <button class="btn btn--fuchsia admin-login-btn" id="loginBtn" onclick="doLogin()">
+            <button type="button" class="btn btn--fuchsia admin-login-btn" id="loginBtn">
                 <i class="fas fa-sign-in-alt"></i>&nbsp; Accedi
             </button>
         </div>
     </div>
 
     <!-- =====================================================================
-         DASHBOARD
+         AREA RISERVATA
          ===================================================================== -->
-    <div id="dashboardScreen" style="display:none;">
+    <div id="dashboardScreen" hidden>
 
-        <!-- TOPBAR -->
         <header class="admin-topbar">
             <div class="admin-topbar__left">
                 <span class="admin-topbar__brand">
@@ -72,112 +73,189 @@
             </div>
             <div class="admin-topbar__right">
                 <span class="admin-topbar__user" id="topbarUser"></span>
-                <button class="btn btn--outline-fuchsia admin-topbar__logout" onclick="doLogout()">
+                <button type="button" class="btn btn--outline-fuchsia admin-topbar__logout" data-azione="logout">
                     <i class="fas fa-sign-out-alt"></i> Esci
                 </button>
             </div>
         </header>
 
-        <main class="admin-main">
+        <main class="admin-main" id="contenuto" tabindex="-1">
 
-            <!-- STATISTICHE -->
-            <section class="admin-section">
-                <h2 class="section-title admin-section__title">Panoramica</h2>
-                <div class="statistics__grid admin-stats-grid">
-                    <div class="stat-card admin-stat">
-                        <span class="stat-card__number" id="statTotale">—</span>
-                        <span class="stat-card__label">Squadre Totali</span>
-                    </div>
-                    <div class="stat-card admin-stat">
-                        <span class="stat-card__number" id="statCompetitive">—</span>
-                        <span class="stat-card__label">Competitive</span>
-                    </div>
-                    <div class="stat-card admin-stat">
-                        <span class="stat-card__number" id="statLudiche">—</span>
-                        <span class="stat-card__label">Ludico-motorie</span>
-                    </div>
-                    <div class="stat-card admin-stat admin-stat--green">
-                        <span class="stat-card__number" id="statBonificiOk">—</span>
-                        <span class="stat-card__label">Bonifici Confermati</span>
-                    </div>
-                    <div class="stat-card admin-stat admin-stat--warn">
-                        <span class="stat-card__number" id="statBonificiPending">—</span>
-                        <span class="stat-card__label">Bonifici in Attesa</span>
-                    </div>
-                    <div class="stat-card admin-stat">
-                        <span class="stat-card__number" id="statPartecipanti">—</span>
-                        <span class="stat-card__label">Partecipanti Totali</span>
+            <div class="admin-tabs" role="tablist" aria-label="Sezioni area riservata">
+                <button type="button" class="admin-tab" role="tab" id="tabEventi" aria-controls="vistaEventi" aria-selected="true" data-azione="tab" data-vista="eventi">
+                    <i class="fas fa-calendar-alt"></i> Eventi
+                </button>
+                <button type="button" class="admin-tab" role="tab" id="tabIscrizioni" aria-controls="vistaIscrizioni" aria-selected="false" data-azione="tab" data-vista="iscrizioni">
+                    <i class="fas fa-users"></i> Iscrizioni
+                </button>
+            </div>
+
+            <!-- ================= EVENTI ================= -->
+            <section class="admin-section" id="vistaEventi" role="tabpanel" aria-labelledby="tabEventi">
+                <div class="admin-section__head">
+                    <h2 class="section-title admin-section__title">
+                        Eventi <span class="admin-count-badge" id="eventiCount">0</span>
+                    </h2>
+                    <div class="admin-actions">
+                        <button type="button" class="btn btn--outline-fuchsia admin-refresh-btn" data-azione="ricarica-eventi" title="Aggiorna">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button type="button" class="btn btn--fuchsia admin-refresh-btn" data-azione="nuovo-evento">
+                            <i class="fas fa-plus"></i>&nbsp; Nuovo evento
+                        </button>
                     </div>
                 </div>
-            </section>
 
-            <!-- TOOLBAR FILTRI -->
-            <section class="admin-section">
-                <div class="admin-toolbar">
-                    <div class="admin-search-wrap">
-                        <i class="fas fa-search admin-search-icon"></i>
-                        <input type="text" class="ps-form__input admin-search-input"
-                               id="searchInput" placeholder="Cerca squadra o email…"
-                               oninput="filterSquadre()">
-                    </div>
-                    <select class="ps-form__input admin-filter-select" id="filterCategoria" onchange="filterSquadre()">
-                        <option value="">Tutte le categorie</option>
-                        <option value="competitiva">Competitiva</option>
-                        <option value="ludica">Ludico-motoria</option>
-                    </select>
-                    <select class="ps-form__input admin-filter-select" id="filterStatus" onchange="filterSquadre()">
-                        <option value="">Tutti gli stati</option>
-                        <option value="confermata">Bonifico confermato</option>
-                        <option value="in_attesa">In attesa</option>
-                    </select>
-                    <button class="btn btn--outline-fuchsia admin-refresh-btn" onclick="loadSquadre()">
-                        <i class="fas fa-sync-alt"></i>
-                    </button>
-                    <button class="btn btn--green admin-refresh-btn" id="btnBulkEmail" onclick="sendBulkEmails()" style="display:none; margin-left: auto;">
-                        <i class="fas fa-paper-plane"></i> Invia Conferme (<span id="bulkEmailCount">0</span>)
-                    </button>
-                    <button class="btn btn--outline-fuchsia admin-refresh-btn" onclick="exportCSV()">
-                        <i class="fas fa-file-csv"></i> Esporta CSV
-                    </button>
-                </div>
-            </section>
-
-            <!-- LISTA SQUADRE -->
-            <section class="admin-section">
-                <h2 class="section-title admin-section__title">
-                    Squadre Iscritte
-                    <span class="admin-count-badge" id="listCount">0</span>
-                </h2>
-
-                <div id="loadingMsg" class="admin-state-msg">
+                <div id="eventiStato" class="admin-state-msg">
                     <i class="fas fa-circle-notch fa-spin"></i> Caricamento…
                 </div>
-                <div id="emptyMsg" class="admin-state-msg" style="display:none;">
-                    <i class="fas fa-inbox"></i>
-                    <p>Nessuna squadra trovata.</p>
-                </div>
-
-                <div class="admin-table-wrap" id="tableWrap" style="display:none;">
+                <div class="admin-table-wrap" id="eventiTabella" hidden>
                     <table class="admin-table">
                         <thead>
                             <tr>
-                                <th style="width: 40px;"><input type="checkbox" id="cbSelectAll" onchange="toggleAllCheckboxes()"></th>
-                                <th>Squadra</th>
-                                <th>Email</th>
-                                <th>Conferma</th>
-                                <th>Categoria</th>
-                                <th>N.</th>
-                                <th>Under 12</th>
-                                <th>Iscrizione</th>
-                                <th>Importo €</th>
-                                <th>Bonifico ✓</th>
-                                <th>Certificati ✓</th>
-                                <th>File</th>
-                                <th>Note</th>
+                                <th>Evento</th>
+                                <th>Data</th>
+                                <th>Luogo</th>
+                                <th>Iscrizioni aperte</th>
+                                <th>Confermate</th>
+                                <th>Azioni</th>
                             </tr>
                         </thead>
-                        <tbody id="squadreTableBody"></tbody>
+                        <tbody id="eventiBody"></tbody>
                     </table>
+                </div>
+            </section>
+
+            <!-- ================= EDITOR EVENTO ================= -->
+            <section class="admin-section" id="vistaEditor" hidden>
+                <div class="admin-section__head">
+                    <h2 class="section-title admin-section__title" id="edTitolo">Nuovo evento</h2>
+                    <div class="admin-actions">
+                        <button type="button" class="btn btn--outline admin-refresh-btn ed-btn-annulla" data-azione="ed-annulla">Annulla</button>
+                        <button type="button" class="btn btn--green admin-refresh-btn" data-azione="ed-salva">
+                            <i class="fas fa-save"></i>&nbsp; Salva evento
+                        </button>
+                    </div>
+                </div>
+                <div id="edErrori" class="ps-form-message ps-form-message--error" role="alert" hidden></div>
+                <div id="editor"></div>
+                <div class="ed-foot">
+                    <button type="button" class="btn btn--outline admin-refresh-btn ed-btn-annulla" data-azione="ed-annulla">Annulla</button>
+                    <button type="button" class="btn btn--green admin-refresh-btn" data-azione="ed-salva">
+                        <i class="fas fa-save"></i>&nbsp; Salva evento
+                    </button>
+                </div>
+            </section>
+
+            <!-- ================= ISCRIZIONI ================= -->
+            <section class="admin-section" id="vistaIscrizioni" role="tabpanel" aria-labelledby="tabIscrizioni" hidden>
+                <div class="admin-toolbar">
+                    <label class="ps-form__label admin-inline-label" for="selEvento">Evento</label>
+                    <select class="ps-form__input admin-filter-select admin-select-evento" id="selEvento"></select>
+                    <button type="button" class="btn btn--outline-fuchsia admin-refresh-btn" data-azione="ricarica-iscrizioni" title="Aggiorna">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+
+                <div id="iscrNessunEvento" class="admin-state-msg" hidden>
+                    <i class="fas fa-calendar-plus"></i>
+                    <p>Nessun evento: creane uno nella sezione Eventi.</p>
+                </div>
+
+                <div id="iscrContenuto">
+                    <div class="statistics__grid admin-stats-grid">
+                        <div class="stat-card admin-stat admin-stat--green">
+                            <span class="stat-card__number" id="statConfermate">—</span>
+                            <span class="stat-card__label">Squadre confermate</span>
+                        </div>
+                        <div class="stat-card admin-stat">
+                            <span class="stat-card__number" id="statPartecipanti">—</span>
+                            <span class="stat-card__label">Partecipanti confermati</span>
+                        </div>
+                        <div class="stat-card admin-stat admin-stat--warn">
+                            <span class="stat-card__number" id="statAttesa">—</span>
+                            <span class="stat-card__label">In attesa di pagamento</span>
+                        </div>
+                        <div class="stat-card admin-stat">
+                            <span class="stat-card__number" id="statAnnullate">—</span>
+                            <span class="stat-card__label">Annullate</span>
+                        </div>
+                        <div class="stat-card admin-stat admin-stat--green">
+                            <span class="stat-card__number" id="statIncasso">—</span>
+                            <span class="stat-card__label">Incassato</span>
+                        </div>
+                    </div>
+
+                    <div class="admin-table-wrap" id="statCategorieWrap" hidden>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Categoria</th>
+                                    <th>Squadre confermate</th>
+                                    <th>Partecipanti confermati</th>
+                                    <th>In attesa di pagamento</th>
+                                    <th>Incassato</th>
+                                </tr>
+                            </thead>
+                            <tbody id="statCategorieBody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="admin-toolbar">
+                        <div class="admin-search-wrap">
+                            <i class="fas fa-search admin-search-icon"></i>
+                            <input type="text" class="ps-form__input admin-search-input"
+                                   id="searchInput" placeholder="Cerca squadra, email o componente…"
+                                   aria-label="Cerca squadra, email o componente">
+                        </div>
+                        <select class="ps-form__input admin-filter-select" id="filterCategoria" aria-label="Filtra per categoria"></select>
+                        <select class="ps-form__input admin-filter-select" id="filterStato" aria-label="Filtra per stato">
+                            <option value="">Tutti gli stati</option>
+                            <option value="valide" selected>Confermate e in attesa</option>
+                            <option value="confermate">Solo confermate</option>
+                            <option value="pagata">Pagate</option>
+                            <option value="confermata_gratuita">Confermate gratuite</option>
+                            <option value="in_attesa_pagamento">In attesa di pagamento</option>
+                            <option value="annullata">Annullate</option>
+                        </select>
+                        <button type="button" class="btn btn--green admin-refresh-btn" id="btnEmail" data-azione="email-apri" hidden>
+                            <i class="fas fa-paper-plane"></i>&nbsp; Email (<span id="emailCount">0</span>)
+                        </button>
+                        <button type="button" class="btn btn--outline-fuchsia admin-refresh-btn" data-azione="csv-squadre">
+                            <i class="fas fa-file-csv"></i>&nbsp; CSV squadre
+                        </button>
+                        <button type="button" class="btn btn--outline-fuchsia admin-refresh-btn" data-azione="csv-partecipanti">
+                            <i class="fas fa-file-csv"></i>&nbsp; CSV partecipanti
+                        </button>
+                    </div>
+
+                    <h2 class="section-title admin-section__title">
+                        Squadre <span class="admin-count-badge" id="listCount">0</span>
+                    </h2>
+
+                    <div id="iscrStato" class="admin-state-msg">
+                        <i class="fas fa-circle-notch fa-spin"></i> Caricamento…
+                    </div>
+                    <div class="admin-table-wrap" id="iscrTabella" hidden>
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 40px;"><input type="checkbox" id="cbSelectAll" aria-label="Seleziona tutte"></th>
+                                    <th>Squadra</th>
+                                    <th>Email</th>
+                                    <th>Categoria</th>
+                                    <th>N.</th>
+                                    <th>Importo</th>
+                                    <th>Stato</th>
+                                    <th>Iscrizione</th>
+                                    <th>Documenti ✓</th>
+                                    <th>Email conferma</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody id="iscrBody"></tbody>
+                        </table>
+                    </div>
                 </div>
             </section>
 
@@ -185,43 +263,68 @@
     </div>
 
     <!-- MODAL DETTAGLIO -->
-    <div id="detailModal" class="ps-modal" onclick="closeModal('detailModal', event)">
-        <div class="ps-modal__content admin-modal-box card">
-            <button class="ps-modal__close" onclick="document.getElementById('detailModal').classList.remove('active')">
-                &times;
-            </button>
+    <div id="detailModal" class="ps-modal" data-modal-overlay>
+        <div class="ps-modal__content admin-modal-box admin-modal-box--wide card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <button type="button" class="ps-modal__close" data-azione="chiudi-modal" data-modal="detailModal" aria-label="Chiudi">&times;</button>
             <h3 id="modalTitle" class="admin-modal-title"></h3>
             <div id="modalContent" class="admin-modal-body"></div>
-            <button class="btn btn--outline" onclick="document.getElementById('detailModal').classList.remove('active')">
-                <i class="fas fa-arrow-left"></i> Indietro
-            </button>
+            <div class="ed-foot">
+                <button type="button" class="btn btn--outline admin-refresh-btn" data-azione="chiudi-modal" data-modal="detailModal">
+                    <i class="fas fa-arrow-left"></i>&nbsp; Indietro
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- MODAL NOTE -->
-    <div id="noteModal" class="ps-modal" onclick="closeModal('noteModal', event)">
-        <div class="ps-modal__content admin-modal-box card" style="width: 100%; max-width: 700px;">
-            <button class="ps-modal__close" onclick="document.getElementById('noteModal').classList.remove('active')">
-                &times;
-            </button>
-            <h3 class="admin-modal-title">Nota interna</h3>
+    <div id="noteModal" class="ps-modal" data-modal-overlay>
+        <div class="ps-modal__content admin-modal-box card" role="dialog" aria-modal="true" aria-labelledby="noteTitle">
+            <button type="button" class="ps-modal__close" data-azione="chiudi-modal" data-modal="noteModal" aria-label="Chiudi">&times;</button>
+            <h3 class="admin-modal-title" id="noteTitle">Nota interna</h3>
             <div class="ps-form__field">
                 <label class="ps-form__label" for="noteTextarea">Visibile solo agli organizzatori</label>
-                <textarea class="ps-form__input admin-textarea" id="noteTextarea"
-                          rows="5" placeholder="Es: bonifico verificato il 12/09…"></textarea>
+                <textarea class="ps-form__input admin-textarea" id="noteTextarea" rows="5"
+                          placeholder="Es: certificato di Mario da ricaricare…"></textarea>
             </div>
-            <input type="hidden" id="noteSquadraId">
-            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
-                <button class="btn btn--outline" onclick="document.getElementById('noteModal').classList.remove('active')">
-                    Annulla
-                </button>
-                <button class="btn btn--green admin-save-note-btn" onclick="saveNote()" style="margin-top: 0;">
-                    <i class="fas fa-save"></i> Salva nota
+            <input type="hidden" id="noteIscrizioneId">
+            <div class="ed-foot">
+                <button type="button" class="btn btn--outline admin-refresh-btn" data-azione="chiudi-modal" data-modal="noteModal">Annulla</button>
+                <button type="button" class="btn btn--green admin-refresh-btn" data-azione="salva-nota">
+                    <i class="fas fa-save"></i>&nbsp; Salva nota
                 </button>
             </div>
-            
         </div>
     </div>
+
+    <!-- MODAL EMAIL -->
+    <div id="emailModal" class="ps-modal" data-modal-overlay>
+        <div class="ps-modal__content admin-modal-box admin-modal-box--wide card" role="dialog" aria-modal="true" aria-labelledby="emailTitle">
+            <button type="button" class="ps-modal__close" data-azione="chiudi-modal" data-modal="emailModal" aria-label="Chiudi">&times;</button>
+            <h3 class="admin-modal-title" id="emailTitle">Invia email a <span id="emailDestCount">0</span> squadre</h3>
+            <div id="emailAvviso" class="ps-form-message admin-avviso" hidden></div>
+            <div class="ps-form__field">
+                <label class="ps-form__label" for="emailOggetto">Oggetto</label>
+                <input type="text" class="ps-form__input" id="emailOggetto">
+            </div>
+            <div class="ps-form__field">
+                <label class="ps-form__label" for="emailTesto">Testo</label>
+                <textarea class="ps-form__input admin-textarea" id="emailTesto" rows="9"></textarea>
+                <p class="ed-help">Segnaposto: {squadra} {categoria} {evento} {data} {luogo} {importo}. Sono precompilati oggetto e testo della conferma impostati nell'evento.</p>
+            </div>
+            <label class="ps-form__check-label">
+                <input type="checkbox" class="ps-form__checkbox" id="emailSegnaConferma">
+                <span class="ps-form__check-text">È l'email di conferma: segna "inviata" sulle squadre</span>
+            </label>
+            <div class="ed-foot">
+                <button type="button" class="btn btn--outline admin-refresh-btn" data-azione="chiudi-modal" data-modal="emailModal">Annulla</button>
+                <button type="button" class="btn btn--green admin-refresh-btn" id="btnEmailInvia" data-azione="email-invia">
+                    <i class="fas fa-paper-plane"></i>&nbsp; Invia
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="admin-toast" role="status" aria-live="polite" hidden></div>
 
     <!-- Firebase SDK -->
     <script type="module">
@@ -229,10 +332,13 @@
             from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
             from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, getDocs, doc, updateDoc, addDoc }
+        import { getFirestore, collection, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc,
+                 runTransaction, serverTimestamp, query, where, getCountFromServer }
             from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         import { getStorage, ref, getDownloadURL }
             from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+        import { getFunctions, httpsCallable }
+            from "https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js";
 
         const firebaseConfig = {
             apiKey:            "AIzaSyCBm7KbqSuNFQgGm4V2ial9KjmVYQdm9sQ",
@@ -247,27 +353,158 @@
         const auth    = getAuth(app);
         const db      = getFirestore(app);
         const storage = getStorage(app);
+        const fnVerificaPagamento = httpsCallable(getFunctions(app, 'europe-west1'), 'verificaPagamento');
 
-        let allSquadre = [];
+        /* =====================================================================
+           COSTANTI
+           ===================================================================== */
+        // Indirizzo pubblico del form (per il pulsante "Copia link iscrizioni")
+        const SITO = 'https://www.orienteeringpiacenza.it';
+        const RE_ID = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
-        /* ---- AUTH ---- */
-        onAuthStateChanged(auth, user => {
-            if (user) {
-                document.getElementById('loginScreen').style.display    = 'none';
-                document.getElementById('dashboardScreen').style.display = 'block';
-                document.getElementById('topbarUser').textContent        = user.email;
-                loadSquadre();
-            } else {
-                document.getElementById('loginScreen').style.display    = 'flex';
-                document.getElementById('dashboardScreen').style.display = 'none';
+        const STATI = {
+            in_attesa_pagamento: { etichetta: 'In attesa di pagamento', badge: 'warn' },
+            pagata:              { etichetta: 'Pagata',                 badge: 'green' },
+            confermata_gratuita: { etichetta: 'Confermata (gratuita)',  badge: 'green' },
+            annullata:           { etichetta: 'Annullata',              badge: 'grey' }
+        };
+        const CONFERMATE = ['pagata', 'confermata_gratuita'];
+
+        const TIPI_QUOTA = {
+            persona:  'A persona',
+            squadra:  'A squadra',
+            gratuita: 'Gratuita'
+        };
+        const TIPI_CAMPO = {
+            testo:    'Testo',
+            numero:   'Numero',
+            email:    'Email',
+            telefono: 'Telefono',
+            scelta:   'Scelta da elenco',
+            casella:  'Casella (sì/no)'
+        };
+
+        const EMAIL_DEFAULT = {
+            oggetto: 'Iscrizione confermata – {evento} – {squadra}',
+            testo: 'Ciao,\n'
+                 + "l'iscrizione della squadra {squadra} alla categoria {categoria} è confermata.\n"
+                 + 'Importo: {importo}\n\n'
+                 + 'Ti aspettiamo il {data} a {luogo}!\n\n'
+                 + 'A presto,\n'
+                 + 'Il team di Piacenza Svelata'
+        };
+
+        /* =====================================================================
+           STATO
+           ===================================================================== */
+        let eventi     = [];   // [{ id, ...dati }]
+        let conteggi   = {};   // id evento -> { totale, confermate } | null
+        let editor     = null; // stato dell'editor aperto
+        let evSel      = '';   // evento selezionato nella dashboard
+        let iscrizioni = [];   // iscrizioni dell'evento selezionato
+        let vista      = 'eventi';
+
+        /* =====================================================================
+           UTILITÀ
+           ===================================================================== */
+        const $ = id => document.getElementById(id);
+
+        function escHtml(t) {
+            return String(t ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                                  .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
+        function slugify(t) {
+            return String(t ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+                .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+        }
+        function fmtEuro(n) {
+            return typeof n === 'number' && isFinite(n)
+                ? n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' })
+                : '—';
+        }
+        function fmtDataStr(s) {
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(s || '')) return '—';
+            const [y, m, d] = s.split('-').map(Number);
+            return new Date(y, m - 1, d).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+        }
+        function fmtTs(ts) {
+            const d = ts && typeof ts.toDate === 'function' ? ts.toDate() : null;
+            return d ? d.toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+        }
+        function tsMs(ts) {
+            return ts && typeof ts.toMillis === 'function' ? ts.toMillis() : 0;
+        }
+        function chiave() {
+            return Math.random().toString(36).slice(2, 10);
+        }
+        function numOrNull(v) {
+            return typeof v === 'number' && isFinite(v) ? v : null;
+        }
+        // Id univoco tra quelli già usati (aggiunge -2, -3…)
+        function idUnico(base, usati) {
+            if (!base) return '';
+            let id = base, n = 2;
+            while (usati.includes(id)) id = `${base}-${n++}`;
+            return id;
+        }
+        // Id del documento in emailUsate: l'email normalizzata, con "/" codificata
+        function idEmail(emailNorm) {
+            return String(emailNorm || '').replace(/\//g, '%2F');
+        }
+
+        let toastTimer = null;
+        function toast(msg, errore = false) {
+            const el = $('toast');
+            el.textContent = msg;
+            el.classList.toggle('admin-toast--errore', errore);
+            el.hidden = false;
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => { el.hidden = true; }, errore ? 7000 : 4000);
+        }
+
+        function apriModal(id)  { $(id).classList.add('active'); }
+        function chiudiModal(id){ $(id).classList.remove('active'); }
+
+        /* =====================================================================
+           ACCESSO
+           ===================================================================== */
+        function mostraLogin(msg) {
+            $('loginScreen').style.display = 'flex';
+            $('dashboardScreen').hidden    = true;
+            const btn = $('loginBtn');
+            btn.disabled  = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i>&nbsp; Accedi';
+            if (msg) {
+                $('loginError').textContent   = msg;
+                $('loginError').style.display = 'block';
             }
+        }
+
+        onAuthStateChanged(auth, async user => {
+            // L'accesso anonimo è quello del form iscrizioni: qui non vale
+            if (!user || user.isAnonymous) { mostraLogin(); return; }
+            try {
+                const snap = await getDoc(doc(db, 'admin', (user.email || '').toLowerCase()));
+                if (!snap.exists()) throw Object.assign(new Error('non admin'), { code: 'permission-denied' });
+            } catch (err) {
+                await signOut(auth);
+                mostraLogin(err.code === 'permission-denied'
+                    ? "Questo account non è abilitato all'area riservata."
+                    : `Impossibile verificare l'account: ${err.message}`);
+                return;
+            }
+            $('loginScreen').style.display = 'none';
+            $('dashboardScreen').hidden    = false;
+            $('topbarUser').textContent    = user.email;
+            mostraVista('eventi');
+            caricaEventi();
         });
 
-        window.doLogin = async function () {
-            const email    = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value;
-            const errEl    = document.getElementById('loginError');
-            const btn      = document.getElementById('loginBtn');
+        async function doLogin() {
+            const email    = $('loginEmail').value.trim();
+            const password = $('loginPassword').value;
+            const errEl    = $('loginError');
+            const btn      = $('loginBtn');
 
             errEl.style.display = 'none';
             btn.disabled        = true;
@@ -278,466 +515,1472 @@
             } catch (err) {
                 const msgs = {
                     'auth/invalid-credential': 'Credenziali non valide.',
+                    'auth/invalid-email':      'Indirizzo email non valido.',
                     'auth/user-not-found':     'Nessun account con questa email.',
                     'auth/wrong-password':     'Password errata.',
                     'auth/too-many-requests':  'Troppi tentativi. Riprova tra qualche minuto.',
                 };
-                errEl.textContent   = msgs[err.code] || `Errore: ${err.message}`;
-                errEl.style.display = 'block';
-                btn.disabled        = false;
-                btn.innerHTML       = '<i class="fas fa-sign-in-alt"></i>&nbsp; Accedi';
+                mostraLogin(msgs[err.code] || `Errore: ${err.message}`);
             }
-        };
+        }
+        $('loginBtn').addEventListener('click', doLogin);
+        $('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
-        document.getElementById('loginPassword').addEventListener('keydown', e => {
-            if (e.key === 'Enter') window.doLogin();
+        /* =====================================================================
+           NAVIGAZIONE TRA LE SEZIONI
+           ===================================================================== */
+        function mostraVista(nome) {
+            vista = nome;
+            $('vistaEventi').hidden     = nome !== 'eventi';
+            $('vistaEditor').hidden     = nome !== 'editor';
+            $('vistaIscrizioni').hidden = nome !== 'iscrizioni';
+            const schedaEventi = nome === 'eventi' || nome === 'editor';
+            $('tabEventi').setAttribute('aria-selected', String(schedaEventi));
+            $('tabIscrizioni').setAttribute('aria-selected', String(nome === 'iscrizioni'));
+            window.scrollTo(0, 0);
+        }
+
+        // Chiede conferma se si sta lasciando l'editor con modifiche non salvate
+        function puoLasciareEditor() {
+            if (vista !== 'editor' || !editor || !editor.modificato) return true;
+            return confirm("Ci sono modifiche non salvate all'evento. Uscire senza salvare?");
+        }
+        window.addEventListener('beforeunload', e => {
+            if (vista === 'editor' && editor && editor.modificato) { e.preventDefault(); e.returnValue = ''; }
         });
 
-        window.doLogout = () => signOut(auth);
-
-        /* ---- CARICAMENTO ---- */
-        window.loadSquadre = async function () {
-            document.getElementById('loadingMsg').style.display = 'flex';
-            document.getElementById('tableWrap').style.display  = 'none';
-            document.getElementById('emptyMsg').style.display   = 'none';
-            try {
-                const snap = await getDocs(collection(db, 'iscrizioni'));
-                allSquadre = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                updateStats();
-                filterSquadre();
-            } catch (err) {
-                document.getElementById('loadingMsg').innerHTML =
-                    `<i class="fas fa-exclamation-triangle"></i> Errore: ${escHtml(err.message)}`;
-            }
-        };
-
-        /* ---- STATISTICHE ---- */
-        function updateStats() {
-            const tot         = allSquadre.length;
-            const competitive = allSquadre.filter(s => s.categoria === 'competitiva').length;
-            const ludiche     = allSquadre.filter(s => s.categoria === 'ludica').length;
-            const bonOk       = allSquadre.filter(s => s.bonificoOk).length;
-            const partec      = allSquadre.reduce((a, s) =>
-                a + (Array.isArray(s.componenti) ? s.componenti.length : 0), 0);
-
-            document.getElementById('statTotale').textContent         = tot;
-            document.getElementById('statCompetitive').textContent    = competitive;
-            document.getElementById('statLudiche').textContent        = ludiche;
-            document.getElementById('statBonificiOk').textContent     = bonOk;
-            document.getElementById('statBonificiPending').textContent = tot - bonOk;
-            document.getElementById('statPartecipanti').textContent   = partec;
+        /* =====================================================================
+           EVENTI – ELENCO
+           ===================================================================== */
+        async function contaIscrizioni(id) {
+            const col = collection(db, 'eventi', id, 'iscrizioni');
+            const [tot, conf] = await Promise.all([
+                getCountFromServer(col),
+                getCountFromServer(query(col, where('stato', 'in', CONFERMATE)))
+            ]);
+            return { totale: tot.data().count, confermate: conf.data().count };
         }
 
-        /* ---- FILTRI ---- */
-        window.filterSquadre = function () {
-            const q    = document.getElementById('searchInput').value.toLowerCase();
-            const cat  = document.getElementById('filterCategoria').value;
-            const stat = document.getElementById('filterStatus').value;
+        async function caricaEventi() {
+            $('eventiStato').hidden    = false;
+            $('eventiStato').innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Caricamento…';
+            $('eventiTabella').hidden  = true;
+            try {
+                const snap = await getDocs(collection(db, 'eventi'));
+                eventi = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+                    .sort((a, b) => (b.data || '').localeCompare(a.data || '') || a.id.localeCompare(b.id));
+                conteggi = {};
+                renderEventi();
+                aggiornaSelettoreEventi();
+                await Promise.all(eventi.map(async ev => {
+                    try { conteggi[ev.id] = await contaIscrizioni(ev.id); }
+                    catch { conteggi[ev.id] = null; }
+                }));
+                renderEventi();
+            } catch (err) {
+                $('eventiStato').innerHTML =
+                    `<i class="fas fa-exclamation-triangle"></i><p>Errore: ${escHtml(err.message)}</p>`;
+            }
+        }
 
-            const filtered = allSquadre.filter(s => {
-                const matchQ  = !q   || s.nomeSquadra?.toLowerCase().includes(q) || s.email?.toLowerCase().includes(q);
-                const matchC  = !cat || s.categoria === cat;
-                const matchS  = !stat
-                    || (stat === 'confermata' && s.bonificoOk)
-                    || (stat === 'in_attesa'  && !s.bonificoOk);
-                return matchQ && matchC && matchS;
-            });
-
-            renderTable(filtered);
-        };
-
-        /* ---- RENDER TABELLA ---- */
-        function renderTable(list) {
-            document.getElementById('loadingMsg').style.display = 'none';
-            document.getElementById('listCount').textContent    = list.length;
-
-            if (list.length === 0) {
-                document.getElementById('tableWrap').style.display = 'none';
-                document.getElementById('emptyMsg').style.display  = 'flex';
+        function renderEventi() {
+            $('eventiCount').textContent = eventi.length;
+            if (eventi.length === 0) {
+                $('eventiTabella').hidden  = true;
+                $('eventiStato').hidden    = false;
+                $('eventiStato').innerHTML = '<i class="fas fa-calendar-plus"></i><p>Nessun evento. Crea il primo con "Nuovo evento".</p>';
                 return;
             }
-            document.getElementById('emptyMsg').style.display   = 'none';
-            document.getElementById('tableWrap').style.display  = 'block';
+            $('eventiStato').hidden   = true;
+            $('eventiTabella').hidden = false;
 
-            const tbody = document.getElementById('squadreTableBody');
-            tbody.innerHTML = '';
-
-            // Pending prima, poi per nome
-            const sorted = [...list].sort((a, b) => {
-                if (!!a.bonificoOk !== !!b.bonificoOk) return a.bonificoOk ? 1 : -1;
-                return (a.nomeSquadra || '').localeCompare(b.nomeSquadra || '');
-            });
-
-            sorted.forEach(s => {
-                const tr = document.createElement('tr');
-                if (!s.bonificoOk) tr.classList.add('admin-row-pending');
-
-                const data = s.timestamp?.toDate
-                    ? s.timestamp.toDate().toLocaleDateString('it-IT',
-                        { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
-                    : '—';
-
-                const numComp  = Array.isArray(s.componenti) ? s.componenti.length : 0;
-                const numUnder12 = Array.isArray(s.componenti)
-                ? s.componenti.filter(c => c.natoDopoGennaio2014).length
-                : 0;
-            const catBadge = s.categoria === 'competitiva'
-                ? '<span class="admin-badge admin-badge--fucsia">Competitiva</span>'
-                : '<span class="admin-badge admin-badge--green">Ludico-mot.</span>';
-
-            const bonToggle = toggleHTML(s.id, 'bonificoOk', s.bonificoOk);
-            const certToggle = s.categoria === 'competitiva'
-                ? toggleHTML(s.id, 'certificatiOk', s.certificatiOk)
-                : '<span class="admin-na">—</span>';
-
-            const emailBadge = s.emailConfermaInviata
-                ? '<span class="admin-badge admin-badge--green">Inviata</span>'
-                : '<span class="admin-badge" style="color: #ff4444; border-color: #ff4444; background: rgba(255,68,68,0.1);">Da inviare</span>';
-
-            const importoLabel = typeof s.importoDovuto === 'number'
-                ? `<span style="font-family:'Montserrat',sans-serif; font-weight:700; color: var(--accent-green);">€${s.importoDovuto}</span>`
-                : '<span style="color:#888;">—</span>';
-
-            tr.innerHTML = `
-                <td class="admin-cell-center">
-                    <input type="checkbox" class="cb-squadra" value="${escHtml(s.id)}" onchange="updateBulkEmailBtn()">
-                </td>
-                <td class="admin-cell-name">
-                    <button class="admin-link-btn" onclick="openDetail(${jsArg(s.id)})">
-                        ${escHtml(s.nomeSquadra || '—')}
-                    </button>
-                </td>
-                <td class="admin-cell-secondary">${escHtml(s.email || '—')}</td>
-                <td class="admin-cell-center">${emailBadge}</td>
-                <td>${catBadge}</td>
-                <td class="admin-cell-center">${numComp}</td>
-                <td class="admin-cell-center">${numUnder12}</td>
-                <td class="admin-cell-secondary">${data}</td>
-                <td class="admin-cell-center">${importoLabel}</td>
-                <td class="admin-cell-center">${bonToggle}</td>
-                <td class="admin-cell-center">${certToggle}</td>
-                <td class="admin-cell-center">
-                    <button class="btn btn--outline-fuchsia admin-icon-btn"
-                            title="Apri file"
-                            onclick="openFiles(${jsArg(s.id)})">
-                        <i class="fas fa-folder-open"></i>
-                    </button>
-                </td>
-                <td class="admin-cell-center">
-                    <button class="btn btn--outline-fuchsia admin-icon-btn ${s.nota ? 'admin-icon-btn--noted' : ''}"
-                            title="${s.nota ? 'Modifica nota' : 'Aggiungi nota'}"
-                            onclick="openNote(${jsArg(s.id)})">
-                        <i class="fas fa-${s.nota ? 'sticky-note' : 'plus'}"></i>
-                    </button>
-                </td>`;
-            tbody.appendChild(tr);
-            });
+            $('eventiBody').innerHTML = eventi.map(ev => {
+                const c     = conteggi[ev.id];
+                const id    = escHtml(ev.id);
+                const nCat  = Array.isArray(ev.categorie) ? ev.categorie.length : 0;
+                const conf  = c === undefined ? '<i class="fas fa-circle-notch fa-spin"></i>'
+                            : c === null      ? '<span class="admin-na">?</span>'
+                            : `${c.confermate}${c.totale > c.confermate ? ` <span class="admin-cell-secondary">(${c.totale} totali)</span>` : ''}`;
+                const eliminabile = c && c.totale === 0;
+                return `<tr>
+                    <td class="admin-cell-name">
+                        <button type="button" class="admin-link-btn" data-azione="modifica-evento" data-id="${id}">${escHtml(ev.titolo || ev.id)}</button>
+                        <div><code class="admin-mono">${id}</code> <span class="admin-cell-secondary">· ${nCat} categori${nCat === 1 ? 'a' : 'e'}</span></div>
+                    </td>
+                    <td class="admin-cell-secondary">${escHtml(fmtDataStr(ev.data))}</td>
+                    <td class="admin-cell-secondary">${escHtml(ev.luogo || '—')}</td>
+                    <td class="admin-cell-center">
+                        <label class="admin-toggle" title="${ev.iscrizioniAperte ? 'Aperte: clic per chiudere' : 'Chiuse: clic per aprire'}">
+                            <input type="checkbox" data-change="toggle-aperte" data-id="${id}" ${ev.iscrizioniAperte ? 'checked' : ''}
+                                   aria-label="Iscrizioni aperte per ${escHtml(ev.titolo || ev.id)}">
+                            <span class="admin-toggle__slider"></span>
+                        </label>
+                    </td>
+                    <td class="admin-cell-center">${conf}</td>
+                    <td>
+                        <div class="admin-actions">
+                            <button type="button" class="btn btn--outline-fuchsia admin-icon-btn" data-azione="modifica-evento" data-id="${id}" title="Modifica" aria-label="Modifica"><i class="fas fa-pen"></i></button>
+                            <button type="button" class="btn btn--outline-fuchsia admin-icon-btn" data-azione="duplica-evento" data-id="${id}" title="Duplica" aria-label="Duplica"><i class="fas fa-clone"></i></button>
+                            <button type="button" class="btn btn--outline-fuchsia admin-icon-btn" data-azione="copia-link" data-id="${id}" title="Copia link iscrizioni" aria-label="Copia link iscrizioni"><i class="fas fa-link"></i></button>
+                            <button type="button" class="btn btn--outline-fuchsia admin-icon-btn" data-azione="vai-iscrizioni" data-id="${id}" title="Vedi iscrizioni" aria-label="Vedi iscrizioni"><i class="fas fa-users"></i></button>
+                            <button type="button" class="btn btn--outline-fuchsia admin-icon-btn" data-azione="elimina-evento" data-id="${id}"
+                                    ${eliminabile ? '' : 'disabled'} title="${eliminabile ? 'Elimina' : 'Eliminabile solo senza iscrizioni'}" aria-label="Elimina"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
         }
 
-        function toggleHTML(id, field, checked) {
-            return `<label class="admin-toggle">
-                <input type="checkbox" ${checked ? 'checked' : ''}
-                       onchange="toggleFlag(${jsArg(id)},'${field}',this.checked)">
-                <span class="admin-toggle__slider"></span>
+        async function toggleAperte(input) {
+            const id  = input.dataset.id;
+            const val = input.checked;
+            const ev  = eventi.find(e => e.id === id);
+            if (!ev) return;
+            if (val && !(ev.categorie || []).some(c => c.attiva !== false)) {
+                input.checked = false;
+                toast('Aggiungi almeno una categoria visibile prima di aprire le iscrizioni.', true);
+                return;
+            }
+            const msg = val
+                ? `Aprire le iscrizioni di "${ev.titolo}"?\nIl form sarà subito utilizzabile da chi ha il link.`
+                : `Chiudere le iscrizioni di "${ev.titolo}"?`;
+            if (!confirm(msg)) { input.checked = !val; return; }
+            input.disabled = true;
+            try {
+                await updateDoc(doc(db, 'eventi', id), { iscrizioniAperte: val, aggiornatoIl: serverTimestamp() });
+                const snap = await getDoc(doc(db, 'eventi', id));
+                Object.assign(ev, snap.data());
+                toast(val ? 'Iscrizioni aperte.' : 'Iscrizioni chiuse.');
+            } catch (err) {
+                input.checked = !val;
+                toast('Errore nel salvataggio: ' + err.message, true);
+            } finally {
+                input.disabled = false;
+                renderEventi();
+            }
+        }
+
+        async function copiaLink(id) {
+            const url = `${SITO}/ps-form-iscrizioni.html?evento=${encodeURIComponent(id)}`;
+            try {
+                await navigator.clipboard.writeText(url);
+                toast('Link copiato: ' + url);
+            } catch {
+                prompt('Copia il link delle iscrizioni:', url);
+            }
+        }
+
+        async function eliminaEvento(id) {
+            const ev = eventi.find(e => e.id === id);
+            if (!ev) return;
+            try {
+                const c = await contaIscrizioni(id);
+                conteggi[id] = c;
+                if (c.totale > 0) {
+                    renderEventi();
+                    toast(`L'evento ha ${c.totale} iscrizioni: non si può eliminare. Puoi chiudere le iscrizioni.`, true);
+                    return;
+                }
+                if (!confirm(`Eliminare definitivamente l'evento "${ev.titolo}" (${id})?\nL'operazione non si può annullare.`)) return;
+                // Eventuali prenotazioni rimaste (non dovrebbero esserci senza iscrizioni)
+                for (const sub of ['nomiSquadre', 'emailUsate']) {
+                    const s = await getDocs(collection(db, 'eventi', id, sub));
+                    for (const d of s.docs) await deleteDoc(d.ref);
+                }
+                await deleteDoc(doc(db, 'eventi', id));
+                toast('Evento eliminato.');
+                if (evSel === id) evSel = '';
+                await caricaEventi();
+            } catch (err) {
+                toast('Errore: ' + err.message, true);
+            }
+        }
+
+        /* =====================================================================
+           EDITOR EVENTO – dati
+           ===================================================================== */
+        function normCampo(f) {
+            return {
+                _auto: !f.id,
+                id: f.id || '',
+                etichetta: f.etichetta || '',
+                tipo: TIPI_CAMPO[f.tipo] ? f.tipo : 'testo',
+                obbligatorio: !!f.obbligatorio,
+                opzioni: Array.isArray(f.opzioni) ? f.opzioni.map(String) : []
+            };
+        }
+        function normDocumento(d) {
+            return {
+                _auto: !d.id,
+                id: d.id || '',
+                nome: d.nome || '',
+                descrizione: d.descrizione || '',
+                per: d.per === 'squadra' ? 'squadra' : 'componente',
+                obbligatorio: d.obbligatorio !== false,
+                sanitario: !!d.sanitario
+            };
+        }
+        function normCategoria(c) {
+            const q = c.quota || {};
+            const tipo = TIPI_QUOTA[q.tipo] ? q.tipo : 'persona';
+            const scaglioni = Array.isArray(q.scaglioni) && q.scaglioni.length
+                ? q.scaglioni.map(s => ({ finoAl: s.finoAl || null, euro: numOrNull(s.euro) }))
+                : [{ finoAl: null, euro: null }];
+            return {
+                _k: chiave(),
+                _auto: !c.id,
+                _orig: c.id || '',
+                id: c.id || '',
+                nome: c.nome || '',
+                descrizione: c.descrizione || '',
+                attiva: c.attiva !== false,
+                classifica: !!c.classifica,
+                componentiMin: Number.isInteger(c.componentiMin) ? c.componentiMin : 1,
+                componentiMax: Number.isInteger(c.componentiMax) ? c.componentiMax : 4,
+                quota: { tipo, scaglioni },
+                gratuitoSottoEta: numOrNull(c.gratuitoSottoEta),
+                etaMinima: numOrNull(c.etaMinima),
+                etaMassima: numOrNull(c.etaMassima),
+                unaSquadraPerEmail: c.unaSquadraPerEmail !== false,
+                documenti: (c.documenti || []).map(normDocumento),
+                campiSquadra: (c.campiSquadra || []).map(normCampo),
+                campiComponente: (c.campiComponente || []).map(normCampo)
+            };
+        }
+        function normEvento(e) {
+            return {
+                titolo: e.titolo || '',
+                data: e.data || '',
+                luogo: e.luogo || '',
+                testoIntro: e.testoIntro || '',
+                linkRegolamento: e.linkRegolamento || '',
+                iscrizioniAperte: !!e.iscrizioniAperte,
+                email: {
+                    oggettoConferma: e.email?.oggettoConferma ?? EMAIL_DEFAULT.oggetto,
+                    testoConferma:   e.email?.testoConferma   ?? EMAIL_DEFAULT.testo
+                },
+                categorie: (e.categorie || []).map(normCategoria)
+            };
+        }
+
+        // Quota "pulita" come verrà salvata (per confronti)
+        function quotaPulita(q) {
+            return q.tipo === 'gratuita'
+                ? { tipo: 'gratuita', scaglioni: [] }
+                : { tipo: q.tipo, scaglioni: q.scaglioni.map(s => ({ finoAl: s.finoAl || null, euro: s.euro })) };
+        }
+
+        function datiDaSalvare() {
+            // Copia senza le chiavi interne dell'editor (_k, _auto, _orig)
+            const d = JSON.parse(JSON.stringify(editor.dati, (k, v) => k.startsWith('_') ? undefined : v));
+            d.titolo          = d.titolo.trim();
+            d.luogo           = d.luogo.trim();
+            d.linkRegolamento = d.linkRegolamento.trim();
+            d.categorie.forEach(c => {
+                c.nome = c.nome.trim();
+                c.quota = quotaPulita(c.quota);
+                if (c.quota.tipo !== 'persona') c.gratuitoSottoEta = null;
+                c.documenti.forEach(x => { x.nome = x.nome.trim(); });
+                [...c.campiSquadra, ...c.campiComponente].forEach(f => {
+                    f.etichetta = f.etichetta.trim();
+                    f.opzioni = f.tipo === 'scelta' ? f.opzioni.map(o => o.trim()).filter(Boolean) : [];
+                });
+            });
+            return d;
+        }
+
+        function bloccata(cat) {
+            return editor.modo === 'modifica' && cat._orig && (editor.iscritti[cat._orig] || 0) > 0;
+        }
+
+        /* =====================================================================
+           EDITOR EVENTO – apertura
+           ===================================================================== */
+        async function apriEditor(modo, ev, opzioni = {}) {
+            if (!puoLasciareEditor()) return;
+            if (modo === 'modifica') {
+                // Rilegge l'evento: la copia in elenco potrebbe non essere aggiornata
+                try {
+                    const snap = await getDoc(doc(db, 'eventi', ev.id));
+                    if (!snap.exists()) {
+                        toast("L'evento non esiste più.", true);
+                        caricaEventi();
+                        return;
+                    }
+                    ev = { id: snap.id, ...snap.data() };
+                    const i = eventi.findIndex(e => e.id === ev.id);
+                    if (i !== -1) eventi[i] = ev;
+                } catch (err) {
+                    toast("Impossibile leggere l'evento: " + err.message, true);
+                    return;
+                }
+            }
+            const dati = normEvento(ev || {});
+            if (opzioni.duplica) {
+                dati.titolo = `${dati.titolo} (copia)`;
+                dati.iscrizioniAperte = false;
+                // Le categorie copiate partono senza iscritti
+                dati.categorie.forEach(c => { c._orig = ''; });
+            }
+            editor = {
+                modo,
+                id: modo === 'modifica' ? ev.id : '',
+                idAuto: modo === 'nuovo',
+                aggiornatoIlMs: modo === 'modifica' ? tsMs(ev.aggiornatoIl) : 0,
+                dati,
+                iscritti: {},
+                quoteOrig: {},
+                apri: new Set(),
+                modificato: false
+            };
+            if (modo === 'nuovo') {
+                editor.id = idUnico(slugify(dati.titolo).slice(0, 60), eventi.map(e => e.id));
+                if (!dati.categorie.length) aggiungiCategoria(false);
+            }
+            if (modo === 'modifica') {
+                dati.categorie.forEach(c => { editor.quoteOrig[c._orig] = JSON.stringify(quotaPulita(c.quota)); });
+                try {
+                    const snap = await getDocs(collection(db, 'eventi', ev.id, 'iscrizioni'));
+                    snap.docs.forEach(d => {
+                        const cid = d.data().categoriaId;
+                        editor.iscritti[cid] = (editor.iscritti[cid] || 0) + 1;
+                    });
+                } catch (err) {
+                    toast('Impossibile contare le iscrizioni: ' + err.message, true);
+                    editor = null;
+                    return;
+                }
+            }
+            $('edTitolo').textContent = modo === 'modifica' ? `Modifica evento` : (opzioni.duplica ? 'Nuovo evento (copia)' : 'Nuovo evento');
+            $('edErrori').hidden = true;
+            renderEditor();
+            mostraVista('editor');
+        }
+
+        function aggiungiCategoria(rendi = true) {
+            const c = normCategoria({});
+            editor.dati.categorie.push(c);
+            editor.apri.add(c._k);
+            if (rendi) { editor.modificato = true; renderEditor(); }
+        }
+
+        /* =====================================================================
+           EDITOR EVENTO – disegno
+           ===================================================================== */
+        function campoId(path) { return 'f_' + path.replace(/[^a-zA-Z0-9]/g, '_'); }
+
+        function fInput(label, path, val, o = {}) {
+            const id = campoId(path);
+            const tipo = o.tipo || 'text';
+            const t = o.t || 's';
+            const v = val === null || val === undefined ? '' : val;
+            return `<div class="ps-form__field ${o.full ? 'ed-full' : ''}">
+                <label class="ps-form__label" for="${id}">${escHtml(label)}</label>
+                <input type="${tipo}" class="ps-form__input" id="${id}" data-bind="${path}" data-t="${t}"
+                       value="${escHtml(v)}" ${o.readonly ? 'readonly' : ''} ${o.attrs || ''}>
+                ${o.help ? `<p class="ed-help">${o.help}</p>` : ''}
+            </div>`;
+        }
+        function fTextarea(label, path, val, o = {}) {
+            const id = campoId(path);
+            return `<div class="ps-form__field ${o.full ? 'ed-full' : ''}">
+                <label class="ps-form__label" for="${id}">${escHtml(label)}</label>
+                <textarea class="ps-form__input admin-textarea-sm" id="${id}" data-bind="${path}" data-t="s" rows="${o.rows || 3}">${escHtml(val)}</textarea>
+                ${o.help ? `<p class="ed-help">${o.help}</p>` : ''}
+            </div>`;
+        }
+        function fSelect(label, path, val, opzioni, o = {}) {
+            const id = campoId(path);
+            return `<div class="ps-form__field ${o.full ? 'ed-full' : ''}">
+                <label class="ps-form__label" for="${id}">${escHtml(label)}</label>
+                <select class="ps-form__input" id="${id}" data-bind="${path}" data-t="s" ${o.struttura ? 'data-struttura="1"' : ''}>
+                    ${Object.entries(opzioni).map(([k, l]) => `<option value="${escHtml(k)}" ${k === val ? 'selected' : ''}>${escHtml(l)}</option>`).join('')}
+                </select>
+                ${o.help ? `<p class="ed-help">${o.help}</p>` : ''}
+            </div>`;
+        }
+        function fCheck(label, path, val, o = {}) {
+            return `<label class="ps-form__check-label">
+                <input type="checkbox" class="ps-form__checkbox" data-bind="${path}" data-t="b" ${val ? 'checked' : ''} ${o.struttura ? 'data-struttura="1"' : ''}>
+                <span class="ps-form__check-text">${escHtml(label)}</span>
             </label>`;
         }
+        function btnPiccolo(azione, testo, attrs = '', icona = 'plus', stile = 'outline') {
+            return `<button type="button" class="btn btn--${stile} ed-small-btn" data-azione="${azione}" ${attrs}>
+                <i class="fas fa-${icona}"></i>&nbsp; ${testo}
+            </button>`;
+        }
 
-        window.exportCSV = function () {
-            // Prende la lista attualmente filtrata/visibile (rispetta i filtri attivi)
-            const q    = document.getElementById('searchInput').value.toLowerCase();
-            const cat  = document.getElementById('filterCategoria').value;
-            const stat = document.getElementById('filterStatus').value;
+        function renderEditor() {
+            const d = editor.dati;
+            // Conserva le categorie aperte
+            document.querySelectorAll('#editor details.ed-cat[open]').forEach(el => editor.apri.add(el.dataset.k));
+            document.querySelectorAll('#editor details.ed-cat:not([open])').forEach(el => editor.apri.delete(el.dataset.k));
+            const y = window.scrollY;
 
-            const list = allSquadre.filter(s => {
-                const matchQ  = !q   || s.nomeSquadra?.toLowerCase().includes(q) || s.email?.toLowerCase().includes(q);
-                const matchC  = !cat || s.categoria === cat;
-                const matchS  = !stat
-                    || (stat === 'confermata' && s.bonificoOk)
-                    || (stat === 'in_attesa'  && !s.bonificoOk);
-                return matchQ && matchC && matchS;
-            });
+            const idEvento = editor.modo === 'modifica'
+                ? `<div class="ps-form__field">
+                       <span class="ps-form__label">Identificativo (nel link)</span>
+                       <code class="admin-mono ed-id-fisso">${escHtml(editor.id)}</code>
+                       <p class="ed-help">Non modificabile dopo la creazione.</p>
+                   </div>`
+                : `<div class="ps-form__field">
+                       <label class="ps-form__label" for="edId">Identificativo (nel link)</label>
+                       <input type="text" class="ps-form__input" id="edId" data-bind="#id" data-t="s" value="${escHtml(editor.id)}"
+                              maxlength="60" autocomplete="off" spellcheck="false">
+                       <p class="ed-help">Minuscole, numeri e trattini, es. piacenza-svelata-2027. Non si potrà più cambiare.</p>
+                   </div>`;
 
-            if (list.length === 0) {
-                alert('Nessuna squadra da esportare con i filtri attuali.');
+            $('editor').innerHTML = `
+                <fieldset class="ed-box">
+                    <legend>Dati generali</legend>
+                    <div class="ed-grid">
+                        ${fInput('Titolo *', 'titolo', d.titolo, { attrs: 'maxlength="200"' })}
+                        ${idEvento}
+                        ${fInput('Data evento *', 'data', d.data, { tipo: 'date' })}
+                        ${fInput('Luogo', 'luogo', d.luogo)}
+                        ${fInput('Link al regolamento', 'linkRegolamento', d.linkRegolamento, { tipo: 'url', full: true, help: 'Indirizzo completo, es. https://www.orienteeringpiacenza.it/files/regolamento.pdf' })}
+                        ${fTextarea('Testo introduttivo del form', 'testoIntro', d.testoIntro, { full: true, rows: 4, help: 'Testo semplice; gli a capo vengono mantenuti.' })}
+                    </div>
+                    <div class="ed-checks">
+                        ${fCheck('Iscrizioni aperte', 'iscrizioniAperte', d.iscrizioniAperte)}
+                    </div>
+                </fieldset>
+
+                <fieldset class="ed-box">
+                    <legend>Email di conferma</legend>
+                    <div class="ed-grid">
+                        ${fInput('Oggetto', 'email.oggettoConferma', d.email.oggettoConferma, { full: true })}
+                        ${fTextarea('Testo', 'email.testoConferma', d.email.testoConferma, { full: true, rows: 8,
+                            help: 'Inviata automaticamente dopo il pagamento (o subito per le categorie gratuite). Segnaposto: {squadra} {categoria} {evento} {data} {luogo} {importo}.' })}
+                    </div>
+                </fieldset>
+
+                <fieldset class="ed-box">
+                    <legend>Categorie</legend>
+                    <div id="edCategorie">
+                        ${d.categorie.length ? d.categorie.map(renderCategoria).join('') : '<p class="ed-help">Nessuna categoria.</p>'}
+                    </div>
+                    ${btnPiccolo('cat-aggiungi', 'Aggiungi categoria', '', 'plus', 'outline-fuchsia')}
+                </fieldset>`;
+
+            window.scrollTo(0, y);
+        }
+
+        function renderCategoria(c, i) {
+            const p = `categorie.${i}`;
+            const lock = bloccata(c);
+            const nIscr = editor.iscritti[c._orig] || 0;
+            const n = editor.dati.categorie.length;
+            const unita = c.quota.tipo === 'squadra' ? '€ a squadra' : '€ a persona';
+
+            const scaglioni = c.quota.tipo === 'gratuita' ? '<p class="ed-help">Nessun pagamento: conferma immediata.</p>' : `
+                ${c.quota.scaglioni.map((s, j) => {
+                    const ultimo = j === c.quota.scaglioni.length - 1;
+                    return `<div class="ed-row">
+                        ${ultimo
+                            ? `<div class="ps-form__field"><span class="ps-form__label">Valido</span><span class="ed-testo-campo">${c.quota.scaglioni.length > 1 ? 'dopo la data precedente, fino alla chiusura' : 'per tutto il periodo di iscrizione'}</span></div>`
+                            : fInput('Fino al (compreso)', `${p}.quota.scaglioni.${j}.finoAl`, s.finoAl, { tipo: 'date', t: 'd' })}
+                        ${fInput(unita, `${p}.quota.scaglioni.${j}.euro`, s.euro, { tipo: 'number', t: 'n', attrs: 'min="0" step="0.01" inputmode="decimal"' })}
+                        <div class="ed-row__azioni">
+                            ${c.quota.scaglioni.length > 1 ? btnPiccolo('scaglione-rimuovi', 'Rimuovi', `data-i="${i}" data-j="${j}"`, 'times') : ''}
+                        </div>
+                    </div>`;
+                }).join('')}
+                ${btnPiccolo('scaglione-aggiungi', 'Aggiungi scaglione di prezzo', `data-i="${i}"`)}
+                <p class="ed-help">Gli scaglioni permettono prezzi diversi in base alla data di iscrizione (es. 5 € fino al 15 aprile, poi 10 €).</p>`;
+
+            const documenti = c.documenti.map((x, j) => `
+                <div class="ed-row">
+                    ${fInput('Nome documento *', `${p}.documenti.${j}.nome`, x.nome, { attrs: 'placeholder="Es. Certificato medico"' })}
+                    ${fInput('Identificativo', `${p}.documenti.${j}.id`, x.id, { attrs: 'spellcheck="false"' })}
+                    ${fSelect('Richiesto per', `${p}.documenti.${j}.per`, x.per, { componente: 'Ogni componente', squadra: 'La squadra' })}
+                    ${fInput('Indicazioni', `${p}.documenti.${j}.descrizione`, x.descrizione, { full: true })}
+                    <div class="ed-row__checks ed-full">
+                        ${fCheck('Obbligatorio', `${p}.documenti.${j}.obbligatorio`, x.obbligatorio)}
+                        ${fCheck('Contiene dati sanitari (es. certificato medico)', `${p}.documenti.${j}.sanitario`, x.sanitario)}
+                        ${btnPiccolo('doc-rimuovi', 'Rimuovi', `data-i="${i}" data-j="${j}"`, 'times')}
+                    </div>
+                </div>`).join('');
+
+            const campi = lista => c[lista].map((f, j) => `
+                <div class="ed-row">
+                    ${fInput('Etichetta *', `${p}.${lista}.${j}.etichetta`, f.etichetta)}
+                    ${fInput('Identificativo', `${p}.${lista}.${j}.id`, f.id, { attrs: 'spellcheck="false"' })}
+                    ${fSelect('Tipo', `${p}.${lista}.${j}.tipo`, f.tipo, TIPI_CAMPO, { struttura: true })}
+                    ${f.tipo === 'scelta' ? fInput('Opzioni (separate da virgola) *', `${p}.${lista}.${j}.opzioni`, f.opzioni.join(', '), { t: 'opz', full: true }) : ''}
+                    <div class="ed-row__checks ed-full">
+                        ${fCheck('Obbligatorio', `${p}.${lista}.${j}.obbligatorio`, f.obbligatorio)}
+                        ${btnPiccolo('campo-rimuovi', 'Rimuovi', `data-i="${i}" data-lista="${lista}" data-j="${j}"`, 'times')}
+                    </div>
+                </div>`).join('');
+
+            return `<details class="ed-cat ${c.attiva ? '' : 'ed-cat--nascosta'}" data-k="${c._k}" ${editor.apri.has(c._k) ? 'open' : ''}>
+                <summary>
+                    <span class="ed-cat__nome" data-sommario="${i}">${escHtml(c.nome || 'Nuova categoria')}</span>
+                    <code class="admin-mono" data-sommario-id="${i}">${escHtml(c.id)}</code>
+                    ${c.attiva ? '' : '<span class="admin-badge admin-badge--grey">Nascosta</span>'}
+                    ${nIscr ? `<span class="admin-badge admin-badge--fucsia">${nIscr} iscrizion${nIscr === 1 ? 'e' : 'i'}</span>` : ''}
+                </summary>
+                <div class="ed-cat__body">
+                    ${lock ? `<p class="ed-lock"><i class="fas fa-lock"></i> Questa categoria ha già ${nIscr} iscrizion${nIscr === 1 ? 'e' : 'i'}: l'identificativo non si può cambiare e la categoria non si può eliminare (puoi nasconderla). Le modifiche alla quota valgono solo per le nuove iscrizioni.</p>` : ''}
+                    <div class="ed-grid">
+                        ${fInput('Nome *', `${p}.nome`, c.nome)}
+                        ${fInput('Identificativo', `${p}.id`, c.id, { readonly: lock, attrs: 'spellcheck="false"' })}
+                        ${fTextarea('Descrizione (mostrata nel form)', `${p}.descrizione`, c.descrizione, { full: true, rows: 2 })}
+                        ${fInput('Componenti minimo *', `${p}.componentiMin`, c.componentiMin, { tipo: 'number', t: 'i', attrs: 'min="1" max="50" step="1"' })}
+                        ${fInput('Componenti massimo *', `${p}.componentiMax`, c.componentiMax, { tipo: 'number', t: 'i', attrs: 'min="1" max="50" step="1"' })}
+                    </div>
+                    <div class="ed-checks">
+                        ${fCheck('Visibile nel form', `${p}.attiva`, c.attiva, { struttura: true })}
+                        ${fCheck('Con classifica', `${p}.classifica`, c.classifica)}
+                        ${fCheck('Una sola squadra per email', `${p}.unaSquadraPerEmail`, c.unaSquadraPerEmail)}
+                    </div>
+
+                    <div class="ed-sub">
+                        <div class="ed-sub__title">Quota di iscrizione</div>
+                        <div class="ed-grid">
+                            ${fSelect('Tipo di quota', `${p}.quota.tipo`, c.quota.tipo, TIPI_QUOTA, { struttura: true })}
+                            ${c.quota.tipo === 'persona' ? fInput('Gratis sotto i … anni', `${p}.gratuitoSottoEta`, c.gratuitoSottoEta, { tipo: 'number', t: 'i', attrs: 'min="1" max="120" step="1"', help: 'Età compiuta alla data dell\'evento. Vuoto = nessuna gratuità.' }) : ''}
+                        </div>
+                        ${scaglioni}
+                    </div>
+
+                    <div class="ed-sub">
+                        <div class="ed-sub__title">Limiti di età dei componenti</div>
+                        <div class="ed-grid">
+                            ${fInput('Età minima', `${p}.etaMinima`, c.etaMinima, { tipo: 'number', t: 'i', attrs: 'min="0" max="120" step="1"' })}
+                            ${fInput('Età massima', `${p}.etaMassima`, c.etaMassima, { tipo: 'number', t: 'i', attrs: 'min="0" max="120" step="1"' })}
+                        </div>
+                        <p class="ed-help">Età compiuta alla data dell'evento. Vuoto = nessun limite. Se c'è un limite o la gratuità per età, il form chiede la data di nascita.</p>
+                    </div>
+
+                    <div class="ed-sub">
+                        <div class="ed-sub__title">Documenti da caricare</div>
+                        ${documenti}
+                        ${btnPiccolo('doc-aggiungi', 'Aggiungi documento', `data-i="${i}"`)}
+                    </div>
+
+                    <div class="ed-sub">
+                        <div class="ed-sub__title">Campi aggiuntivi della squadra</div>
+                        ${campi('campiSquadra')}
+                        ${btnPiccolo('campo-aggiungi', 'Aggiungi campo squadra', `data-i="${i}" data-lista="campiSquadra"`)}
+                        <p class="ed-help">Nome squadra ed email sono sempre chiesti.</p>
+                    </div>
+
+                    <div class="ed-sub">
+                        <div class="ed-sub__title">Campi aggiuntivi di ogni componente</div>
+                        ${campi('campiComponente')}
+                        ${btnPiccolo('campo-aggiungi', 'Aggiungi campo componente', `data-i="${i}" data-lista="campiComponente"`)}
+                        <p class="ed-help">Nome e cognome sono sempre chiesti.</p>
+                    </div>
+
+                    <div class="ed-cat__azioni">
+                        ${btnPiccolo('cat-su', 'Su', `data-i="${i}" ${i === 0 ? 'disabled' : ''}`, 'arrow-up')}
+                        ${btnPiccolo('cat-giu', 'Giù', `data-i="${i}" ${i === n - 1 ? 'disabled' : ''}`, 'arrow-down')}
+                        ${btnPiccolo('cat-duplica', 'Duplica', `data-i="${i}"`, 'clone')}
+                        ${btnPiccolo('cat-rimuovi', 'Elimina categoria', `data-i="${i}" ${lock ? 'disabled title="Ha iscrizioni: puoi solo nasconderla"' : ''}`, 'trash')}
+                    </div>
+                </div>
+            </details>`;
+        }
+
+        /* =====================================================================
+           EDITOR EVENTO – modifiche
+           ===================================================================== */
+        function leggiPath(obj, path) {
+            return path.split('.').reduce((o, k) => (o == null ? o : o[/^\d+$/.test(k) ? Number(k) : k]), obj);
+        }
+        function scriviPath(obj, path, val) {
+            const parti = path.split('.');
+            const ultimo = parti.pop();
+            const padre = leggiPath(obj, parti.join('.')) ?? obj;
+            padre[/^\d+$/.test(ultimo) ? Number(ultimo) : ultimo] = val;
+        }
+        function convertiValore(el) {
+            const t = el.dataset.t;
+            if (t === 'b') return el.checked;
+            const v = el.value;
+            if (t === 'n')   return v.trim() === '' ? null : Number(v);
+            if (t === 'i')   return v.trim() === '' ? null : Number(v);
+            if (t === 'd')   return v || null;
+            if (t === 'opz') return v.split(',').map(s => s.trim()).filter(Boolean);
+            return v;
+        }
+
+        function suModificaEditor(e) {
+            const el = e.target.closest('[data-bind]');
+            if (!el || !editor) return;
+            const path = el.dataset.bind;
+            const val  = convertiValore(el);
+            editor.modificato = true;
+
+            if (path === '#id') {
+                editor.id = val.trim();
+                editor.idAuto = false;
                 return;
             }
+            scriviPath(editor.dati, path, val);
 
-            const headers = ['Nome Squadra', 'Email', 'Categoria', 'N. Componenti', 'Under 12', 'Importo Dovuto', 'Bonifico Confermato', 'Certificati Verificati', 'Note'];
-
-            const rows = list.map(s => {
-                const numComp    = Array.isArray(s.componenti) ? s.componenti.length : 0;
-                const numUnder12 = Array.isArray(s.componenti)
-                    ? s.componenti.filter(c => c.natoDopoGennaio2014).length
-                    : 0;
-                return [
-                    s.nomeSquadra || '',
-                    s.email || '',
-                    s.categoria === 'competitiva' ? 'Competitiva' : 'Ludico-motoria',
-                    numComp,
-                    numUnder12,
-                    typeof s.importoDovuto === 'number' ? s.importoDovuto : '',
-                    s.bonificoOk ? 'Sì' : 'No',
-                    s.categoria === 'competitiva' ? (s.certificatiOk ? 'Sì' : 'No') : 'N/A',
-                    s.nota || ''
-                ];
-            });
-
-            // Escaping CSV base (racchiude in virgolette se contiene virgola, virgolette o a capo)
-            const escCsv = v => {
-                const str = String(v);
-                if (/[",\n;]/.test(str)) {
-                    return '"' + str.replace(/"/g, '""') + '"';
-                }
-                return str;
-            };
-
-            const csvContent = [headers, ...rows]
-                .map(row => row.map(escCsv).join(';'))
-                .join('\n');
-
-            // BOM per far aprire correttamente gli accenti in Excel
-            const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url  = URL.createObjectURL(blob);
-            const a    = document.createElement('a');
-            const oggi = new Date().toISOString().slice(0, 10);
-
-            a.href = url;
-            a.download = `iscrizioni-piacenza-svelata-${oggi}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        };
-
-        function escHtml(t) {
-            return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-                            .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-        }
-        // Argomento sicuro per funzioni chiamate da attributi onclick/onchange
-        function jsArg(v) {
-            return escHtml(JSON.stringify(String(v)));
-        }
-
-        /* ---- TOGGLE FLAG ---- */
-        window.toggleFlag = async function (id, field, value) {
-            try {
-                await updateDoc(doc(db, 'iscrizioni', id), { [field]: value });
-                const idx = allSquadre.findIndex(s => s.id === id);
-                if (idx !== -1) allSquadre[idx][field] = value;
-                updateStats();
-            } catch (err) {
-                alert('Errore nel salvataggio: ' + err.message);
-                loadSquadre();
+            // Titolo → identificativo automatico (solo eventi nuovi)
+            if (path === 'titolo' && editor.modo === 'nuovo' && editor.idAuto) {
+                editor.id = idUnico(slugify(val).slice(0, 60), eventi.map(x => x.id));
+                const inp = $('edId');
+                if (inp) inp.value = editor.id;
             }
-        };
 
-        /* ---- MODAL DETTAGLIO ---- */
-        window.openDetail = function (id) {
-            const s = allSquadre.find(s => s.id === id);
+            // Nome categoria / documento / campo → identificativo automatico
+            const m = path.match(/^categorie\.(\d+)(?:\.(documenti|campiSquadra|campiComponente)\.(\d+))?\.(nome|etichetta|id)$/);
+            if (m) {
+                const cat = editor.dati.categorie[Number(m[1])];
+                const lista = m[2];
+                const ogg = lista ? cat[lista][Number(m[3])] : cat;
+                if (m[4] === 'id') {
+                    ogg._auto = false;
+                    if (!lista) aggiornaSommario(Number(m[1]));
+                } else if (ogg._auto && !(!lista && bloccata(cat))) {
+                    const altri = (lista ? cat[lista] : editor.dati.categorie).filter(x => x !== ogg).map(x => x.id);
+                    ogg.id = idUnico(slugify(val).slice(0, 40), altri);
+                    const prefisso = lista ? `categorie.${m[1]}.${lista}.${m[3]}` : `categorie.${m[1]}`;
+                    const inp = $(campoId(`${prefisso}.id`));
+                    if (inp) inp.value = ogg.id;
+                }
+                if (!lista) aggiornaSommario(Number(m[1]));
+            }
+
+            if (el.dataset.struttura && e.type === 'change') renderEditor();
+        }
+
+        function aggiornaSommario(i) {
+            const c = editor.dati.categorie[i];
+            const nome = document.querySelector(`[data-sommario="${i}"]`);
+            const id   = document.querySelector(`[data-sommario-id="${i}"]`);
+            if (nome) nome.textContent = c.nome || 'Nuova categoria';
+            if (id)   id.textContent   = c.id;
+        }
+
+        $('editor').addEventListener('input', suModificaEditor);
+        $('editor').addEventListener('change', suModificaEditor);
+
+        function azioneEditor(azione, b) {
+            const cats = editor.dati.categorie;
+            const i = Number(b.dataset.i);
+            const j = Number(b.dataset.j);
+            switch (azione) {
+                case 'cat-aggiungi':
+                    aggiungiCategoria(false);
+                    break;
+                case 'cat-rimuovi': {
+                    if (bloccata(cats[i])) return;
+                    if (!confirm(`Eliminare la categoria "${cats[i].nome || 'senza nome'}"?`)) return;
+                    cats.splice(i, 1);
+                    break;
+                }
+                case 'cat-su':
+                    if (i > 0) [cats[i - 1], cats[i]] = [cats[i], cats[i - 1]];
+                    break;
+                case 'cat-giu':
+                    if (i < cats.length - 1) [cats[i + 1], cats[i]] = [cats[i], cats[i + 1]];
+                    break;
+                case 'cat-duplica': {
+                    const copia = normCategoria(JSON.parse(JSON.stringify(cats[i], (k, v) => k.startsWith('_') ? undefined : v)));
+                    copia._orig = '';
+                    copia.nome = `${copia.nome} (copia)`;
+                    copia.id = idUnico(copia.id || 'categoria', cats.map(c => c.id));
+                    copia._auto = false;
+                    cats.splice(i + 1, 0, copia);
+                    editor.apri.add(copia._k);
+                    break;
+                }
+                case 'scaglione-aggiungi': {
+                    const s = cats[i].quota.scaglioni;
+                    // Il nuovo scaglione va prima dell'ultimo (che vale fino alla chiusura)
+                    s.splice(s.length - 1, 0, { finoAl: null, euro: s[s.length - 1]?.euro ?? null });
+                    break;
+                }
+                case 'scaglione-rimuovi': {
+                    const s = cats[i].quota.scaglioni;
+                    s.splice(j, 1);
+                    if (s.length) s[s.length - 1].finoAl = null;
+                    break;
+                }
+                case 'doc-aggiungi':
+                    cats[i].documenti.push(normDocumento({}));
+                    break;
+                case 'doc-rimuovi':
+                    cats[i].documenti.splice(j, 1);
+                    break;
+                case 'campo-aggiungi':
+                    cats[i][b.dataset.lista].push(normCampo({}));
+                    break;
+                case 'campo-rimuovi':
+                    cats[i][b.dataset.lista].splice(j, 1);
+                    break;
+                default:
+                    return;
+            }
+            editor.modificato = true;
+            renderEditor();
+        }
+
+        /* =====================================================================
+           EDITOR EVENTO – controllo e salvataggio
+           ===================================================================== */
+        function validaEditor() {
+            const err = [];
+            const d = editor.dati;
+            const intOk = (v, min, max) => Number.isInteger(v) && v >= min && v <= max;
+
+            if (editor.modo === 'nuovo') {
+                const id = editor.id;
+                if (!RE_ID.test(id) || id.length < 3 || id.length > 60)
+                    err.push('Identificativo evento: da 3 a 60 caratteri, solo lettere minuscole, numeri e trattini (es. piacenza-svelata-2027).');
+                else if (eventi.some(e => e.id === id))
+                    err.push(`Esiste già un evento con identificativo "${id}".`);
+            }
+            if (!d.titolo.trim()) err.push('Il titolo è obbligatorio.');
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(d.data)) err.push("La data dell'evento è obbligatoria.");
+            if (d.linkRegolamento.trim() && !/^https?:\/\/\S+$/i.test(d.linkRegolamento.trim()))
+                err.push('Il link al regolamento deve essere un indirizzo completo che inizia con https://');
+            if (d.categorie.length > 30) err.push('Massimo 30 categorie.');
+            if (d.iscrizioniAperte && !d.categorie.some(c => c.attiva))
+                err.push('Per aprire le iscrizioni serve almeno una categoria visibile.');
+
+            const idsCat = [];
+            d.categorie.forEach((c, i) => {
+                const n = `Categoria ${i + 1}${c.nome.trim() ? ` (${c.nome.trim()})` : ''}`;
+                if (!c.nome.trim()) err.push(`${n}: il nome è obbligatorio.`);
+                if (!RE_ID.test(c.id) || c.id.length > 40) err.push(`${n}: identificativo non valido (minuscole, numeri e trattini).`);
+                else if (idsCat.includes(c.id)) err.push(`${n}: l'identificativo "${c.id}" è già usato da un'altra categoria.`);
+                idsCat.push(c.id);
+
+                if (!intOk(c.componentiMin, 1, 50)) err.push(`${n}: il numero minimo di componenti deve essere tra 1 e 50.`);
+                if (!intOk(c.componentiMax, 1, 50) || (Number.isInteger(c.componentiMin) && c.componentiMax < c.componentiMin))
+                    err.push(`${n}: il numero massimo di componenti deve essere tra il minimo e 50.`);
+
+                if (c.quota.tipo !== 'gratuita') {
+                    const s = c.quota.scaglioni;
+                    s.forEach((x, j) => {
+                        const centesimi = typeof x.euro === 'number' ? x.euro * 100 : NaN;
+                        if (typeof x.euro !== 'number' || !(x.euro >= 0) || x.euro > 10000 || Math.abs(Math.round(centesimi) - centesimi) > 1e-6)
+                            err.push(`${n}: importo dello scaglione ${j + 1} non valido (massimo due decimali).`);
+                        if (j < s.length - 1) {
+                            if (!/^\d{4}-\d{2}-\d{2}$/.test(x.finoAl || '')) err.push(`${n}: manca la data dello scaglione ${j + 1}.`);
+                            else if (j > 0 && s[j - 1].finoAl && x.finoAl <= s[j - 1].finoAl)
+                                err.push(`${n}: le date degli scaglioni devono essere in ordine crescente.`);
+                        }
+                    });
+                    if (s.length && s.every(x => x.euro === 0))
+                        err.push(`${n}: tutti gli importi sono 0 €: usa il tipo di quota "Gratuita".`);
+                }
+                if (c.quota.tipo === 'persona' && c.gratuitoSottoEta !== null && !intOk(c.gratuitoSottoEta, 1, 120))
+                    err.push(`${n}: l'età per la gratuità deve essere un numero intero tra 1 e 120.`);
+                if (c.etaMinima !== null && !intOk(c.etaMinima, 0, 120)) err.push(`${n}: età minima non valida.`);
+                if (c.etaMassima !== null && !intOk(c.etaMassima, 0, 120)) err.push(`${n}: età massima non valida.`);
+                if (Number.isInteger(c.etaMinima) && Number.isInteger(c.etaMassima) && c.etaMinima > c.etaMassima)
+                    err.push(`${n}: l'età minima supera la massima.`);
+
+                const idsDoc = [];
+                c.documenti.forEach((x, j) => {
+                    if (!x.nome.trim()) err.push(`${n}: manca il nome del documento ${j + 1}.`);
+                    if (!RE_ID.test(x.id) || x.id.length > 40) err.push(`${n}: identificativo del documento ${j + 1} non valido.`);
+                    else if (idsDoc.includes(x.id)) err.push(`${n}: due documenti con identificativo "${x.id}".`);
+                    idsDoc.push(x.id);
+                });
+                for (const lista of ['campiSquadra', 'campiComponente']) {
+                    const nomeLista = lista === 'campiSquadra' ? 'campo squadra' : 'campo componente';
+                    const ids = [];
+                    c[lista].forEach((f, j) => {
+                        if (!f.etichetta.trim()) err.push(`${n}: manca l'etichetta del ${nomeLista} ${j + 1}.`);
+                        if (!RE_ID.test(f.id) || f.id.length > 40) err.push(`${n}: identificativo del ${nomeLista} ${j + 1} non valido.`);
+                        else if (ids.includes(f.id)) err.push(`${n}: due ${nomeLista} con identificativo "${f.id}".`);
+                        ids.push(f.id);
+                        if (f.tipo === 'scelta' && !f.opzioni.length) err.push(`${n}: il ${nomeLista} "${f.etichetta}" non ha opzioni.`);
+                    });
+                }
+            });
+            return err;
+        }
+
+        async function salvaEditor() {
+            const errori = validaEditor();
+            const box = $('edErrori');
+            if (errori.length) {
+                box.innerHTML = '<strong>Correggi prima di salvare:</strong><ul>'
+                    + errori.map(e => `<li>${escHtml(e)}</li>`).join('') + '</ul>';
+                box.hidden = false;
+                window.scrollTo(0, 0);
+                return;
+            }
+            box.hidden = true;
+
+            const dati = datiDaSalvare();
+
+            if (editor.modo === 'modifica') {
+                const cambiate = dati.categorie.filter((c, i) => {
+                    const orig = editor.dati.categorie[i]._orig;
+                    return orig && editor.iscritti[orig] && editor.quoteOrig[orig] !== JSON.stringify(c.quota);
+                });
+                if (cambiate.length && !confirm(
+                    `Hai cambiato la quota di categorie che hanno già iscrizioni (${cambiate.map(c => c.nome).join(', ')}).\n`
+                    + 'Le iscrizioni già fatte mantengono l\'importo calcolato al momento dell\'iscrizione. Continuare?')) return;
+            }
+
+            const pulsanti = document.querySelectorAll('[data-azione="ed-salva"]');
+            pulsanti.forEach(p => { p.disabled = true; });
+            const rif = doc(db, 'eventi', editor.id);
+            try {
+                await runTransaction(db, async tx => {
+                    const snap = await tx.get(rif);
+                    if (editor.modo === 'nuovo') {
+                        if (snap.exists()) throw new Error(`esiste già un evento con identificativo "${editor.id}".`);
+                        tx.set(rif, { ...dati, creatoIl: serverTimestamp(), aggiornatoIl: serverTimestamp() });
+                    } else {
+                        if (!snap.exists()) throw new Error("l'evento è stato eliminato da un altro organizzatore.");
+                        if (tsMs(snap.data().aggiornatoIl) !== editor.aggiornatoIlMs)
+                            throw new Error("l'evento è stato modificato nel frattempo (da un altro organizzatore o con l'interruttore aperte/chiuse). Annulla e riapri l'evento per vedere la versione aggiornata.");
+                        tx.update(rif, { ...dati, aggiornatoIl: serverTimestamp() });
+                    }
+                });
+                editor.modificato = false;
+                toast('Evento salvato.');
+                editor = null;
+                mostraVista('eventi');
+                await caricaEventi();
+            } catch (err) {
+                box.innerHTML = `<strong>Salvataggio non riuscito:</strong> ${escHtml(err.message)}`;
+                box.hidden = false;
+                window.scrollTo(0, 0);
+            } finally {
+                pulsanti.forEach(p => { p.disabled = false; });
+            }
+        }
+
+        /* =====================================================================
+           ISCRIZIONI – dashboard
+           ===================================================================== */
+        function evCorrente() { return eventi.find(e => e.id === evSel) || null; }
+
+        function aggiornaSelettoreEventi() {
+            const sel = $('selEvento');
+            if (!eventi.some(e => e.id === evSel)) {
+                evSel = (eventi.find(e => e.iscrizioniAperte) || eventi[0] || {}).id || '';
+            }
+            sel.innerHTML = eventi.map(e =>
+                `<option value="${escHtml(e.id)}" ${e.id === evSel ? 'selected' : ''}>${escHtml(e.titolo || e.id)}${e.data ? ' – ' + escHtml(fmtDataStr(e.data)) : ''}${e.iscrizioniAperte ? ' (aperte)' : ''}</option>`
+            ).join('');
+        }
+
+        async function apriIscrizioni(id) {
+            if (!puoLasciareEditor()) return;
+            editor = null;
+            if (id) evSel = id;
+            aggiornaSelettoreEventi();
+            mostraVista('iscrizioni');
+            await caricaIscrizioni();
+        }
+
+        function catInfo(s) {
+            const ev = evCorrente();
+            const cfg = (ev?.categorie || []).find(c => c.id === s.categoriaId) || null;
+            return { cfg, nome: s.categoria?.nome || cfg?.nome || s.categoriaId || '—' };
+        }
+        function nComp(s)     { return Array.isArray(s.componenti) ? s.componenti.length : 0; }
+        function haDocumenti(s) {
+            const { cfg } = catInfo(s);
+            const caricati = Object.keys(s.documentiSquadra || {}).length
+                + (s.componenti || []).reduce((a, c) => a + Object.keys(c.documenti || {}).length, 0);
+            return caricati > 0 || (cfg?.documenti || []).length > 0;
+        }
+
+        async function caricaIscrizioni() {
+            const ev = evCorrente();
+            $('iscrNessunEvento').hidden = !!ev;
+            $('iscrContenuto').hidden    = !ev;
+            if (!ev) return;
+
+            $('iscrStato').hidden    = false;
+            $('iscrStato').innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Caricamento…';
+            $('iscrTabella').hidden  = true;
+            $('cbSelectAll').checked = false;
+            aggiornaBtnEmail();
+            try {
+                const snap = await getDocs(collection(db, 'eventi', ev.id, 'iscrizioni'));
+                if (ev.id !== evSel) return; // nel frattempo è stato scelto un altro evento
+                iscrizioni = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+                    .sort((a, b) => tsMs(b.creataIl) - tsMs(a.creataIl));
+                popolaFiltroCategorie();
+                renderStatistiche();
+                filtraIscrizioni();
+            } catch (err) {
+                $('iscrStato').innerHTML =
+                    `<i class="fas fa-exclamation-triangle"></i><p>Errore: ${escHtml(err.message)}</p>`;
+            }
+        }
+
+        function popolaFiltroCategorie() {
+            const sel = $('filterCategoria');
+            const prima = sel.value;
+            const ev = evCorrente();
+            const cat = new Map((ev?.categorie || []).map(c => [c.id, c.nome || c.id]));
+            iscrizioni.forEach(s => { if (!cat.has(s.categoriaId)) cat.set(s.categoriaId, catInfo(s).nome); });
+            sel.innerHTML = '<option value="">Tutte le categorie</option>'
+                + [...cat].map(([id, nome]) => `<option value="${escHtml(id)}">${escHtml(nome)}</option>`).join('');
+            sel.value = cat.has(prima) ? prima : '';
+        }
+
+        function renderStatistiche() {
+            const conf = iscrizioni.filter(s => CONFERMATE.includes(s.stato));
+            const pagate = iscrizioni.filter(s => s.stato === 'pagata');
+            $('statConfermate').textContent   = conf.length;
+            $('statPartecipanti').textContent = conf.reduce((a, s) => a + nComp(s), 0);
+            $('statAttesa').textContent       = iscrizioni.filter(s => s.stato === 'in_attesa_pagamento').length;
+            $('statAnnullate').textContent    = iscrizioni.filter(s => s.stato === 'annullata').length;
+            $('statIncasso').textContent      = fmtEuro(pagate.reduce((a, s) => a + (Number(s.importo) || 0), 0));
+
+            const ev = evCorrente();
+            const righe = new Map((ev?.categorie || []).map(c => [c.id, { nome: c.nome || c.id, sq: 0, part: 0, att: 0, euro: 0 }]));
+            iscrizioni.forEach(s => {
+                if (!righe.has(s.categoriaId)) righe.set(s.categoriaId, { nome: catInfo(s).nome, sq: 0, part: 0, att: 0, euro: 0 });
+                const r = righe.get(s.categoriaId);
+                if (CONFERMATE.includes(s.stato)) { r.sq++; r.part += nComp(s); }
+                if (s.stato === 'pagata') r.euro += Number(s.importo) || 0;
+                if (s.stato === 'in_attesa_pagamento') r.att++;
+            });
+            $('statCategorieWrap').hidden = righe.size === 0;
+            $('statCategorieBody').innerHTML = [...righe.values()].map(r => `<tr>
+                <td class="admin-cell-name">${escHtml(r.nome)}</td>
+                <td class="admin-cell-center">${r.sq}</td>
+                <td class="admin-cell-center">${r.part}</td>
+                <td class="admin-cell-center">${r.att}</td>
+                <td class="admin-cell-center">${fmtEuro(r.euro)}</td>
+            </tr>`).join('');
+        }
+
+        function listaFiltrata() {
+            const q    = $('searchInput').value.trim().toLowerCase();
+            const cat  = $('filterCategoria').value;
+            const st   = $('filterStato').value;
+            return iscrizioni.filter(s => {
+                const testo = [s.nomeSquadra, s.email, ...(s.componenti || []).map(c => `${c.nome} ${c.cognome}`)]
+                    .join(' ').toLowerCase();
+                const okQ = !q || testo.includes(q);
+                const okC = !cat || s.categoriaId === cat;
+                const okS = !st
+                    || (st === 'valide' && s.stato !== 'annullata')
+                    || (st === 'confermate' && CONFERMATE.includes(s.stato))
+                    || s.stato === st;
+                return okQ && okC && okS;
+            });
+        }
+
+        function badgeStato(stato) {
+            const s = STATI[stato] || { etichetta: stato || '—', badge: 'grey' };
+            return `<span class="admin-badge admin-badge--${s.badge}">${escHtml(s.etichetta)}</span>`;
+        }
+
+        function filtraIscrizioni() {
+            const list = listaFiltrata();
+            $('iscrStato').hidden = true;
+            $('listCount').textContent = list.length;
+            if (list.length === 0) {
+                $('iscrTabella').hidden  = true;
+                $('iscrStato').hidden    = false;
+                $('iscrStato').innerHTML = `<i class="fas fa-inbox"></i><p>${iscrizioni.length ? 'Nessuna squadra con questi filtri.' : 'Nessuna iscrizione per questo evento.'}</p>`;
+                aggiornaBtnEmail();
+                return;
+            }
+            $('iscrTabella').hidden = false;
+            const selezionate = new Set([...document.querySelectorAll('.cb-squadra:checked')].map(cb => cb.value));
+
+            $('iscrBody').innerHTML = list.map(s => {
+                const id = escHtml(s.id);
+                const classi = s.stato === 'in_attesa_pagamento' ? 'admin-row-pending'
+                             : s.stato === 'annullata' ? 'admin-row-annullata' : '';
+                const docCell = haDocumenti(s)
+                    ? `<label class="admin-toggle" title="Documenti verificati">
+                           <input type="checkbox" data-change="toggle-doc" data-id="${id}" ${s.verifiche?.documentiOk ? 'checked' : ''} aria-label="Documenti verificati">
+                           <span class="admin-toggle__slider"></span>
+                       </label>`
+                    : '<span class="admin-na">—</span>';
+                const emailCell = !CONFERMATE.includes(s.stato) ? '<span class="admin-na">—</span>'
+                    : s.emailConfermaInviata ? '<span class="admin-badge admin-badge--green">Inviata</span>'
+                    : '<span class="admin-badge admin-badge--warn">Non inviata</span>';
+                return `<tr class="${classi}">
+                    <td class="admin-cell-center"><input type="checkbox" class="cb-squadra" value="${id}" ${selezionate.has(s.id) ? 'checked' : ''} aria-label="Seleziona ${escHtml(s.nomeSquadra)}"></td>
+                    <td class="admin-cell-name"><button type="button" class="admin-link-btn" data-azione="dettaglio" data-id="${id}">${escHtml(s.nomeSquadra || '—')}</button></td>
+                    <td class="admin-cell-secondary">${escHtml(s.email || '—')}</td>
+                    <td><span class="admin-badge admin-badge--fucsia">${escHtml(catInfo(s).nome)}</span></td>
+                    <td class="admin-cell-center">${nComp(s)}</td>
+                    <td class="admin-cell-center admin-importo">${fmtEuro(s.importo)}</td>
+                    <td>${badgeStato(s.stato)}</td>
+                    <td class="admin-cell-secondary">${fmtTs(s.creataIl)}</td>
+                    <td class="admin-cell-center">${docCell}</td>
+                    <td class="admin-cell-center">${emailCell}</td>
+                    <td class="admin-cell-center">
+                        <button type="button" class="btn btn--outline-fuchsia admin-icon-btn ${s.notaAdmin ? 'admin-icon-btn--noted' : ''}"
+                                data-azione="nota" data-id="${id}" title="${s.notaAdmin ? 'Modifica nota' : 'Aggiungi nota'}" aria-label="Nota">
+                            <i class="fas fa-${s.notaAdmin ? 'sticky-note' : 'plus'}"></i>
+                        </button>
+                    </td>
+                </tr>`;
+            }).join('');
+            aggiornaBtnEmail();
+        }
+
+        $('searchInput').addEventListener('input', filtraIscrizioni);
+        $('filterCategoria').addEventListener('change', filtraIscrizioni);
+        $('filterStato').addEventListener('change', filtraIscrizioni);
+        $('selEvento').addEventListener('change', e => { evSel = e.target.value; caricaIscrizioni(); });
+
+        $('cbSelectAll').addEventListener('change', e => {
+            document.querySelectorAll('.cb-squadra').forEach(cb => { cb.checked = e.target.checked; });
+            aggiornaBtnEmail();
+        });
+        $('iscrBody').addEventListener('change', e => { if (e.target.classList.contains('cb-squadra')) aggiornaBtnEmail(); });
+
+        function selezionate() {
+            const ids = new Set([...document.querySelectorAll('.cb-squadra:checked')].map(cb => cb.value));
+            return iscrizioni.filter(s => ids.has(s.id));
+        }
+        function aggiornaBtnEmail() {
+            const n = document.querySelectorAll('.cb-squadra:checked').length;
+            $('btnEmail').hidden = n === 0;
+            $('emailCount').textContent = n;
+        }
+
+        async function aggiornaIscrizione(s, campi) {
+            await updateDoc(doc(db, 'eventi', evSel, 'iscrizioni', s.id), { ...campi, aggiornataIl: serverTimestamp() });
+            Object.assign(s, campi);
+        }
+
+        async function toggleDocumenti(input) {
+            const s = iscrizioni.find(x => x.id === input.dataset.id);
             if (!s) return;
+            const val = input.checked;
+            try {
+                await aggiornaIscrizione(s, { verifiche: { ...(s.verifiche || {}), documentiOk: val } });
+            } catch (err) {
+                input.checked = !val;
+                toast('Errore nel salvataggio: ' + err.message, true);
+            }
+        }
 
-            document.getElementById('modalTitle').textContent = s.nomeSquadra || 'Dettaglio';
+        /* ---------- Dettaglio ---------- */
+        function etichetteCampi(cfg, lista) {
+            return Object.fromEntries((cfg?.[lista] || []).map(f => [f.id, f.etichetta]));
+        }
+        function nomiDocumenti(cfg) {
+            return Object.fromEntries((cfg?.documenti || []).map(d => [d.id, d.nome]));
+        }
+        function valoreCampo(v) {
+            if (v === true) return 'Sì';
+            if (v === false) return 'No';
+            if (v === null || v === undefined || v === '') return '—';
+            return String(v);
+        }
+        function righeDocumenti(mappa, nomi, prefisso = '') {
+            return Object.entries(mappa || {}).map(([idDoc, path]) => `
+                <div class="admin-file-row">
+                    <span class="admin-file-label"><i class="fas fa-file-alt"></i> ${escHtml(prefisso + (nomi[idDoc] || idDoc))}</span>
+                    <button type="button" class="btn btn--fuchsia admin-file-btn" data-azione="apri-doc" data-path="${escHtml(path)}">
+                        <i class="fas fa-external-link-alt"></i>&nbsp; Apri
+                    </button>
+                </div>`).join('');
+        }
 
-            const componenti = Array.isArray(s.componenti) && s.componenti.length
-                ? s.componenti.map((c, i) => `
-                    <div class="admin-member-row">
-                        <span class="admin-member-num">${i + 1}</span>
-                        <span>${escHtml(c.nome)} ${escHtml(c.cognome)}</span>
-                        ${c.natoDopoGennaio2014 ? '<span class="admin-badge admin-badge--green" style="margin-left:auto;">Gratuito</span>' : ''}
-                    </div>`).join('')
-                : '<p>Nessun componente.</p>';
+        function apriDettaglio(id) {
+            const s = iscrizioni.find(x => x.id === id);
+            if (!s) return;
+            const { cfg, nome: nomeCat } = catInfo(s);
+            const etSq   = etichetteCampi(cfg, 'campiSquadra');
+            const etComp = etichetteCampi(cfg, 'campiComponente');
+            const nomiDoc = nomiDocumenti(cfg);
+            const dett = s.dettaglioImporto;
 
-            const detailRows = [
-                ['Email',      escHtml(s.email || '—')],
-                ['Categoria',  s.categoria === 'competitiva' ? 'Competitiva' : 'Ludico-motoria'],
-                 ['Importo dovuto', typeof s.importoDovuto === 'number' ? `<span style="color:var(--accent-green);font-weight:700;">€${s.importoDovuto}</span>` : '—'],
-                ['Bonifico',   s.bonificoOk    ? '<span class="admin-badge admin-badge--green">✓ Confermato</span>' : '<span class="admin-badge admin-badge--warn">In attesa</span>'],
-                ...(s.categoria === 'competitiva'
-                    ? [['Certificati', s.certificatiOk ? '<span class="admin-badge admin-badge--green">✓ Verificati</span>' : '<span class="admin-badge admin-badge--warn">In attesa</span>']]
-                    : []),
-                ['ID Firestore', `<code class="admin-mono">${escHtml(s.id)}</code>`],
-                ...(s.nota ? [['Nota', escHtml(s.nota)]] : []),
+            const righe = [
+                ['Email', escHtml(s.email || '—')],
+                ['Categoria', escHtml(nomeCat)],
+                ['Stato', badgeStato(s.stato)],
+                ['Importo', `<span class="admin-importo">${fmtEuro(s.importo)}</span>`
+                    + (dett ? `<br><span class="admin-cell-secondary">${escHtml(TIPI_QUOTA[dett.tipo] || dett.tipo || '')}${typeof dett.euroUnitario === 'number' ? ' · ' + fmtEuro(dett.euroUnitario) : ''}${dett.paganti !== undefined ? ` · ${dett.paganti} paganti` : ''}${dett.gratuiti ? `, ${dett.gratuiti} gratuiti` : ''}</span>` : '')],
+                ['Iscritta il', fmtTs(s.creataIl)],
+                ...(s.stato === 'in_attesa_pagamento' ? [['Scade il', fmtTs(s.scadeIl)]] : []),
+                ...(s.pagataIl ? [['Pagata il', fmtTs(s.pagataIl)]] : []),
+                ...(s.annullataIl ? [['Annullata il', fmtTs(s.annullataIl)]] : []),
+                ...(s.sumup?.transactionCode ? [['Transazione SumUp', `<code class="admin-mono">${escHtml(s.sumup.transactionCode)}</code>`]] : []),
+                ...(s.sumup?.checkoutId ? [['Checkout SumUp', `<code class="admin-mono">${escHtml(s.sumup.checkoutId)}</code>`]] : []),
+                ...Object.entries(s.campiSquadra || {}).map(([k, v]) => [escHtml(etSq[k] || k), escHtml(valoreCampo(v))]),
+                ['Consensi', ['regolamento', 'privacy', 'datiSanitari']
+                    .filter(k => s.consensi?.[k])
+                    .map(k => `${{ regolamento: 'Regolamento', privacy: 'Privacy', datiSanitari: 'Dati sanitari' }[k]}: ${fmtTs(s.consensi[k])}`)
+                    .join('<br>') || '—'],
+                ['ID iscrizione', `<code class="admin-mono">${escHtml(s.id)}</code>`],
+                ...(s.notaAdmin ? [['Nota', escHtml(s.notaAdmin)]] : []),
+                ...(s.pagamentoInattesoIl ? [['Attenzione', `<span class="ed-lock">Pagamento ricevuto il ${fmtTs(s.pagamentoInattesoIl)} su un'iscrizione non in attesa: valutare il rimborso da SumUp.</span>`]] : []),
             ];
 
-            document.getElementById('modalContent').innerHTML = `
+            const componenti = (s.componenti || []).map((c, i) => {
+                const extra = [
+                    c.dataNascita ? `Nato/a il ${escHtml(fmtDataStr(c.dataNascita))}` : '',
+                    ...Object.entries(c.campi || {}).map(([k, v]) => `${escHtml(etComp[k] || k)}: ${escHtml(valoreCampo(v))}`)
+                ].filter(Boolean).join(' · ');
+                return `<div class="admin-member-row">
+                    <span class="admin-member-num">${i + 1}</span>
+                    <span>${escHtml(c.nome)} ${escHtml(c.cognome)}${extra ? `<br><span class="admin-cell-secondary">${extra}</span>` : ''}</span>
+                    ${c.gratuito ? '<span class="admin-badge admin-badge--green" style="margin-left:auto;">Gratuito</span>' : ''}
+                </div>`;
+            }).join('') || '<p>Nessun componente.</p>';
+
+            const documenti = righeDocumenti(s.documentiSquadra, nomiDoc)
+                + (s.componenti || []).map(c => righeDocumenti(c.documenti, nomiDoc, `${c.nome} ${c.cognome} – `)).join('');
+
+            $('modalTitle').textContent = s.nomeSquadra || 'Dettaglio';
+            $('modalContent').innerHTML = `
                 <div class="admin-detail-grid">
-                    ${detailRows.map(([k, v]) => `
+                    ${righe.map(([k, v]) => `
                         <div class="admin-detail-item">
                             <span class="admin-detail-label">${k}</span>
                             <span class="admin-detail-value">${v}</span>
                         </div>`).join('')}
                 </div>
                 <h4 class="admin-members-title">Componenti</h4>
-                <div class="admin-members-list">${componenti}</div>`;
-
-            document.getElementById('detailModal').classList.add('active');
-        };
-
-        /* ---- MODAL FILE ---- */
-        window.openFiles = async function (id) {
-            const s = allSquadre.find(s => s.id === id);
-            if (!s) return;
-
-            document.getElementById('modalTitle').textContent = `File — ${s.nomeSquadra}`;
-            document.getElementById('modalContent').innerHTML =
-                '<p><i class="fas fa-circle-notch fa-spin"></i> Recupero link…</p>';
-            document.getElementById('detailModal').classList.add('active');
-
-            const base = `iscrizioni/${s.cartellaStorage || s.id}`;
-            let html   = '<div class="admin-files-list">';
-
-            // Bonifico — prova le estensioni più comuni
-            const bonExt = ['jpg', 'jpeg', 'png', 'pdf'];
-            let bonUrl = null;
-            for (const ext of bonExt) {
-                try { bonUrl = await getDownloadURL(ref(storage, `${base}/ricevuta_bonifico.${ext}`)); break; }
-                catch {}
-            }
-            html += bonUrl ? fileRow('Ricevuta Bonifico', bonUrl) : fileRowMissing('Ricevuta Bonifico');
-
-            // Certificati
-            if (s.categoria === 'competitiva' && Array.isArray(s.componenti)) {
-                for (const c of s.componenti) {
-                    const label = `Certificato ${c.nome} ${c.cognome}`;
-                    if (!c.pathCertificato) { html += fileRowMissing(label); continue; }
-                    try {
-                        const url = await getDownloadURL(ref(storage, c.pathCertificato));
-                        html += fileRow(label, url);
-                    } catch { html += fileRowMissing(label); }
-                }
-            }
-
-            html += '</div>';
-            document.getElementById('modalContent').innerHTML = html;
-        };
-
-        function fileRow(label, url) {
-            return `<div class="admin-file-row">
-                <span class="admin-file-label"><i class="fas fa-file-alt"></i> ${escHtml(label)}</span>
-                <a href="${escHtml(url)}" target="_blank" rel="noopener noreferrer" class="btn btn--fuchsia admin-file-btn">
-                    <i class="fas fa-external-link-alt"></i> Apri
-                </a>
-            </div>`;
-        }
-        function fileRowMissing(label) {
-            return `<div class="admin-file-row admin-file-row--missing">
-                <span class="admin-file-label"><i class="fas fa-file-excel"></i> ${escHtml(label)}</span>
-                <span class="admin-badge admin-badge--warn">Non trovato</span>
-            </div>`;
+                <div class="admin-members-list">${componenti}</div>
+                ${documenti ? `<h4 class="admin-members-title ed-sub">Documenti</h4><div class="admin-files-list">${documenti}</div>` : ''}
+                ${s.stato === 'in_attesa_pagamento' && s.sumup?.checkoutId ? `
+                    <div class="ed-sub">
+                        <button type="button" class="btn btn--green admin-refresh-btn" data-azione="ricontrolla-pagamento" data-id="${escHtml(s.id)}">
+                            <i class="fas fa-sync-alt"></i>&nbsp; Ricontrolla il pagamento su SumUp
+                        </button>
+                        <p class="ed-help">Utile se la squadra dice di aver pagato ma risulta ancora in attesa.</p>
+                    </div>` : ''}
+                ${s.stato !== 'annullata' ? `
+                    <div class="ed-sub admin-zona-annulla">
+                        <h4 class="admin-members-title">Annulla iscrizione</h4>
+                        <label class="ps-form__check-label">
+                            <input type="checkbox" class="ps-form__checkbox" id="liberaNomeEmail" checked>
+                            <span class="ps-form__check-text">Libera nome squadra ed email (potranno essere usati per una nuova iscrizione)</span>
+                        </label>
+                        <button type="button" class="btn btn--outline-fuchsia admin-refresh-btn" data-azione="annulla-iscrizione" data-id="${escHtml(s.id)}">
+                            <i class="fas fa-ban"></i>&nbsp; Annulla iscrizione
+                        </button>
+                    </div>` : ''}`;
+            apriModal('detailModal');
         }
 
-        /* ---- MODAL NOTE ---- */
-        window.openNote = function (id, nota) {
-            if (nota === undefined) {
-                const s = allSquadre.find(s => s.id === id);
-                nota = s ? s.nota : '';
-            }
-            document.getElementById('noteSquadraId').value      = id;
-            document.getElementById('noteTextarea').value       = nota || '';
-            document.getElementById('noteModal').classList.add('active');
-        };
-
-        window.saveNote = async function () {
-            const id   = document.getElementById('noteSquadraId').value;
-            const nota = document.getElementById('noteTextarea').value.trim();
+        async function apriDocumento(path) {
+            const finestra = window.open('', '_blank');
             try {
-                await updateDoc(doc(db, 'iscrizioni', id), { nota });
-                const idx = allSquadre.findIndex(s => s.id === id);
-                if (idx !== -1) allSquadre[idx].nota = nota;
-                document.getElementById('noteModal').classList.remove('active');
-                filterSquadre();
+                const url = await getDownloadURL(ref(storage, path));
+                if (finestra) { finestra.opener = null; finestra.location.href = url; }
+                else window.location.href = url;
             } catch (err) {
-                alert('Errore nel salvataggio: ' + err.message);
+                if (finestra) finestra.close();
+                toast('File non trovato o non accessibile: ' + err.message, true);
             }
-        };
+        }
 
-        /* ---- CHIUDI MODAL CLICCANDO OVERLAY ---- */
-        window.closeModal = function (modalId, event) {
-            if (event.target === document.getElementById(modalId)) {
-                document.getElementById(modalId).classList.remove('active');
-            }
-        };
-
-        /* ---- GESTIONE SELEZIONE EMAIL ---- */
-        window.toggleAllCheckboxes = function() {
-            const master = document.getElementById('cbSelectAll');
-            const cbs = document.querySelectorAll('.cb-squadra');
-            cbs.forEach(cb => cb.checked = master.checked);
-            updateBulkEmailBtn();
-        };
-
-        window.updateBulkEmailBtn = function() {
-            const checked = document.querySelectorAll('.cb-squadra:checked').length;
-            const btn = document.getElementById('btnBulkEmail');
-            if(checked > 0) {
-                btn.style.display = 'inline-flex';
-                document.getElementById('bulkEmailCount').textContent = checked;
-            } else {
-                btn.style.display = 'none';
-            }
-        };
-
-        window.sendBulkEmails = async function() {
-            const cbs = document.querySelectorAll('.cb-squadra:checked');
-            const selectedIds = Array.from(cbs).map(cb => cb.value);
-            if (selectedIds.length === 0) return;
-
-            const selectedSquadre = allSquadre.filter(s => selectedIds.includes(s.id));
-
-            const incomplete = selectedSquadre.filter(s => {
-                if (s.categoria === 'ludica') return !s.bonificoOk;
-                if (s.categoria === 'competitiva') return !(s.bonificoOk && s.certificatiOk);
-                return true;
-            });
-
-            if (incomplete.length > 0) {
-                const incompleteNames = incomplete.map(s => s.nomeSquadra).join(', ');
-                const msg = `ATTENZIONE: Stai per inviare l'email di conferma a ${incomplete.length} squadre con documenti non validati:\n\n${incompleteNames}\n\nProcedere ugualmente?`;
-                if (!confirm(msg)) return;
-            }
-
-            if (!confirm(`Confermi l'invio dell'email a ${selectedIds.length} squadre?`)) return;
-
-            const btn = document.getElementById('btnBulkEmail');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Invio in corso...';
-            btn.disabled = true;
-
+        async function annullaIscrizione(id) {
+            const s = iscrizioni.find(x => x.id === id);
+            if (!s) return;
+            const libera = $('liberaNomeEmail')?.checked;
+            let msg = `Annullare l'iscrizione della squadra "${s.nomeSquadra}"?\nL'operazione non si può annullare dall'area riservata.`;
+            if (s.stato === 'pagata') msg += '\n\nLa squadra ha già pagato: l\'eventuale rimborso va fatto da SumUp.';
+            if (s.stato === 'in_attesa_pagamento') msg += '\n\nSe la squadra completa comunque il pagamento, andrà rimborsata da SumUp.';
+            if (!confirm(msg)) return;
             try {
-                for (const s of selectedSquadre) {
-                    const mailData = {
+                await updateDoc(doc(db, 'eventi', evSel, 'iscrizioni', s.id), {
+                    stato: 'annullata', annullataIl: serverTimestamp(), aggiornataIl: serverTimestamp()
+                });
+                if (libera) {
+                    if (s.nomeSlug)  await deleteDoc(doc(db, 'eventi', evSel, 'nomiSquadre', s.nomeSlug));
+                    if (s.emailNorm) await deleteDoc(doc(db, 'eventi', evSel, 'emailUsate', idEmail(s.emailNorm)));
+                }
+                chiudiModal('detailModal');
+                toast('Iscrizione annullata.');
+                await caricaIscrizioni();
+            } catch (err) {
+                toast('Errore: ' + err.message, true);
+            }
+        }
+
+        async function ricontrollaPagamento(btn, id) {
+            const orig = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>&nbsp; Controllo in corso…';
+            try {
+                const r = (await fnVerificaPagamento({ eventoId: evSel, iscrizioneId: id })).data || {};
+                const testi = {
+                    pagata: 'Pagamento trovato: iscrizione confermata e email inviata.',
+                    fallito: "L'ultimo tentativo di pagamento è stato rifiutato.",
+                    in_attesa_pagamento: 'Nessun pagamento ricevuto finora.',
+                    inesistente: "L'iscrizione non esiste più."
+                };
+                toast(testi[r.stato] || `Stato: ${r.stato}`, r.stato !== 'pagata');
+                if (r.stato === 'pagata' || r.stato === 'inesistente') {
+                    chiudiModal('detailModal');
+                    await caricaIscrizioni();
+                }
+            } catch (err) {
+                toast('Controllo non riuscito: ' + err.message, true);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = orig;
+            }
+        }
+
+        /* ---------- Note ---------- */
+        function apriNota(id) {
+            const s = iscrizioni.find(x => x.id === id);
+            if (!s) return;
+            $('noteIscrizioneId').value = id;
+            $('noteTextarea').value     = s.notaAdmin || '';
+            apriModal('noteModal');
+            $('noteTextarea').focus();
+        }
+        async function salvaNota() {
+            const s = iscrizioni.find(x => x.id === $('noteIscrizioneId').value);
+            if (!s) return;
+            try {
+                await aggiornaIscrizione(s, { notaAdmin: $('noteTextarea').value.trim() });
+                chiudiModal('noteModal');
+                filtraIscrizioni();
+            } catch (err) {
+                toast('Errore nel salvataggio: ' + err.message, true);
+            }
+        }
+
+        /* ---------- Email ---------- */
+        function valoriSegnaposto(s) {
+            const ev = evCorrente();
+            return {
+                squadra:   s.nomeSquadra || '',
+                categoria: catInfo(s).nome,
+                evento:    ev?.titolo || '',
+                data:      fmtDataStr(ev?.data),
+                luogo:     ev?.luogo || '',
+                importo:   fmtEuro(s.importo)
+            };
+        }
+        function sostituisci(testo, valori, esc) {
+            return testo.replace(/\{(squadra|categoria|evento|data|luogo|importo)\}/g, (_, k) => esc ? escHtml(valori[k]) : valori[k]);
+        }
+        function emailHtml(titolo, testo, valori) {
+            const corpo = sostituisci(escHtml(testo), valori, true).replace(/\r?\n/g, '<br>');
+            return `<div style="background-color: #050505; padding: 40px 20px; font-family: Arial, sans-serif; color: #e0e0e0; line-height: 1.6;">
+    <div style="max-width: 600px; margin: 0 auto; background-color: #121212; border: 1px solid #333333; border-radius: 8px; padding: 30px;">
+        <h2 style="color: #FF0099; font-size: 22px; font-weight: 800; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #2E7D32; padding-bottom: 10px;">${escHtml(titolo)}</h2>
+        <p style="font-size: 16px; margin: 0;">${corpo}</p>
+    </div>
+</div>`;
+        }
+
+        function apriEmail() {
+            const lista = selezionate();
+            if (!lista.length) return;
+            const ev = evCorrente();
+            const nonConf = lista.filter(s => !CONFERMATE.includes(s.stato));
+            $('emailDestCount').textContent = lista.length;
+            $('emailOggetto').value = ev?.email?.oggettoConferma ?? EMAIL_DEFAULT.oggetto;
+            $('emailTesto').value   = ev?.email?.testoConferma   ?? EMAIL_DEFAULT.testo;
+            $('emailSegnaConferma').checked = nonConf.length === 0;
+            const avviso = $('emailAvviso');
+            if (nonConf.length) {
+                avviso.textContent = `Attenzione: ${nonConf.length} delle squadre selezionate non sono confermate (${nonConf.map(s => s.nomeSquadra).join(', ')}).`;
+                avviso.hidden = false;
+            } else {
+                avviso.hidden = true;
+            }
+            apriModal('emailModal');
+        }
+
+        async function inviaEmail() {
+            const lista   = selezionate();
+            const oggetto = $('emailOggetto').value.trim();
+            const testo   = $('emailTesto').value;
+            const segna   = $('emailSegnaConferma').checked;
+            if (!lista.length) return;
+            if (!oggetto || !testo.trim()) { toast('Oggetto e testo sono obbligatori.', true); return; }
+            if (!confirm(`Inviare l'email a ${lista.length} squadre?`)) return;
+
+            const btn = $('btnEmailInvia');
+            const orig = btn.innerHTML;
+            btn.disabled = true;
+            let inviate = 0;
+            try {
+                for (const s of lista) {
+                    btn.innerHTML = `<i class="fas fa-circle-notch fa-spin"></i>&nbsp; ${inviate + 1}/${lista.length}`;
+                    const valori = valoriSegnaposto(s);
+                    const titolo = valori.evento || 'Piacenza Svelata';
+                    await addDoc(collection(db, 'mail'), {
                         to: s.email,
                         message: {
-                            subject: `Iscrizione Confermata Piacenza Svelata - ${s.nomeSquadra}`,
-                            html: `
-                                <div style="background-color: #050505; padding: 40px 20px; font-family: Arial, sans-serif; color: #e0e0e0; line-height: 1.6;">
-                                    <div style="max-width: 600px; margin: 0 auto; background-color: #121212; border: 1px solid #333333; border-radius: 8px; padding: 30px;">
-                                        <h2 style="color: #FF0099; font-size: 24px; font-weight: 800; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #2E7D32; padding-bottom: 10px;">Iscrizione Confermata!</h2>
-                                        <p style="font-size: 16px; margin-bottom: 20px;">Ciao, ti comunichiamo che abbiamo verificato i tuoi documenti e l'iscrizione per la squadra <strong style="color: #ffffff;">${escHtml(s.nomeSquadra)}</strong> è ufficialmente <strong style="color: #2E7D32;">CONFERMATA</strong>.</p>
-                                        <p style="font-size: 16px; margin-bottom: 20px;">Ci vediamo il 20 Settembre a Castell'Arquato!</p>
-                                        <p style="font-size: 16px; margin-bottom: 0;">A presto,<br><strong style="color: #FF0099;">Il team di Piacenza Svelata</strong></p>
-                                    </div>
-                                </div>
-                            `
+                            subject: sostituisci(oggetto, valori, false),
+                            text:    sostituisci(testo, valori, false),
+                            html:    emailHtml(titolo, testo, valori)
                         }
-                    };
-                    
-                    await addDoc(collection(db, "mail"), mailData);
-                    await updateDoc(doc(db, 'iscrizioni', s.id), { emailConfermaInviata: true });
-                    s.emailConfermaInviata = true;
+                    });
+                    if (segna) await aggiornaIscrizione(s, { emailConfermaInviata: true });
+                    inviate++;
                 }
-                alert(`Email inviate con successo a ${selectedIds.length} squadre.`);
-                document.getElementById('cbSelectAll').checked = false;
-                filterSquadre();
-                updateBulkEmailBtn();
-            } catch (error) {
-                alert('Errore durante l\'invio: ' + error.message);
+                chiudiModal('emailModal');
+                toast(`Email messe in coda: ${inviate}.`);
+                document.querySelectorAll('.cb-squadra').forEach(cb => { cb.checked = false; });
+                $('cbSelectAll').checked = false;
+                filtraIscrizioni();
+            } catch (err) {
+                toast(`Errore dopo ${inviate} email: ${err.message}`, true);
+                filtraIscrizioni();
             } finally {
-                btn.innerHTML = originalText;
                 btn.disabled = false;
+                btn.innerHTML = orig;
             }
-        };
+        }
 
+        /* ---------- CSV ---------- */
+        function escCsv(v) {
+            let str = String(v ?? '');
+            // Evita che Excel interpreti come formula i valori inseriti dagli utenti
+            if (/^[=+\-@\t\r]/.test(str)) str = "'" + str;
+            return /[";\n\r]/.test(str) ? '"' + str.replace(/"/g, '""') + '"' : str;
+        }
+        function scaricaCsv(nome, intestazioni, righe) {
+            const csv = [intestazioni, ...righe].map(r => r.map(escCsv).join(';')).join('\r\n');
+            const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            a.href = url;
+            a.download = nome;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+        // Colonne dinamiche: campi e documenti definiti nelle categorie + eventuali vecchi
+        function colonne(lista, chiaveDati, estrai) {
+            const ev = evCorrente();
+            const mappa = new Map();
+            (ev?.categorie || []).forEach(c => (c[lista] || []).forEach(f => {
+                if (!mappa.has(f.id)) mappa.set(f.id, f[chiaveDati]);
+            }));
+            iscrizioni.forEach(s => estrai(s).forEach(k => { if (!mappa.has(k)) mappa.set(k, k); }));
+            return [...mappa];
+        }
+        function nomeFileCsv(tipo) {
+            return `${evSel}-${tipo}-${new Date().toISOString().slice(0, 10)}.csv`;
+        }
+
+        function csvSquadre() {
+            const list = listaFiltrata();
+            if (!list.length) { toast('Nessuna squadra da esportare con i filtri attuali.', true); return; }
+            const campi = colonne('campiSquadra', 'etichetta', s => Object.keys(s.campiSquadra || {}));
+            const docs  = colonne('documenti', 'nome', s => Object.keys(s.documentiSquadra || {}))
+                .filter(([id]) => (evCorrente()?.categorie || []).some(c => (c.documenti || []).some(d => d.id === id && d.per === 'squadra'))
+                                  || list.some(s => s.documentiSquadra?.[id]));
+            const head = ['Squadra', 'Email', 'Categoria', 'Stato', 'Importo €', 'N. componenti', 'Gratuiti',
+                          'Iscritta il', 'Pagata il', ...campi.map(([, l]) => l), ...docs.map(([, l]) => `Documento: ${l}`),
+                          'Componenti', 'Documenti verificati', 'Email conferma inviata', 'Transazione SumUp', 'Nota'];
+            const righe = list.map(s => [
+                s.nomeSquadra, s.email, catInfo(s).nome, STATI[s.stato]?.etichetta || s.stato,
+                typeof s.importo === 'number' ? s.importo.toFixed(2).replace('.', ',') : '',
+                nComp(s), (s.componenti || []).filter(c => c.gratuito).length,
+                fmtTs(s.creataIl), s.pagataIl ? fmtTs(s.pagataIl) : '',
+                ...campi.map(([k]) => valoreCampo(s.campiSquadra?.[k]).replace(/^—$/, '')),
+                ...docs.map(([k]) => s.documentiSquadra?.[k] ? 'Sì' : 'No'),
+                (s.componenti || []).map(c => `${c.nome} ${c.cognome}`).join(', '),
+                s.verifiche?.documentiOk ? 'Sì' : 'No',
+                s.emailConfermaInviata ? 'Sì' : 'No',
+                s.sumup?.transactionCode || '',
+                s.notaAdmin || ''
+            ]);
+            scaricaCsv(nomeFileCsv('squadre'), head, righe);
+        }
+
+        function csvPartecipanti() {
+            const list = listaFiltrata();
+            if (!list.length) { toast('Nessuna squadra da esportare con i filtri attuali.', true); return; }
+            const campi = colonne('campiComponente', 'etichetta', s => (s.componenti || []).flatMap(c => Object.keys(c.campi || {})));
+            const docs  = colonne('documenti', 'nome', s => (s.componenti || []).flatMap(c => Object.keys(c.documenti || {})))
+                .filter(([id]) => (evCorrente()?.categorie || []).some(c => (c.documenti || []).some(d => d.id === id && d.per === 'componente'))
+                                  || list.some(s => (s.componenti || []).some(c => c.documenti?.[id])));
+            const head = ['Squadra', 'Email referente', 'Categoria', 'Stato', 'N.', 'Nome', 'Cognome', 'Data di nascita', 'Gratuito',
+                          ...campi.map(([, l]) => l), ...docs.map(([, l]) => `Documento: ${l}`)];
+            const righe = list.flatMap(s => (s.componenti || []).map((c, i) => [
+                s.nomeSquadra, s.email, catInfo(s).nome, STATI[s.stato]?.etichetta || s.stato, i + 1,
+                c.nome, c.cognome, c.dataNascita ? c.dataNascita.split('-').reverse().join('/') : '',
+                c.gratuito ? 'Sì' : 'No',
+                ...campi.map(([k]) => valoreCampo(c.campi?.[k]).replace(/^—$/, '')),
+                ...docs.map(([k]) => c.documenti?.[k] ? 'Sì' : 'No')
+            ]));
+            scaricaCsv(nomeFileCsv('partecipanti'), head, righe);
+        }
+
+        /* =====================================================================
+           GESTIONE CLIC E CAMBI (delegata)
+           ===================================================================== */
+        document.addEventListener('click', e => {
+            const b = e.target.closest('[data-azione]');
+            if (!b || b.disabled) return;
+            const az = b.dataset.azione;
+            const id = b.dataset.id;
+
+            if (az.startsWith('cat-') || az.startsWith('scaglione-') || az.startsWith('doc-') || az.startsWith('campo-')) {
+                if (editor) azioneEditor(az, b);
+                return;
+            }
+            switch (az) {
+                case 'logout':
+                    if (puoLasciareEditor()) { editor = null; signOut(auth); }
+                    break;
+                case 'tab':
+                    if (b.dataset.vista === 'eventi') {
+                        if (!puoLasciareEditor()) return;
+                        editor = null;
+                        mostraVista('eventi');
+                    } else {
+                        apriIscrizioni();
+                    }
+                    break;
+                case 'ricarica-eventi':    caricaEventi(); break;
+                case 'nuovo-evento':       apriEditor('nuovo', null); break;
+                case 'modifica-evento':    apriEditor('modifica', eventi.find(x => x.id === id)); break;
+                case 'duplica-evento':     apriEditor('nuovo', eventi.find(x => x.id === id), { duplica: true }); break;
+                case 'copia-link':         copiaLink(id); break;
+                case 'vai-iscrizioni':     apriIscrizioni(id); break;
+                case 'elimina-evento':     eliminaEvento(id); break;
+                case 'ed-annulla':
+                    if (puoLasciareEditor()) { editor = null; mostraVista('eventi'); }
+                    break;
+                case 'ed-salva':           salvaEditor(); break;
+                case 'ricarica-iscrizioni': caricaIscrizioni(); break;
+                case 'dettaglio':          apriDettaglio(id); break;
+                case 'apri-doc':           apriDocumento(b.dataset.path); break;
+                case 'annulla-iscrizione': annullaIscrizione(id); break;
+                case 'ricontrolla-pagamento': ricontrollaPagamento(b, id); break;
+                case 'nota':               apriNota(id); break;
+                case 'salva-nota':         salvaNota(); break;
+                case 'email-apri':         apriEmail(); break;
+                case 'email-invia':        inviaEmail(); break;
+                case 'csv-squadre':        csvSquadre(); break;
+                case 'csv-partecipanti':   csvPartecipanti(); break;
+                case 'chiudi-modal':       chiudiModal(b.dataset.modal); break;
+            }
+        });
+
+        document.addEventListener('change', e => {
+            const el = e.target.closest('[data-change]');
+            if (!el) return;
+            if (el.dataset.change === 'toggle-aperte') toggleAperte(el);
+            if (el.dataset.change === 'toggle-doc')    toggleDocumenti(el);
+        });
+
+        // Chiusura dei modal cliccando sullo sfondo o con Esc
+        document.querySelectorAll('[data-modal-overlay]').forEach(m => {
+            m.addEventListener('click', e => { if (e.target === m) chiudiModal(m.id); });
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') document.querySelectorAll('.ps-modal.active').forEach(m => chiudiModal(m.id));
+        });
     </script>
 </body>
 </html>

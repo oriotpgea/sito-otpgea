@@ -14,7 +14,8 @@
     <meta property="og:url" content="https://www.orienteeringpiacenza.it/eventi.html">
     <meta property="og:image" content="https://www.orienteeringpiacenza.it/images/sfondo-eventi.jpg">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stile-comune.css">
+    <link rel="stylesheet" href="stile-principale.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -35,32 +36,107 @@
     fbq('track', 'PageView');
     </script>
     <!-- End Meta Pixel Code -->
+    <style>
+        /* Card natalizia "Orienteering del solstizio" (solo pagina eventi) */
+        .card-natale {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0b3d2a 0%, #14603f 55%, #8e1b2c 100%);
+            color: #fff;
+            border: 2px solid #e8c25a;
+            border-left: 6px solid #e8c25a;
+        }
+        .card-natale .race-details { position: relative; z-index: 1; }
+        .card-natale .race-details h3 { color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.35); }
+        .card-natale .race-details li { border-bottom: 1px solid rgba(255,255,255,0.18); }
+        .card-natale .race-details li i { color: #e8c25a; width: 1.4em; text-align: center; }
+        .card-natale .race-details strong { color: #f6dc8f; }
+        .card-natale p { color: #fff; }
+        .nastro-natale {
+            display: inline-block;
+            background-color: #c62f3f;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85em;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        }
+        .auguri-natale {
+            font-family: var(--font-headings);
+            font-weight: 700;
+            font-size: 1.2em;
+            color: #f6dc8f !important;
+            margin-top: 1rem;
+        }
+        .decorazione-natale {
+            position: relative;
+            z-index: 1;
+            flex: 0 0 auto;
+            font-size: 7rem;
+            line-height: 1;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.35));
+            margin: 0 auto;
+        }
+        .fiocchi { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+        .fiocchi i {
+            position: absolute;
+            top: -2rem;
+            color: rgba(255,255,255,0.55);
+            animation: fiocco-cade 11s linear infinite;
+        }
+        .fiocchi i:nth-child(1) { left: 5%;  font-size: 0.9rem; animation-delay: 0s; }
+        .fiocchi i:nth-child(2) { left: 18%; font-size: 1.3rem; animation-delay: -3s; }
+        .fiocchi i:nth-child(3) { left: 32%; font-size: 0.8rem; animation-delay: -6s; }
+        .fiocchi i:nth-child(4) { left: 47%; font-size: 1.1rem; animation-delay: -1.5s; }
+        .fiocchi i:nth-child(5) { left: 61%; font-size: 0.9rem; animation-delay: -8s; }
+        .fiocchi i:nth-child(6) { left: 74%; font-size: 1.4rem; animation-delay: -4.5s; }
+        .fiocchi i:nth-child(7) { left: 86%; font-size: 1rem;   animation-delay: -9.5s; }
+        .fiocchi i:nth-child(8) { left: 95%; font-size: 0.8rem; animation-delay: -2s; }
+        @keyframes fiocco-cade {
+            from { transform: translateY(0) rotate(0deg); }
+            to   { transform: translateY(40rem) rotate(360deg); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .fiocchi i { animation: none; top: auto; }
+            .fiocchi i:nth-child(odd)  { top: 10%; }
+            .fiocchi i:nth-child(even) { top: 70%; }
+        }
+        @media (max-width: 768px) {
+            .decorazione-natale { font-size: 4.5rem; }
+        }
+    </style>
 </head>
 <body>
+    <a class="skip-link" href="#contenuto">Vai al contenuto</a>
 
     <header class="main-header">
         <nav class="navbar">
             <div class="logo">
-                <a href="index.html"><img src="images/logo.png" alt="Logo OTP-GEA Orienteering"></a>
+                <a href="index.html"><img width="2125" height="522" src="images/logo.png" alt="Logo OTP-GEA Orienteering"></a>
             </div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links">
                 
                 <li><a href="index.html">Home</a></li>
                 <li>
-                    <a href="ps-home.html" style="color: #FF0099; font-weight: 800; border: 2px solid #FF0099; padding: 8px 15px; border-radius: 4px; text-transform: uppercase; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#FF0099'; this.style.color='#fff'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#FF0099'">
+                    <a href="ps-home.html" class="nav-ps-link">
                         Piacenza Svelata
                     </a>
                 </li>
                 <li class="dropdown">
-                    <a href="#">Le Nostre Attività <i class="fas fa-caret-down"></i></a>
+                    <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Le Nostre Attività <i class="fas fa-caret-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-content">
                         <li><a href="eventi.html" class="active">Eventi</a></li>
                         <li><a href="teambuilding.html">Teambuilding</a></li>
                         <li><a href="caccia-al-tesoro.html">Caccia al tesoro</a></li>
+                        <li><a href="web-app.html">Web app per le scuole</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">L'Associazione <i class="fas fa-caret-down"></i></a>
+                    <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">L'Associazione <i class="fas fa-caret-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-content">
                         <li><a href="storia.html">La Nostra Storia</a></li>
                         <li><a href="promozione-territorio.html">Promozione Territorio</a></li>
@@ -71,13 +147,13 @@
                     </ul>
                 </li>
             </ul>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Apri menu">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-links">
                 <i class="fas fa-bars"></i>
             </button>
         </nav>
     </header>
 
-    <main>
+    <main id="contenuto" tabindex="-1">
         <section id="hero-eventi" class="hero-section">
             <div class="hero-content">
                 <h1>Eventi</h1>
@@ -90,105 +166,31 @@
             <div class="container">
                 <h2>I prossimi Appuntamenti</h2>
 
-                <div class="featured-race-container" style="margin-top: 1rem; margin-bottom: 3rem; border-left: 5px solid var(--primary-color);">
+                <div class="featured-race-container card-natale" style="margin-top: 1rem; margin-bottom: 3rem;">
+                    <div class="fiocchi" aria-hidden="true">
+                        <i class="fas fa-snowflake"></i><i class="fas fa-snowflake"></i><i class="fas fa-snowflake"></i><i class="fas fa-snowflake"></i><i class="fas fa-snowflake"></i><i class="fas fa-snowflake"></i><i class="fas fa-snowflake"></i><i class="fas fa-snowflake"></i>
+                    </div>
                     <div class="race-details">
-                        <h3>🏆 Trofeo Nolivari — Tappa 4: Monte Morìa</h3>
+                        <span class="nastro-natale">✨ Auguri di fine anno ✨</span>
+                        <h3>🎄 Orienteering del solstizio 2026</h3>
                         <ul>
-                            <li><strong>Data:</strong> 24 Ottobre 2026</li>
-                            <li><strong>Luogo:</strong> Monte Morìa</li>
-                            <li><strong>Tipologia:</strong> Gara del Trofeo Giorgio Nolivari 2026</li>
+                            <li><i class="fas fa-calendar-day" aria-hidden="true"></i> <strong>Data:</strong> 20 dicembre 2026</li>
+                            <li><i class="fas fa-mountain" aria-hidden="true"></i> <strong>Luogo:</strong> Val Perino - rifugio Maramotti</li>
+                            <li><i class="fas fa-users" aria-hidden="true"></i> <strong>Tipologia:</strong> attività per tesserati</li>
                         </ul>
-                        <p>Gran finale nel foliage del maestoso Parco Provinciale.</p>
-                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1rem;">
-                            <a href="files/bollettinoTGN4.pdf" class="race-link">Bollettino</a>
-                            <a href="https://forms.gle/A63TkGR6shTNrxwr9" class="race-link">Iscrizioni</a>
-                            <a href="#trofeo-nolivari" class="race-link" style="background-color: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); text-transform: uppercase;">Info Trofeo &amp; Classifica</a>
-                        </div>
+                        <p>Torna l'appuntamento di fine anno: un rogaining con polentata nell'amato rifugio Maramotti per scambiarci gli auguri e passare una bella giornata in compagnia all'aria aperta.</p>
+                        <p class="auguri-natale">🎁 Buone feste da OTP-GEA! ⛄</p>
                     </div>
+                    <div class="decorazione-natale" aria-hidden="true">🎄</div>
                 </div>
-                
-                <div id="trofeo-nolivari" class="trofeo-container" style="margin-top: 3rem;">
 
-                    <div class="trofeo-description-box">
-                        <h3>🏆 Trofeo Giorgio Nolivari 2026</h3>
-                        <p>
-                            Un circuito di gare promozionali pensato per tutti. L'obiettivo è promuovere l'orienteering tra i principianti offrendo contemporaneamente un'opportunità di allenamento per i più esperti.
-                            Un calendario di competizioni locali con tre percorsi (BIANCO, ROSSO, NERO) adatti a ogni livello. Partecipa alle tappe, accumula punti e scala il ranking finale!
-                        </p>
-                        <div style="display: flex; gap: 10px; width: 100%; box-sizing: border-box; max-width: 500px; margin: 0 auto;">
-                            <a href="files/regolamento-trofeo-nolivari.pdf" class="race-link" style="flex: 1; background-color: var(--primary-color); color: var(--text-light); text-transform: uppercase; text-align: center; padding: 10px 0; margin: 0;" target="_blank" rel="noopener noreferrer">Regolamento</a>
-                            <a href="files/Classifica_Generale_tappa3.pdf" class="race-link" style="flex: 1; background-color: var(--primary-color); color: var(--text-light); text-transform: uppercase; text-align: center; padding: 10px 0; margin: 0;" target="_blank" rel="noopener noreferrer">Classifica provvisoria</a>
+                <div class="featured-race-container" style="margin-bottom: 3rem; border-left: 5px solid var(--primary-color);">
+                    <div class="race-details">
+                        <h3>🏆 Trofeo Giorgio Nolivari 2027</h3>
+                        <p>Il Trofeo Giorgio Nolivari tornerà nel 2027! Il circuito di gare promozionali pensato per tutti, con tre percorsi (BIANCO, ROSSO, NERO) adatti a ogni livello, ripartirà con nuove tappe. Il calendario sarà pubblicato a breve: seguici sui nostri canali per non perdere le novità.</p>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1rem;">
+                            <a href="#trofeo-nolivari" class="race-link" style="background-color: transparent; color: var(--primary-color); border: 2px solid var(--primary-color); text-transform: uppercase;">Rivivi l'edizione 2026</a>
                         </div>
-                    </div>
-
-                    <h4 class="trofeo-calendario-title">Le tappe del Trofeo — Riepilogo</h4>
-
-                    <div class="trofeo-races-grid">
-
-                        <div class="trofeo-race-card">
-                            <div class="race-card-header">
-                                <span class="race-date">28 Marzo</span>
-                                <span class="race-location">Besurica e Montecucco</span>
-                            </div>
-                            <div class="race-card-body">
-                                <p>Tra parco e quartiere per una gara adrenalinica!</p>
-                            </div>
-                            <div class="race-card-links">
-                                <a href="files/BollettinoTGN1.pdf" class="race-link" style="background-color: var(--primary-color); color: var(--text-light); text-transform: uppercase;" target="_blank" rel="noopener noreferrer">Bollettino</a>
-                                <div style="display: flex; gap: 10px; width: 100%; box-sizing: border-box;">
-                                    <a href="files/classifiche-TGN1.pdf" class="race-link" style="flex: 1; background-color: var(--primary-color); color: var(--text-light); text-transform: uppercase; text-align: center; margin: 0; padding-left: 0; padding-right: 0;" target="_blank" rel="noopener noreferrer">Classifiche</a>
-                                    <a href="files/Split-TGN1.pdf" class="race-link" style="flex: 1; background-color: var(--primary-color); color: var(--text-light); text-transform: uppercase; text-align: center; margin: 0; padding-left: 0; padding-right: 0;" target="_blank" rel="noopener noreferrer">Intertempi</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="trofeo-race-card">
-                            <div class="race-card-header">
-                                <span class="race-date">18 Aprile</span>
-                                <span class="race-location">Parco della Galleana</span>
-                            </div>
-                            <div class="race-card-body">
-                                <p>Gara veloce nel più grande parco cittadino.</p>
-                            </div>
-                            <div class="race-card-links">
-                                <a href="files/BollettinoTGN2.pdf" class="race-link" style="background-color: var(--primary-color); color: var(--text-light); text-transform: uppercase;" target="_blank" rel="noopener noreferrer">Bollettino</a>
-                                <div style="display: flex; gap: 10px; width: 100%; box-sizing: border-box;">
-                                    <a href="files/classifiche-TGN2.pdf" class="race-link" style="flex: 1; background-color: var(--primary-color); color: var(--text-light); text-transform: uppercase; text-align: center; margin: 0; padding-left: 0; padding-right: 0;" target="_blank" rel="noopener noreferrer">Classifiche</a>
-                                    <a href="files/Split-TGN2.pdf" class="race-link" style="flex: 1; background-color: var(--primary-color); color: var(--text-light); text-transform: uppercase; text-align: center; margin: 0; padding-left: 0; padding-right: 0;" target="_blank" rel="noopener noreferrer">Intertempi</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="trofeo-race-card" style="border: 2px solid #FF0099;">
-                            <div class="race-card-header" style="border-bottom: 1px solid rgba(255,0,153,0.3);">
-                                <span class="race-date">20 Settembre</span>
-                                <span class="race-location">Castell'Arquato</span>
-                            </div>
-                            <div class="race-card-body">
-                                <p>Gara svolta in concomitanza con <strong style="color: #FF0099;">Castell'Arquato Svelata</strong>.</p>
-                            </div>
-                            <div class="race-card-links">
-                                <div style="display: flex; gap: 10px; width: 100%; box-sizing: border-box;">
-                                    <a href="files/classifiche-TGN3.pdf" class="race-link" style="flex: 1; background-color: var(--primary-color); color: var(--text-light); text-transform: uppercase; text-align: center; margin: 0; padding-left: 0; padding-right: 0;" target="_blank" rel="noopener noreferrer">Classifiche</a>
-                                </div>
-                                <a href="ps-edizioni.html" class="race-link" style="background-color: #FF0099; color: #fff; border: none; text-align: center;">Foto e risultati Castell'Arquato Svelata →</a>
-                            </div>
-                        </div>
-
-                        <div class="trofeo-race-card">
-                            <div class="race-card-header">
-                                <span class="race-date">24 Ottobre</span>
-                                <span class="race-location">Monte Morìa</span>
-                            </div>
-                            <div class="race-card-body">
-                                <p>Gran finale nel foliage del maestoso Parco Provinciale.</p>
-                            </div>
-                            <div class="race-card-links">
-                                <a href="files/bollettinoTGN4.pdf" class="race-link">Bollettino</a>
-                                <a href="https://forms.gle/PUzfB5a6qcacx2PD7" class="race-link">Iscrizioni</a>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
 
@@ -201,6 +203,21 @@
                 <p style="text-align: center; max-width: 800px; margin: 0 auto 4rem auto;">
                     Qui puoi rivivere le emozioni di alcune delle competizioni passate e leggere gli articoli che hanno parlato di noi.
                 </p>
+
+                <div id="trofeo-nolivari" class="featured-race-container" style="margin-bottom: 4rem;">
+                    <div class="race-details">
+                        <h3>Trofeo Giorgio Nolivari 2026</h3>
+                        <p>
+                            Il circuito di gare promozionali pensato per tutti, con tre percorsi (BIANCO, ROSSO, NERO) adatti a ogni livello: un'occasione per avvicinare i principianti all'orienteering e per allenare i più esperti. Quattro tappe tra parchi, quartieri e borghi del nostro territorio.
+                        </p>
+                        <ul>
+                            <li><strong>Tappa 1:</strong> 28 marzo 2026 - Besurica e Montecucco</li>
+                            <li><strong>Tappa 2:</strong> 18 aprile 2026 - Parco della Galleana</li>
+                            <li><strong>Tappa 3:</strong> 20 settembre 2026 - Castell'Arquato</li>
+                        </ul>
+                        <a href="files/Classifica_Generale_tappa3.pdf" class="cta-button" target="_blank" rel="noopener noreferrer">Classifiche</a>
+                    </div>
+                </div>
 
                 <div class="featured-race-container" style="margin-bottom: 4rem;">
                     <div class="race-details">
@@ -218,24 +235,24 @@
                     <div class="race-flyer" style="max-width: 380px; width: 100%; margin: 0 auto;">
                         <div class="slideshow-container">
                             <div class="mySlides fade" style="display: block;">
-                                <img src="images/castellarquato-svelata-2026/1 (1).jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 1">
+                                <img width="2738" height="1825" src="images/castellarquato-svelata-2026/1 (1).jpg" onclick="openUniversalModal(this)" alt="Foto 1">
                             </div>
                             <div class="mySlides fade">
-                                <img src="images/castellarquato-svelata-2026/1 (2).jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 2">
+                                <img width="2738" height="1825" src="images/castellarquato-svelata-2026/1 (2).jpg" onclick="openUniversalModal(this)" alt="Foto 2">
                             </div>
                             <div class="mySlides fade">
-                                <img src="images/castellarquato-svelata-2026/1 (3).jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 3">
+                                <img width="2738" height="1825" src="images/castellarquato-svelata-2026/1 (3).jpg" onclick="openUniversalModal(this)" alt="Foto 3">
                             </div>
                             <div class="mySlides fade">
-                                <img src="images/castellarquato-svelata-2026/1 (4).jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 4">
+                                <img width="2738" height="1825" src="images/castellarquato-svelata-2026/1 (4).jpg" onclick="openUniversalModal(this)" alt="Foto 4">
                             </div>
                             <div class="mySlides fade">
-                                <img src="images/castellarquato-svelata-2026/1 (5).jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 5">
+                                <img width="2738" height="1825" src="images/castellarquato-svelata-2026/1 (5).jpg" onclick="openUniversalModal(this)" alt="Foto 5">
                             </div>
                             <a class="prev" onclick="moveLocalSlide(this, -1)">&#10094;</a>
                             <a class="next" onclick="moveLocalSlide(this, 1)">&#10095;</a>
                         </div>
-                        <p style="text-align:center; font-size:0.8rem; margin-top:5px;"><i>Clicca per ingrandire</i></p>
+                        <p class="slideshow-hint"><i>Clicca per ingrandire</i></p>
                     </div>
                 </div>
 
@@ -255,24 +272,24 @@
                     <div class="race-flyer" style="max-width: 380px; width: 100%; margin: 0 auto;">
                         <div class="slideshow-container">
                             <div class="mySlides fade" style="display: block;">
-                                <img src="images/piacenza-svelata-2026/1 (1).jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 1">
+                                <img width="925" height="617" src="images/piacenza-svelata-2026/1 (1).jpg" onclick="openUniversalModal(this)" alt="Foto 1">
                             </div>
                             <div class="mySlides fade">
-                                <img src="images/piacenza-svelata-2026/1 (2).jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 2">
+                                <img width="894" height="595" src="images/piacenza-svelata-2026/1 (2).jpg" onclick="openUniversalModal(this)" alt="Foto 2">
                             </div>
                             <div class="mySlides fade">
-                                <img src="images/piacenza-svelata-2026/1 (3).jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 3">
+                                <img width="1199" height="799" src="images/piacenza-svelata-2026/1 (3).jpg" onclick="openUniversalModal(this)" alt="Foto 3">
                             </div>
                             <div class="mySlides fade">
-                                <img src="images/piacenza-svelata-2026/1 (4).jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 4">
+                                <img width="1224" height="816" src="images/piacenza-svelata-2026/1 (4).jpg" onclick="openUniversalModal(this)" alt="Foto 4">
                             </div>
                             <div class="mySlides fade">
-                                <img src="images/piacenza-svelata-2026/1 (5).jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 5">
+                                <img width="1102" height="735" src="images/piacenza-svelata-2026/1 (5).jpg" onclick="openUniversalModal(this)" alt="Foto 5">
                             </div>
                             <a class="prev" onclick="moveLocalSlide(this, -1)">&#10094;</a>
                             <a class="next" onclick="moveLocalSlide(this, 1)">&#10095;</a>
                         </div>
-                        <p style="text-align:center; font-size:0.8rem; margin-top:5px;"><i>Clicca per ingrandire</i></p>
+                        <p class="slideshow-hint"><i>Clicca per ingrandire</i></p>
                     </div>
                 </div>
 
@@ -294,61 +311,61 @@
                         <div class="slideshow-container">
                             
                             <div class="mySlides fade" style="display: block;">
-                                <img src="images/solstizio2025/foto1.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 1">
+                                <img width="1195" height="896" src="images/solstizio2025/foto1.jpg" onclick="openUniversalModal(this)" alt="Foto 1">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto2.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 2">
+                                <img width="915" height="1219" src="images/solstizio2025/foto2.jpg" onclick="openUniversalModal(this)" alt="Foto 2">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto3.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 3">
+                                <img width="691" height="921" src="images/solstizio2025/foto3.jpg" onclick="openUniversalModal(this)" alt="Foto 3">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto4.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 4">
+                                <img width="1873" height="1405" src="images/solstizio2025/foto4.jpg" onclick="openUniversalModal(this)" alt="Foto 4">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto5.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 5">
+                                <img width="839" height="1259" src="images/solstizio2025/foto5.jpg" onclick="openUniversalModal(this)" alt="Foto 5">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto6.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 6">
+                                <img width="2081" height="1387" src="images/solstizio2025/foto6.jpg" onclick="openUniversalModal(this)" alt="Foto 6">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto7.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 7">
+                                <img width="1969" height="1313" src="images/solstizio2025/foto7.jpg" onclick="openUniversalModal(this)" alt="Foto 7">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto8.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 8">
+                                <img width="771" height="1157" src="images/solstizio2025/foto8.jpg" onclick="openUniversalModal(this)" alt="Foto 8">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto9.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 9">
+                                <img width="888" height="1331" src="images/solstizio2025/foto9.jpg" onclick="openUniversalModal(this)" alt="Foto 9">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto10.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 10">
+                                <img width="721" height="1082" src="images/solstizio2025/foto10.jpg" onclick="openUniversalModal(this)" alt="Foto 10">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto11.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 11">
+                                <img width="2121" height="1414" src="images/solstizio2025/foto11.jpg" onclick="openUniversalModal(this)" alt="Foto 11">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto12.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 12">
+                                <img width="2121" height="1414" src="images/solstizio2025/foto12.jpg" onclick="openUniversalModal(this)" alt="Foto 12">
                             </div>
 
                             <div class="mySlides fade">
-                                <img src="images/solstizio2025/foto13.jpg" style="width:100%; cursor: pointer;" onclick="openUniversalModal(this)" alt="Foto 13">
+                                <img width="2045" height="1363" src="images/solstizio2025/foto13.jpg" onclick="openUniversalModal(this)" alt="Foto 13">
                             </div>
 
                             <a class="prev" onclick="moveLocalSlide(this, -1)">&#10094;</a>
                             <a class="next" onclick="moveLocalSlide(this, 1)">&#10095;</a>
                         </div>
-                        <p style="text-align:center; font-size:0.8rem; margin-top:5px;"><i>Clicca per ingrandire</i></p>
+                        <p class="slideshow-hint"><i>Clicca per ingrandire</i></p>
                     </div>
                 </div>
 
@@ -368,7 +385,7 @@
                     </div>
 
                     <div class="race-flyer">
-                        <img src="images/giornale-bando26.jpg" alt="Articolo di giornale Piacenza2030 2026">
+                        <img width="670" height="630" src="images/giornale-bando26.jpg" alt="Articolo di giornale Piacenza2030 2026">
                     </div>
                 </div>
 
@@ -387,7 +404,7 @@
                     </div>
 
                     <div class="race-flyer">
-                        <img src="images/giornale-valdarda25.jpg" alt="Articolo di giornale val d'Arda 2025">
+                        <img width="934" height="1118" src="images/giornale-valdarda25.jpg" alt="Articolo di giornale val d'Arda 2025">
                     </div>
 
                 </div>
@@ -407,7 +424,7 @@
                     </div>
 
                     <div class="race-flyer">
-                        <img src="images/giornale-bando25.jpg" alt="Articolo di giornale Piacenza2030 2024">
+                        <img width="988" height="487" src="images/giornale-bando25.jpg" alt="Articolo di giornale Piacenza2030 2024">
                     </div>
                 </div>
                 
@@ -426,7 +443,7 @@
                     </div>
 
                     <div class="race-flyer">
-                        <img src="images/giornale-bando24.jpg" alt="Articolo di giornale Piacenza2030 2024">
+                        <img width="685" height="804" src="images/giornale-bando24.jpg" alt="Articolo di giornale Piacenza2030 2024">
                     </div>
 
                 </div>

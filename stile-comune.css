@@ -1,0 +1,529 @@
+/* Stili comuni a tutto il sito (sito principale e Piacenza Svelata) */
+
+/* ==========================================================================
+   IMPOSTAZIONI GLOBALI E VARIABILI
+   ========================================================================== */
+:root {
+    --primary-color: #36685C; /*verde vecchio sito: 2E7D32. Verde scuro per titoli e dettagli */
+    --secondary-color: #7cbd7b; /* Verde più chiaro per bottoni e accenti */
+    --background-light: #F1F8E9; /* Sfondo per sezioni alternate */
+    --background-dark: #333; /* Sfondo scuro per contrasto (contatti) */
+    --text-color: #333;
+    --text-light: #fff;
+    --font-headings: 'Montserrat', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* Evita che l'header copra i titoli quando si naviga con ancore */
+}
+
+body {
+    font-family: var(--font-body);
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+    vertical-align: middle;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    padding: 0 1rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary-color);
+}
+
+/* --- Menu Hamburger per Mobile --- */
+.menu-toggle {
+    display: none; /* Nascosto di default */
+    font-size: 1.8rem;
+    color: var(--text-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    flex-basis: 31%;
+    min-width: 300px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.card h3 {
+    font-family: var(--font-headings);
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.card p {
+    flex-grow: 1; /* Fa in modo che il testo occupi lo spazio disponibile */
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 2rem 0;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (PER SMARTPHONE)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        text-align: center;
+        padding: 1.5rem 0;
+        border-top: 1px solid #eee;
+    }
+
+    .card {
+        flex-basis: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+/* ==========================================================================
+   STILI PER MENU A TENDINA (DROPDOWN)
+   ========================================================================== */
+/* Contenitore principale per un elemento del menu che ha una tendina */
+.nav-links .dropdown {
+    position: relative; /* Necessario per posizionare la tendina sottostante */
+}
+
+/* Contenitore interno, ora si occupa solo delle proporzioni */
+.video-due-click-container {
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    width: 100%;
+    padding-top: 56.25%; /* Mantiene le proporzioni 16:9 del video */
+}
+
+.video-due-click-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Assicura che l'immagine copra tutto lo spazio */
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.video-due-click-container:hover img {
+    transform: scale(1.03); /* Leggero effetto zoom al passaggio del mouse */
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 56px;
+    background-color: rgba(255, 0, 0, 0.8);
+    border-radius: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.play-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-40%, -50%);
+    border-left: 20px solid white;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+}
+
+.video-due-click-container:hover .play-button {
+    background-color: rgba(255, 0, 0, 1);
+}
+
+.video-due-click-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* --- STILI SLIDESHOW --- */
+.slideshow-container {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden; /* Mantiene i bordi arrotondati anche sulle immagini */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+/* Nascondi le immagini di default */
+.mySlides {
+  display: none;
+}
+
+/* Assicura che la prima slide sia visibile se JS non parte subito (opzionale, gestito da JS) */
+.mySlides img {
+    vertical-align: middle;
+    width: 100%;
+    height: auto;
+}
+
+/* --- STILI MODALE (LIGHTBOX) --- */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000; /* Sopra a tutto, anche alla navbar */
+  padding-top: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+}
+
+.close-newsletter {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-newsletter:hover {
+    color: #FF0099;
+}
+
+/* Classe per evidenziare il form nel footer quando si clicca */
+.highlight-form {
+    animation: pulseForm 1.5s ease-in-out infinite;
+    border: 3px solid #FF0099;
+}
+
+/* Nasconde il messaggio se il consenso è stato dato */
+.cookieconsent-optin-marketing .cookieconsent-optout-marketing {
+    display: none;
+}
+
+/* Stile per l'avviso Cookiebot dentro i contenitori video */
+.video-due-click-container .cookieconsent-optout-marketing {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #111;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    z-index: 10;
+}
+
+.video-due-click-container .cookieconsent-optout-marketing a {
+    color: var(--secondary-color);
+    text-decoration: underline;
+    font-weight: 700;
+}
+
+/* Nasconde il messaggio se il consenso è stato dato */
+.cookieconsent-optin-marketing .cookieconsent-optout-marketing {
+    display: none !important;
+}
+
+/* ==========================================================================
+   PIACENZA SVELATA - MAIN STYLESHEET
+   Sottodominio: piacenzasvelata.it
+   Author: AI Web Developer
+   ========================================================================== */
+/* --------------------------------------------------------------------------
+   0. VARIABILI CSS — Piacenza Svelata (scoped su body.page-ps)
+   -------------------------------------------------------------------------- */
+:root {
+    /* Variabili condivise tra tutti i temi */
+    --accent-fucsia: #FF0099;
+    --accent-green: #2E7D32;
+    --transition-smooth: 0.3s ease;
+    --shadow-default: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --radius-default: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   1. RESET E IMPOSTAZIONI BASE — Piacenza Svelata
+   -------------------------------------------------------------------------- */
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   3. HEADER GLOBALE
+   -------------------------------------------------------------------------- */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background-color: rgba(5, 5, 5, 0.98);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.hero__video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 1;
+}
+
+/* --- ADVENTURE (Cos'è) --- */
+.adventure {
+    padding: 5rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   5. BOTTONI GLOBALI
+   -------------------------------------------------------------------------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 30px;
+    border-radius: var(--radius-default);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition-smooth), transform var(--transition-smooth), color var(--transition-smooth);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+/* --------------------------------------------------------------------------
+   7. SLIDESHOW GALLERIA FOTOGRAFICA
+   -------------------------------------------------------------------------- */
+.slideshow {
+    max-width: 800px;
+    margin: 0 auto 2rem auto;
+}
+
+.faq__item {
+    display: block;
+    background-color: var(--bg-panel);
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-dark);
+    border-left: 4px solid var(--accent-green);
+    transition: background-color var(--transition-smooth);
+}
+
+/* Gestione nativa Cookiebot Wrapper */
+.cookieconsent-optout-marketing {
+    display: block;
+    padding: 20px;
+    background-color: var(--bg-panel);
+    border: 1px dashed var(--accent-fucsia);
+    text-align: center;
+    margin-bottom: 15px;
+    border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   13. FOOTER
+   -------------------------------------------------------------------------- */
+.footer {
+    background-color: #000000;
+    padding: 2rem 0;
+    text-align: center;
+    color: #aaaaaa;
+    border-top: 1px solid var(--border-dark);
+}
+
+/* MOBILE */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2, .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+
+    .container, [class$="__container"] {
+        padding: 0 15px;
+    }
+}
+
+/* Piccoli schermi mobile (SE, vecchi iPhone) */
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+.faq__item {
+    padding: 20px;
+    margin-bottom: 15px;
+    border-left: 6px solid var(--accent-fucsia);
+    background-color: var(--bg-panel);
+    transition: background-color var(--transition-smooth);
+}
+
+.edition-tab {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-default);
+    padding: 25px;
+    cursor: pointer;
+    transition: border-color var(--transition-smooth), transform var(--transition-smooth);
+}
+
+.edition-tab:hover {
+    border-color: rgba(255, 0, 153, 0.5);
+    transform: translateY(-2px);
+}
+
+.edition-tab.active {
+    border: 2px solid var(--accent-fucsia);
+}
+
+.edition-content {
+    display: none;
+}
+
+.edition-content.active {
+    display: block;
+}
+
+/* ==========================================================================
+   ACCESSIBILITÀ
+   ========================================================================== */
+/* Link "Vai al contenuto": invisibile finché non riceve il focus da tastiera */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 10px;
+    z-index: 10001;
+    padding: 10px 16px;
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    left: 10px;
+}
+
+#contenuto:focus {
+    outline: none;
+}
+
+/* eventi.html (prima stili inline ripetuti) */
+.mySlides img {
+    cursor: pointer;
+}
+
+/* Animazioni ridotte per chi le ha disattivate nelle impostazioni del sistema.
+   Il video della hero di ps-home viene sostituito dalla sua immagine (script.js). */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@keyframes pulseForm {
+    0% { box-shadow: 0 0 0 0 rgba(255, 0, 153, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(255, 0, 153, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 0, 153, 0); }
+}

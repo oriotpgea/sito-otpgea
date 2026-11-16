@@ -39,7 +39,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
+
     <style>
         :root {
             --bg-dark: #050505;
@@ -48,12 +48,15 @@
             --text-white: #ffffff;
             --accent-fucsia: #FF0099;
             --accent-green: #2E7D32;
+            --green-light: #66bb6a;
             --border-dark: #333333;
             --radius-default: 8px;
             --transition-smooth: 0.3s ease;
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        [hidden] { display: none !important; }
 
         body {
             background-color: var(--bg-dark);
@@ -66,7 +69,9 @@
         }
 
         h1, h2, h3 { font-family: 'Montserrat', sans-serif; color: var(--text-white); }
-        
+
+        a { color: var(--accent-fucsia); }
+
         .form-container {
             width: 100%;
             max-width: 640px;
@@ -96,9 +101,14 @@
             margin-bottom: 20px;
         }
 
-        .step { display: none; animation: fadeIn var(--transition-smooth); }
-        .step.active { display: block; }
+        .step { animation: fadeIn var(--transition-smooth); }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .step-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .step-title:focus { outline: none; }
 
         .progress-bar {
             display: flex;
@@ -143,7 +153,9 @@
             outline: none;
             border-color: var(--accent-fucsia);
         }
-        
+
+        input[type="date"] { color-scheme: dark; }
+
         select { cursor: pointer; appearance: none; }
 
         .ps-form__checkbox-wrap {
@@ -167,6 +179,15 @@
             line-height: 1.5;
         }
 
+        .field-help {
+            font-size: 0.82rem;
+            color: #999;
+            margin-top: 6px;
+        }
+
+        .field-ok   { font-size: 0.85rem; margin-top: 6px; color: var(--green-light); }
+        .field-warn { font-size: 0.85rem; margin-top: 6px; color: #ff9999; }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -180,24 +201,26 @@
             letter-spacing: 0.5px;
             border: none;
             cursor: pointer;
+            text-decoration: none;
             transition: all var(--transition-smooth);
         }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
         .btn--fuchsia { background-color: var(--accent-fucsia); color: #fff; width: 100%; }
-        .btn--fuchsia:hover { background-color: #d60080; transform: scale(1.02); }
+        .btn--fuchsia:hover:not(:disabled) { background-color: #d60080; transform: scale(1.02); }
         .btn--green { background-color: var(--accent-green); color: #fff; width: 100%; }
-        .btn--green:hover { background-color: #236026; transform: scale(1.02); }
+        .btn--green:hover:not(:disabled) { background-color: #236026; transform: scale(1.02); }
         .btn--outline { background-color: transparent; border: 2px solid var(--border-dark); color: var(--text-white); }
-        .btn--outline:hover { border-color: var(--text-white); }
-        .btn--outline-fuchsia { background-color: transparent; border: 2px solid var(--accent-fucsia); color: var(--text-white); width: 100%; }
-        .btn--outline-fuchsia:hover { background-color: var(--accent-fucsia); transform: scale(1.02); }
+        .btn--outline:hover:not(:disabled) { border-color: var(--text-white); }
+        .btn--small { width: auto; font-size: 0.8rem; padding: 8px 16px; }
 
         .btn-group {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 2fr;
             gap: 15px;
             margin-top: 30px;
         }
+        .btn-group--single { grid-template-columns: 1fr; }
 
         .component-row {
             background-color: var(--bg-dark);
@@ -208,10 +231,11 @@
             position: relative;
         }
 
-        .component-row h4 {
+        .component-row h3 {
             font-size: 1rem;
             color: var(--accent-green);
-            margin-bottom: 10px;
+            margin-bottom: 4px;
+            padding-right: 90px;
         }
 
         .remove-component {
@@ -227,12 +251,62 @@
             font-weight: bold;
         }
 
-        .file-preview {
-            font-size: 0.85rem;
-            color: var(--accent-green);
+        .badge-gratuito {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--green-light);
+            border: 1px solid rgba(46,125,50,0.5);
+            border-radius: 20px;
+            padding: 1px 8px;
+            margin-left: 8px;
+            text-transform: uppercase;
+        }
+
+        /* Scelta della categoria */
+        .intro-info { margin-bottom: 20px; }
+        .intro-info p { margin-bottom: 8px; }
+        .intro-info i { color: var(--accent-green); width: 20px; text-align: center; margin-right: 6px; }
+        .intro-testo { margin: 15px 0 5px; }
+
+        .cat-list { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; border: none; }
+        .cat-list legend { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--text-white); margin-bottom: 4px; }
+        .cat-opt {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-dark);
+            border-radius: 6px;
+            padding: 16px;
+            cursor: pointer;
+            transition: border-color var(--transition-smooth);
+        }
+        .cat-opt:hover { border-color: #666; }
+        .cat-opt:has(input:checked) { border-color: var(--accent-fucsia); }
+        .cat-opt input { margin-top: 5px; accent-color: var(--accent-fucsia); width: 18px; height: 18px; flex-shrink: 0; }
+        .cat-opt__nome { display: block; font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--text-white); }
+        .cat-opt__prezzo { display: block; color: var(--green-light); font-weight: 500; font-size: 0.95rem; }
+        .cat-opt__meta, .cat-opt__desc { display: block; font-size: 0.88rem; color: #bbb; margin-top: 4px; }
+
+        /* Documenti */
+        .doc-block { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border-dark); }
+        .doc-block:first-of-type { border-top: none; padding-top: 0; }
+        .doc-block h3 { font-size: 1.1rem; color: var(--accent-fucsia); margin-bottom: 4px; }
+        .doc-file {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: var(--bg-dark);
+            border: 1px solid rgba(46,125,50,0.6);
+            border-radius: 4px;
+            padding: 10px 14px;
             margin-top: 8px;
-            display: none;
-            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--green-light);
+            word-break: break-all;
         }
 
         .ps-form-message {
@@ -244,11 +318,39 @@
         }
 
         .ps-form-message--error { background-color: #2a0b0b; border: 1px solid #ff4949; color: #ff9999; }
-        
+        .ps-form-message ul { margin: 6px 0 0 20px; }
+
         .summary-box { background-color: var(--bg-dark); padding: 20px; border-radius: 4px; border: 1px solid var(--border-dark); margin-bottom: 20px; }
-        .summary-item { margin-bottom: 10px; font-size: 0.95rem; border-bottom: 1px solid var(--border-dark); padding-bottom: 8px; }
+        .summary-item { margin-bottom: 10px; font-size: 0.95rem; border-bottom: 1px solid var(--border-dark); padding-bottom: 8px; overflow-wrap: anywhere; }
         .summary-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .summary-item strong { color: var(--accent-fucsia); display: inline-block; width: 140px; }
+        .summary-item strong { color: var(--accent-fucsia); display: inline-block; min-width: 140px; }
+        .summary-list { list-style: none; margin-top: 4px; }
+        .summary-list li { padding-left: 12px; color: var(--text-light); }
+
+        /* Totale sempre visibile */
+        .totale-box {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--accent-green);
+            border-left: 4px solid var(--accent-green);
+            border-radius: var(--radius-default);
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px 20px;
+            flex-wrap: wrap;
+        }
+        .totale-box__label { font-family: 'Montserrat', sans-serif; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; color: var(--text-white); }
+        .totale-box__importo { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.5rem; color: var(--green-light); }
+        .totale-box__dettaglio { flex-basis: 100%; font-size: 0.85rem; color: #bbb; }
+
+        .esito { text-align: center; padding: 50px 20px; }
+        .esito i.esito__icona { font-size: 4rem; margin-bottom: 20px; }
+        .esito h2 { font-size: 2rem; margin-bottom: 10px; }
+        .esito p { margin-top: 12px; }
+        .esito .btn { margin-top: 20px; }
+        .esito__azioni { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
 
         .loading-overlay {
             position: fixed;
@@ -269,133 +371,60 @@
             animation: spin 1s linear infinite;
             margin-bottom: 15px;
         }
+        .spinner--inline { margin: 0 auto 15px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .skip-link { position: absolute; left: -9999px; top: 10px; z-index: 10000; padding: 10px 16px; background: var(--accent-fucsia); color: #fff; font-weight: 700; border-radius: 4px; text-decoration: none; }
+        .skip-link:focus { left: 10px; }
+        #contenuto:focus { outline: none; }
+
+        @media (max-width: 520px) {
+            body { padding: 24px 12px; }
+            .panel { padding: 22px 16px; }
+            .header-title { font-size: 1.6rem; }
+            .btn-group { grid-template-columns: 1fr; }
+            .btn-group .btn--outline { order: 2; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+        }
     </style>
 </head>
 <body>
+<a class="skip-link" href="#contenuto">Vai al contenuto</a>
 
-<div class="loading-overlay" id="loadingOverlay">
+<div class="loading-overlay" id="loadingOverlay" role="status" aria-live="polite">
     <div class="spinner"></div>
     <div id="loadingText" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: white;">Elaborazione in corso...</div>
 </div>
 
-<div class="form-container">
-    <h1 class="header-title">Iscrizione a Piacenza Svelata</h1>
-    
-    <div class="progress-bar" id="progressBar">
-        <div class="progress-step active" data-step="0"></div>
-        <div class="progress-step" data-step="1"></div>
-        <div class="progress-step" data-step="2"></div>
-        <div class="progress-step" data-step="3"></div>
-    </div>
+<main class="form-container" id="contenuto" tabindex="-1">
+    <h1 class="header-title" id="titoloEvento">Iscrizione</h1>
+    <p class="header-subtitle" id="sottotitoloEvento"></p>
 
-    <div id="errorBox" class="ps-form-message ps-form-message--error"></div>
+    <div class="progress-bar" id="progressBar" aria-hidden="true"></div>
 
-    <div class="step active panel" id="step0">
-        <h2 style="font-size: 1.5rem; margin-bottom: 15px; color: var(--accent-green);">Istruzioni Preliminari</h2>
-        <p>L'iscrizione richiede il pagamento anticipato tramite bonifico bancario.</p>
-        <div style="background: var(--bg-dark); padding: 15px; border: 1px solid var(--border-dark); border-radius: 4px; margin: 20px 0;">
-            <p><strong>Intestatario:</strong> OTP-GEA ORIENTEERING ASD APS</p>
-            <p><strong>IBAN:</strong> IT81J0306909606100000199060 </p>
-            <p><strong>Causale:</strong> PIACENZA SVELATA 2026 - [Nome della squadra]</p>
-            <p><strong>Importo:</strong> 5€ a persona fino al 16 settembre, poi 10€.</p>
-            <p>Si consiglia di fare un bonifico per ogni squadra. Se un bonifico copre più squadre indicarlo chiaramente nella causale.</p>
-        </div>
-        <p style="margin-bottom: 25px; font-size: 0.9rem; color: #aaa;">Per la categoria competitiva è obbligatorio caricare i certificati medici di <strong>ogni singolo componente</strong> della squadra.</p>
-        
-        <button type="button" class="btn btn--fuchsia" onclick="nextStep(1)">Ho effettuato il bonifico, procedi <i class="fas fa-arrow-right" style="margin-left: 10px;"></i></button>
-    </div>
+    <div id="errorBox" class="ps-form-message ps-form-message--error" role="alert"></div>
+    <div class="totale-box" id="totaleBox" aria-live="polite" hidden></div>
 
-    <div class="step panel" id="step1">
-        <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Dati Squadra</h2>
-        
-        <label class="ps-form__label" for="nomeSquadra">Nome Squadra *</label>
-        <input type="text" class="ps-form__input" id="nomeSquadra" required>
-
-        <label class="ps-form__label" for="emailReferente">Email di riferimento *</label>
-        <input type="email" class="ps-form__input" id="emailReferente" required>
-
-        <label class="ps-form__label" for="categoria">Categoria *</label>
-        <select class="ps-form__input" id="categoria" onchange="toggleCategoriaLogic()">
-            <option value="">Seleziona...</option>
-            <option value="competitiva">Competitiva (ROSSO) - Richiede Certificati</option>
-            <option value="ludica">Ludico-motoria (BIANCO)</option>
-        </select>
-
-        <div style="margin-top: 30px; border-top: 1px solid var(--border-dark); padding-top: 20px;">
-            <h3 style="font-size: 1.2rem;">Componenti (Max 4)</h3>
-            <div id="componentiContainer"></div>
-            <button type="button" class="btn btn--outline" id="btnAddUser" onclick="addComponente()" style="margin-top: 15px; width: auto; font-size: 0.8rem; padding: 8px 16px;">
-                <i class="fas fa-plus" style="margin-right: 5px;"></i> Aggiungi componente
-            </button>
-        </div>
-
-        <label class="ps-form__checkbox-wrap" id="certificatoCheckboxGroup" style="display: none;">
-            <input type="checkbox" class="ps-form__checkbox" id="dichiaraCertificato">
-            <span class="ps-form__checkbox-text">Dichiaro che tutti i componenti competitivi sono in possesso di certificato medico per attività sportiva non agonistica o superiore *</span>
-        </label>
-
-        <div class="btn-group">
-            <button type="button" class="btn btn--outline" onclick="prevStep(0)">Indietro</button>
-            <button type="button" class="btn btn--fuchsia" onclick="validateAndNext(1)">Avanti</button>
+    <div class="panel" id="statoPanel">
+        <div class="esito">
+            <div class="spinner spinner--inline"></div>
+            <p>Caricamento del modulo…</p>
         </div>
     </div>
 
-    <div class="step panel" id="step2">
-        <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Upload Documenti</h2>
-        
-        <div style="margin-bottom: 30px;">
-            <label class="ps-form__label" for="fileBonifico">Ricevuta Bonifico (JPG, PNG, PDF) *</label>
-            <input type="file" class="ps-form__input" id="fileBonifico" accept=".jpg,.jpeg,.png,.pdf" required onchange="handleFileSelect(event, 'bonifico')">
-            <div id="previewBonifico" class="file-preview"></div>
-        </div>
+    <form class="panel step" id="passo" novalidate hidden></form>
 
-        <div id="uploadCertificatiContainer" style="display: none; border-top: 1px solid var(--border-dark); padding-top: 20px;">
-            <h3 style="font-size: 1.2rem; color: var(--accent-fucsia); margin-bottom: 15px;">Certificati Medici</h3>
-            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 20px;">Carica un certificato medico per ogni membro della squadra.</p>
-            <div id="certificatiInputs"></div>
-        </div>
-
-        <div class="btn-group">
-            <button type="button" class="btn btn--outline" onclick="prevStep(1)">Indietro</button>
-            <button type="button" class="btn btn--fuchsia" onclick="validateAndNext(2)">Avanti</button>
-        </div>
-    </div>
-
-    <div class="step panel" id="step3">
-        <h2 style="font-size: 1.5rem; margin-bottom: 20px;">Riepilogo e Invio</h2>
-        
-        <div id="riepilogoDati" class="summary-box"></div>
-
-        <label class="ps-form__checkbox-wrap">
-            <input type="checkbox" class="ps-form__checkbox" id="accettoRegolamento" required>
-            <span class="ps-form__checkbox-text">Accetto il regolamento dell'evento *</span>
-        </label>
-
-        <label class="ps-form__checkbox-wrap">
-            <input type="checkbox" class="ps-form__checkbox" id="accettoPrivacy" required>
-            <span class="ps-form__checkbox-text">Accetto il trattamento dei dati personali ai sensi del GDPR *</span>
-        </label>
-
-        <div class="btn-group" style="grid-template-columns: 1fr 2fr;">
-            <button type="button" class="btn btn--outline" onclick="prevStep(2)">Indietro</button>
-            <button type="button" class="btn btn--green" onclick="submitForm()">Invia Iscrizione <i class="fas fa-check" style="margin-left: 8px;"></i></button>
-        </div>
-    </div>
-
-    <div class="step panel" id="successScreen" style="text-align: center; padding: 50px 20px;">
-        <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--accent-green); margin-bottom: 20px;"></i>
-        <h2 style="font-size: 2rem; margin-bottom: 10px;">Iscrizione Ricevuta!</h2>
-        <p style="font-size: 1.1rem;">La tua richiesta è stata registrata con successo.</p>
-        <p style="margin-top: 15px; color: #aaa;">Manderemo un'email all'indirizzo <strong id="successEmail" style="color: var(--text-white);"></strong> per la conferma definitiva non appena avremo verificato il bonifico.</p>
-    </div>
-
-</div>
+</main>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, setDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, deleteObject } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
+    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-functions.js";
+    import * as R from "./iscrizioni-comune.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCBm7KbqSuNFQgGm4V2ial9KjmVYQdm9sQ",
@@ -406,239 +435,560 @@
         appId: "1:404522211919:web:dbce73bb8e2af9c510a83a"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
+    const app       = initializeApp(firebaseConfig);
+    const auth      = getAuth(app);
+    const db        = getFirestore(app);
+    const storage   = getStorage(app);
+    const functions = getFunctions(app, 'europe-west1');
 
-    let currentStep = 0;
-    let componentiCount = 0;
-    const MAX_COMPONENTI = 4;
-    const MAX_FILE_SIZE_KB = 300;
-    const MAX_PDF_SIZE_KB = 2000;
+    const fnCreaIscrizione    = httpsCallable(functions, 'creaIscrizione');
+    const fnVerificaPagamento = httpsCallable(functions, 'verificaPagamento');
+    const fnRiprendiPagamento = httpsCallable(functions, 'riprendiPagamento');
 
-    let processedFiles = { bonifico: null, certificati: [] };
+    /* =========================================================================
+       COSTANTI E STATO
+       ========================================================================= */
+    const MAX_IMG_KB  = 800;   // le foto vengono ridimensionate fino a questo peso
+    const MAX_PDF_MB  = 5;     // limite delle regole Storage
+    const PRIVACY_URL = 'privacy.html';
 
-    window.addComponente = function() {
-        if (componentiCount >= MAX_COMPONENTI) return;
-        componentiCount++;
-        
-        const div = document.createElement('div');
-        div.className = 'component-row';
-        div.id = `componente-${componentiCount}`;
-        
-        let removeBtn = componentiCount > 1 
-            ? `<button type="button" class="remove-component" onclick="removeComponente(${componentiCount})"><i class="fas fa-times"></i> Rimuovi</button>` 
-            : '';
+    const params   = new URLSearchParams(location.search);
+    const eventoId = (params.get('evento') || '').trim();
+    const CHIAVE   = 'ps-iscrizione:' + eventoId;
 
-        div.innerHTML = `
-            ${removeBtn}
-            <h4>Componente ${componentiCount}</h4>
-            <label class="ps-form__label" style="margin-top:0;">Nome *</label>
-            <input type="text" class="ps-form__input comp-nome" required>
-            <label class="ps-form__label">Cognome *</label>
-            <input type="text" class="ps-form__input comp-cognome" required>
-            <label class="ps-form__check-label" style="margin-top: 12px;">
-                <input type="checkbox" class="ps-form__checkbox comp-minore">
-                <span class="ps-form__check-text">Nato/a dopo il 1 gennaio 2014 (ingresso gratuito)</span>
-            </label>
-        `;
-        document.getElementById('componentiContainer').appendChild(div);
-        
-        if (componentiCount >= MAX_COMPONENTI) {
-            document.getElementById('btnAddUser').style.display = 'none';
-        }
+    const NOMI_PASSI = {
+        categoria:  'Categoria',
+        squadra:    'Squadra',
+        componenti: 'Componenti',
+        documenti:  'Documenti',
+        riepilogo:  'Riepilogo'
     };
 
-    window.removeComponente = function(id) {
-        document.getElementById(`componente-${id}`).remove();
-        componentiCount--;
-        document.getElementById('btnAddUser').style.display = 'inline-flex';
-        aggiornaIndiciComponenti();
-    };
+    let evento  = null;
+    let utente  = null;
+    let passi   = [];
+    let caricamentiInCorso = 0;
 
-    function aggiornaIndiciComponenti() {
-        const righe = document.querySelectorAll('.component-row');
-        righe.forEach((row, index) => {
-            const num = index + 1;
-            row.id = `componente-${num}`;
-            row.querySelector('h4').textContent = `Componente ${num}`;
-            const btn = row.querySelector('.remove-component');
-            if(btn) btn.setAttribute('onclick', `removeComponente(${num})`);
-        });
-        componentiCount = righe.length;
+    // Dati compilati (salvati in sessionStorage per il ritorno dal pagamento)
+    let d = datiVuoti();
+
+    function datiVuoti() {
+        return {
+            uid: '',
+            passo: 'categoria',
+            categoriaId: '',
+            nomeSquadra: '',
+            email: '',
+            email2: '',
+            campiSquadra: {},
+            componenti: [],
+            documentiSquadra: {},          // idDoc -> { path, nome, kb }
+            consensi: { regolamento: false, privacy: false, datiSanitari: false },
+            iscrizioneId: ''               // iscrizione in attesa di pagamento (da sostituire se si ripresenta)
+        };
+    }
+    function nuovoComponente() {
+        return { k: Math.random().toString(36).slice(2, 9), nome: '', cognome: '', dataNascita: '', campi: {}, documenti: {} };
     }
 
-    window.toggleCategoriaLogic = function() {
-        const cat = document.getElementById('categoria').value;
-        const certGroup = document.getElementById('certificatoCheckboxGroup');
-        
-        if (cat === 'competitiva') {
-            certGroup.style.display = 'flex';
-        } else {
-            certGroup.style.display = 'none';
-            document.getElementById('dichiaraCertificato').checked = false;
-        }
-    };
+    /* =========================================================================
+       UTILITÀ
+       ========================================================================= */
+    const $ = id => document.getElementById(id);
 
-    window.showError = function(msg) {
-        const errBox = document.getElementById('errorBox');
-        if (msg) {
-            errBox.textContent = msg;
-            errBox.style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-            errBox.style.display = 'none';
-        }
-    };
-
-    function updateProgressBar(target) {
-        document.querySelectorAll('.progress-step').forEach((el, index) => {
-            el.classList.remove('active', 'completed');
-            if (index < target) el.classList.add('completed');
-            if (index === target) el.classList.add('active');
-        });
+    function escHtml(t) {
+        return String(t ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                              .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+    function fmtEuro(n) {
+        return Number(n || 0).toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
+    }
+    function fmtData(s) {
+        if (!R.dataValida(s)) return '';
+        const [y, m, g] = s.split('-').map(Number);
+        return new Date(y, m - 1, g).toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    }
+    function testoConAcapo(t) {
+        return escHtml(t).replace(/\r?\n/g, '<br>');
+    }
+    function linkSicuro(u) {
+        return /^https?:\/\//i.test(u || '') ? u : '';
     }
 
-    window.nextStep = function(target) {
-        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-        document.getElementById(`step${target}`).classList.add('active');
-        updateProgressBar(target);
-        currentStep = target;
-        showError('');
+    function categoria() { return R.categoriaDi(evento, d.categoriaId); }
 
-        if (target === 2) buildCertificatiInputs();
-        if (target === 3) generateRiepilogo();
-    };
-
-    window.prevStep = function(target) {
-        showError('');
-        document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-        document.getElementById(`step${target}`).classList.add('active');
-        updateProgressBar(target);
-        currentStep = target;
-    };
-
-    window.validateAndNext = async function(stepNumber) {
-        showError('');
-        if (stepNumber === 1) {
-            const nomeSquadra = document.getElementById('nomeSquadra').value.trim();
-            const email = document.getElementById('emailReferente').value.trim();
-            const cat = document.getElementById('categoria').value;
-            
-            if (!nomeSquadra || !email || !cat) return showError('Compila tutti i campi obbligatori della squadra.');
-            
-            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!regexEmail.test(email)) return showError('Inserisci un indirizzo email valido.');
-
-            let compValidi = true;
-            document.querySelectorAll('.component-row').forEach(row => {
-                const n = row.querySelector('.comp-nome').value.trim();
-                const c = row.querySelector('.comp-cognome').value.trim();
-                if (!n || !c) compValidi = false;
-            });
-            if (!compValidi) return showError('Compila nome e cognome di tutti i componenti.');
-
-            if (cat === 'competitiva' && !document.getElementById('dichiaraCertificato').checked) {
-                return showError('Per la categoria competitiva è necessario dichiarare il possesso del certificato medico.');
-            }
-            nextStep(2);
-
-        } else if (stepNumber === 2) {
-            if (!processedFiles.bonifico) return showError('Carica la ricevuta del bonifico.');
-            
-            const cat = document.getElementById('categoria').value;
-            if (cat === 'competitiva') {
-                const componenti = document.querySelectorAll('.component-row');
-                for (let i = 0; i < componenti.length; i++) {
-                    if (!processedFiles.certificati[i]) {
-                        return showError(`Carica il certificato medico per il componente ${i + 1}.`);
-                    }
-                }
-            }
-            nextStep(3);
-        }
-    };
-
-    function buildCertificatiInputs() {
-        const cat = document.getElementById('categoria').value;
-        const container = document.getElementById('uploadCertificatiContainer');
-        const inputsDiv = document.getElementById('certificatiInputs');
-        
-        if (cat === 'ludica') {
-            container.style.display = 'none';
-            processedFiles.certificati = [];
-            return;
-        }
-
-        container.style.display = 'block';
-        inputsDiv.innerHTML = '';
-        
-        const componenti = document.querySelectorAll('.component-row');
-        
-        if (processedFiles.certificati.length !== componenti.length) {
-            processedFiles.certificati = new Array(componenti.length).fill(null);
-        }
-
-        componenti.forEach((row, index) => {
-            const nome = row.querySelector('.comp-nome').value.trim();
-            const cognome = row.querySelector('.comp-cognome').value.trim();
-            
-            const div = document.createElement('div');
-            div.style.marginBottom = '20px';
-            div.innerHTML = `
-                <label class="ps-form__label">Certificato Medico di ${nome} ${cognome} *</label>
-                <input type="file" class="ps-form__input" accept=".jpg,.jpeg,.png,.pdf" required onchange="handleFileSelect(event, 'certificato', ${index})">
-                <div id="previewCertificato_${index}" class="file-preview"></div>
-            `;
-            inputsDiv.appendChild(div);
-        });
+    function salva() {
+        try { sessionStorage.setItem(CHIAVE, JSON.stringify(d)); } catch { /* memoria non disponibile */ }
     }
-
-    window.handleFileSelect = async function(event, type, index = null) {
-        const file = event.target.files[0];
-        const previewId = type === 'bonifico' ? 'previewBonifico' : `previewCertificato_${index}`;
-        const previewEl = document.getElementById(previewId);
-        showError('');
-        
-        if (!file) {
-            previewEl.style.display = 'none';
-            if(type === 'bonifico') processedFiles.bonifico = null;
-            if(type === 'certificato') processedFiles.certificati[index] = null;
-            return;
-        }
-
+    function ripristina() {
         try {
-            document.getElementById('loadingOverlay').style.display = 'flex';
-            document.getElementById('loadingText').textContent = 'Ottimizzazione file in corso...';
-            
-            let processedFile = file;
-            if (file.type.startsWith('image/')) {
-                processedFile = await compressImage(file, MAX_FILE_SIZE_KB);
-            } else if (file.type === 'application/pdf') {
-                if (file.size > MAX_PDF_SIZE_KB * 1024) {
-                    throw new Error(`Il file ${file.name} supera ${MAX_PDF_SIZE_KB / 1000}MB. Comprimi il PDF prima di caricarlo.`);
-                }
-            } else {
-                throw new Error('Formato non supportato. Usa JPG, PNG o PDF.');
-            }
+            const s = JSON.parse(sessionStorage.getItem(CHIAVE) || 'null');
+            if (s && typeof s === 'object') d = { ...datiVuoti(), ...s, consensi: { ...datiVuoti().consensi, ...(s.consensi || {}) } };
+        } catch { /* dati non leggibili: si riparte da zero */ }
+    }
+    function dimentica() {
+        try { sessionStorage.removeItem(CHIAVE); } catch { /* niente */ }
+    }
 
-            if(type === 'bonifico') processedFiles.bonifico = processedFile;
-            if(type === 'certificato') processedFiles.certificati[index] = processedFile;
+    function mostraErrori(lista) {
+        const box = $('errorBox');
+        if (!lista || !lista.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
+        box.innerHTML = lista.length === 1
+            ? escHtml(lista[0])
+            : 'Controlla questi punti:<ul>' + lista.map(e => `<li>${escHtml(e)}</li>`).join('') + '</ul>';
+        box.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-            previewEl.textContent = `✓ ${processedFile.name} (${(processedFile.size / 1024).toFixed(1)} KB)`;
-            previewEl.style.display = 'block';
-            
-        } catch (err) {
-            event.target.value = '';
-            previewEl.style.display = 'none';
-            if(type === 'bonifico') processedFiles.bonifico = null;
-            if(type === 'certificato') processedFiles.certificati[index] = null;
-            showError(err.message);
-        } finally {
-            document.getElementById('loadingOverlay').style.display = 'none';
+    function attesa(testo) {
+        if (testo === false) { $('loadingOverlay').style.display = 'none'; return; }
+        $('loadingText').textContent = testo;
+        $('loadingOverlay').style.display = 'flex';
+    }
+
+    // Schermata di messaggio (evento inesistente, iscrizioni chiuse, esiti…)
+    function messaggio({ icona = 'info-circle', colore = 'var(--accent-fucsia)', titolo, testo = '', html = '' }) {
+        $('passo').hidden = true;
+        $('totaleBox').hidden = true;
+        $('progressBar').hidden = true;
+        mostraErrori(null);
+        $('statoPanel').hidden = false;
+        $('statoPanel').innerHTML = `<div class="esito">
+            <i class="fas fa-${icona} esito__icona" style="color:${colore};" aria-hidden="true"></i>
+            <h2 tabindex="-1" id="esitoTitolo">${escHtml(titolo)}</h2>
+            ${testo ? `<p>${escHtml(testo)}</p>` : ''}
+            ${html}
+        </div>`;
+        $('esitoTitolo').focus();
+        window.scrollTo(0, 0);
+    }
+
+    /* =========================================================================
+       AVVIO
+       ========================================================================= */
+    function assicuraUtente() {
+        return new Promise((resolve, reject) => {
+            const stop = onAuthStateChanged(auth, async u => {
+                stop();
+                if (u) return resolve(u);
+                try { resolve((await signInAnonymously(auth)).user); }
+                catch (err) { reject(err); }
+            });
+        });
+    }
+
+    async function avvia() {
+        if (!eventoId) {
+            messaggio({ icona: 'link', titolo: 'Link non valido', testo: "Il link non indica l'evento. Usa il pulsante di iscrizione sul sito." });
+            return;
         }
-    };
+        try {
+            utente = await assicuraUtente();
+        } catch (err) {
+            console.error(err);
+            messaggio({ icona: 'exclamation-triangle', titolo: 'Modulo non disponibile', testo: 'Non è stato possibile avviare il modulo di iscrizione. Ricarica la pagina o riprova più tardi.' });
+            return;
+        }
+        let snap;
+        try {
+            snap = await getDoc(doc(db, 'eventi', eventoId));
+        } catch (err) {
+            console.error(err);
+            messaggio({ icona: 'exclamation-triangle', titolo: 'Errore di connessione', testo: 'Non riusciamo a caricare i dati dell\'evento. Controlla la connessione e ricarica la pagina.' });
+            return;
+        }
+        if (!snap.exists()) {
+            messaggio({ icona: 'calendar-times', titolo: 'Evento non trovato', testo: 'Il link non corrisponde a nessun evento. Controlla di averlo copiato per intero.' });
+            return;
+        }
+        evento = snap.data();
+        $('titoloEvento').textContent = evento.titolo || 'Iscrizione';
+        document.title = `Iscrizione – ${evento.titolo || 'Piacenza Svelata'}`;
+        $('sottotitoloEvento').textContent = [fmtData(evento.data), evento.luogo].filter(Boolean).join(' · ');
 
+        ripristina();
+        // File caricati con un altro accesso non sarebbero accettati dal server
+        if (d.uid && d.uid !== utente.uid) {
+            d.documentiSquadra = {};
+            d.componenti.forEach(c => { c.documenti = {}; });
+            d.iscrizioneId = '';
+        }
+        d.uid = utente.uid;
+        salva();
+
+        const idRitorno = params.get('iscrizione');
+        if (params.get('ritorno') && idRitorno) {
+            // Toglie i parametri di ritorno dall'indirizzo (un ricaricamento non rifà il controllo)
+            history.replaceState(null, '', `${location.pathname}?evento=${encodeURIComponent(eventoId)}`);
+            await gestisciRitorno(idRitorno);
+            return;
+        }
+        if (!evento.iscrizioniAperte) {
+            messaggio({ icona: 'lock', titolo: 'Iscrizioni chiuse', testo: `Le iscrizioni a "${evento.titolo}" non sono aperte in questo momento.` });
+            return;
+        }
+        if (!R.categorieVisibili(evento).length) {
+            messaggio({ icona: 'lock', titolo: 'Iscrizioni non disponibili', testo: 'Non ci sono categorie disponibili per questo evento.' });
+            return;
+        }
+        if (!categoria() || categoria().attiva === false) { d.categoriaId = ''; d.passo = 'categoria'; }
+        calcolaPassi();
+        vaiA(passi.includes(d.passo) ? d.passo : 'categoria');
+    }
+
+    /* =========================================================================
+       PASSI
+       ========================================================================= */
+    function calcolaPassi() {
+        const cat = categoria();
+        passi = ['categoria', 'squadra', 'componenti'];
+        if (cat && (cat.documenti || []).length) passi.push('documenti');
+        passi.push('riepilogo');
+    }
+
+    function aggiornaProgresso() {
+        const i = passi.indexOf(d.passo);
+        $('progressBar').hidden = false;
+        $('progressBar').innerHTML = passi.map((p, j) =>
+            `<div class="progress-step ${j < i ? 'completed' : ''} ${j === i ? 'active' : ''}" title="${NOMI_PASSI[p]}"></div>`).join('');
+    }
+
+    function vaiA(passo) {
+        d.passo = passo;
+        salva();
+        mostraErrori(null);
+        $('statoPanel').hidden = true;
+        const form = $('passo');
+        form.hidden = false;
+        form.innerHTML = ({
+            categoria:  htmlCategoria,
+            squadra:    htmlSquadra,
+            componenti: htmlComponenti,
+            documenti:  htmlDocumenti,
+            riepilogo:  htmlRiepilogo
+        })[passo]();
+        // riavvia l'animazione di ingresso
+        form.classList.remove('step'); void form.offsetWidth; form.classList.add('step');
+        aggiornaProgresso();
+        aggiornaTotale();
+        window.scrollTo(0, 0);
+        const titolo = form.querySelector('.step-title');
+        if (titolo) titolo.focus({ preventScroll: true });
+        if (passo === 'squadra' && d.nomeSquadra) controllaNome();
+    }
+
+    function pulsanti(indietro, avantiTesto = 'Avanti <i class="fas fa-arrow-right" style="margin-left: 10px;" aria-hidden="true"></i>', classe = 'btn--fuchsia') {
+        return `<div class="btn-group ${indietro ? '' : 'btn-group--single'}">
+            ${indietro ? `<button type="button" class="btn btn--outline" data-azione="indietro">Indietro</button>` : ''}
+            <button type="submit" class="btn ${classe}" id="btnAvanti">${avantiTesto}</button>
+        </div>`;
+    }
+
+    function idCampo(path) { return 'f_' + path.replace(/[^a-zA-Z0-9]/g, '_'); }
+
+    function htmlCampo(def, valore, path) {
+        const id = idCampo(path);
+        const obb = def.obbligatorio ? ' *' : '';
+        if (def.tipo === 'casella') {
+            return `<label class="ps-form__checkbox-wrap">
+                <input type="checkbox" class="ps-form__checkbox" id="${id}" data-bind="${path}" ${valore === true ? 'checked' : ''}>
+                <span class="ps-form__checkbox-text">${escHtml(def.etichetta)}${obb}</span>
+            </label>`;
+        }
+        const label = `<label class="ps-form__label" for="${id}">${escHtml(def.etichetta)}${obb}</label>`;
+        const v = escHtml(valore ?? '');
+        if (def.tipo === 'scelta') {
+            return `${label}<select class="ps-form__input" id="${id}" data-bind="${path}">
+                <option value="">Seleziona…</option>
+                ${(def.opzioni || []).map(o => `<option value="${escHtml(o)}" ${o === valore ? 'selected' : ''}>${escHtml(o)}</option>`).join('')}
+            </select>`;
+        }
+        const tipi = { email: 'email', telefono: 'tel', numero: 'text' };
+        const extra = def.tipo === 'numero' ? 'inputmode="decimal"' : def.tipo === 'telefono' ? 'autocomplete="tel"' : '';
+        return `${label}<input type="${tipi[def.tipo] || 'text'}" class="ps-form__input" id="${id}" data-bind="${path}" value="${v}" maxlength="${R.MAX_CAMPO}" ${extra}>`;
+    }
+
+    /* ---------- 1. Categoria ---------- */
+    function htmlCategoria() {
+        const oggi = R.oggiRoma();
+        const regolamento = linkSicuro(evento.linkRegolamento);
+        const cats = R.categorieVisibili(evento);
+        return `
+            <h2 class="step-title" tabindex="-1" style="color: var(--accent-green);">Benvenuti!</h2>
+            <div class="intro-info">
+                ${evento.data ? `<p><i class="fas fa-calendar-alt" aria-hidden="true"></i>${escHtml(fmtData(evento.data))}</p>` : ''}
+                ${evento.luogo ? `<p><i class="fas fa-map-marker-alt" aria-hidden="true"></i>${escHtml(evento.luogo)}</p>` : ''}
+                ${evento.testoIntro ? `<p class="intro-testo">${testoConAcapo(evento.testoIntro)}</p>` : ''}
+                ${regolamento ? `<p><i class="fas fa-file-alt" aria-hidden="true"></i><a href="${escHtml(regolamento)}" target="_blank" rel="noopener noreferrer">Leggi il regolamento</a></p>` : ''}
+                <p class="field-help">Il pagamento della quota avviene con carta alla fine del modulo: l'iscrizione è valida solo dopo il pagamento.</p>
+            </div>
+            <fieldset class="cat-list">
+                <legend>Scegli la categoria *</legend>
+                ${cats.map(c => {
+                    const n = c.componentiMin === c.componentiMax ? `${c.componentiMin} componenti` : `Da ${c.componentiMin} a ${c.componentiMax} componenti`;
+                    return `<label class="cat-opt">
+                        <input type="radio" name="categoria" value="${escHtml(c.id)}" data-bind="categoriaId" ${c.id === d.categoriaId ? 'checked' : ''}>
+                        <span>
+                            <span class="cat-opt__nome">${escHtml(c.nome)}</span>
+                            <span class="cat-opt__prezzo">${escHtml(R.descriviQuota(c, oggi))}</span>
+                            <span class="cat-opt__meta">${n}${(c.documenti || []).length ? ' · richiede documenti (' + escHtml(c.documenti.map(x => x.nome).join(', ')) + ')' : ''}</span>
+                            ${c.descrizione ? `<span class="cat-opt__desc">${testoConAcapo(c.descrizione)}</span>` : ''}
+                        </span>
+                    </label>`;
+                }).join('')}
+            </fieldset>
+            ${pulsanti(false)}`;
+    }
+
+    /* ---------- 2. Squadra ---------- */
+    function htmlSquadra() {
+        const cat = categoria();
+        return `
+            <h2 class="step-title" tabindex="-1">Dati della squadra</h2>
+            <label class="ps-form__label" for="nomeSquadra" style="margin-top:0;">Nome squadra *</label>
+            <input type="text" class="ps-form__input" id="nomeSquadra" data-bind="nomeSquadra" value="${escHtml(d.nomeSquadra)}" maxlength="${R.MAX_NOME_SQUADRA}" autocomplete="off">
+            <div id="nomeStato" aria-live="polite"></div>
+
+            <label class="ps-form__label" for="email">Email di riferimento *</label>
+            <input type="email" class="ps-form__input" id="email" data-bind="email" value="${escHtml(d.email)}" maxlength="${R.MAX_EMAIL}" autocomplete="email">
+            <p class="field-help">Qui riceverai la conferma dell'iscrizione e le comunicazioni sull'evento.${cat?.unaSquadraPerEmail !== false ? ' Con un indirizzo si può iscrivere una sola squadra.' : ''}</p>
+
+            <label class="ps-form__label" for="email2">Ripeti l'email *</label>
+            <input type="email" class="ps-form__input" id="email2" data-bind="email2" value="${escHtml(d.email2)}" maxlength="${R.MAX_EMAIL}" autocomplete="off">
+
+            ${(cat?.campiSquadra || []).map(def => htmlCampo(def, d.campiSquadra[def.id], `campiSquadra.${def.id}`)).join('')}
+            ${pulsanti(true)}`;
+    }
+
+    /* ---------- 3. Componenti ---------- */
+    function htmlComponenti() {
+        const cat = categoria();
+        const chiediData = R.richiedeDataNascita(cat);
+        const calc = R.calcolaImporto(evento, cat, d.componenti, R.oggiRoma());
+        const n = d.componenti.length;
+        const limiti = cat.componentiMin === cat.componentiMax
+            ? `La squadra è formata da ${cat.componentiMin} componenti.`
+            : `La squadra è formata da ${cat.componentiMin} a ${cat.componentiMax} componenti.`;
+        const etaInfo = [
+            Number.isInteger(cat.etaMinima) ? `età minima ${cat.etaMinima} anni` : '',
+            Number.isInteger(cat.etaMassima) ? `età massima ${cat.etaMassima} anni` : ''
+        ].filter(Boolean).join(', ');
+        return `
+            <h2 class="step-title" tabindex="-1">Componenti</h2>
+            <p class="field-help" style="margin-top:0;">${limiti}${etaInfo ? ` Per questa categoria: ${etaInfo} (compiuti il giorno dell'evento).` : ''}</p>
+            ${d.componenti.map((c, i) => `
+                <div class="component-row">
+                    ${n > cat.componentiMin ? `<button type="button" class="remove-component" data-azione="rimuovi-componente" data-i="${i}"><i class="fas fa-times" aria-hidden="true"></i> Rimuovi</button>` : ''}
+                    <h3>Componente ${i + 1}${calc?.gratuitoPerComponente[i] ? '<span class="badge-gratuito">Gratuito</span>' : ''}</h3>
+                    <label class="ps-form__label" for="${idCampo(`componenti.${i}.nome`)}" style="margin-top:8px;">Nome *</label>
+                    <input type="text" class="ps-form__input" id="${idCampo(`componenti.${i}.nome`)}" data-bind="componenti.${i}.nome" value="${escHtml(c.nome)}" maxlength="${R.MAX_NOME_PERSONA}" autocomplete="off">
+                    <label class="ps-form__label" for="${idCampo(`componenti.${i}.cognome`)}">Cognome *</label>
+                    <input type="text" class="ps-form__input" id="${idCampo(`componenti.${i}.cognome`)}" data-bind="componenti.${i}.cognome" value="${escHtml(c.cognome)}" maxlength="${R.MAX_NOME_PERSONA}" autocomplete="off">
+                    ${chiediData ? `
+                        <label class="ps-form__label" for="${idCampo(`componenti.${i}.dataNascita`)}">Data di nascita *</label>
+                        <input type="date" class="ps-form__input" id="${idCampo(`componenti.${i}.dataNascita`)}" data-bind="componenti.${i}.dataNascita" data-ricalcola="1" value="${escHtml(c.dataNascita)}" max="${R.oggiRoma()}">` : ''}
+                    ${(cat.campiComponente || []).map(def => htmlCampo(def, c.campi[def.id], `componenti.${i}.campi.${def.id}`)).join('')}
+                </div>`).join('')}
+            ${n < cat.componentiMax ? `<button type="button" class="btn btn--outline btn--small" data-azione="aggiungi-componente" style="margin-top: 15px;">
+                <i class="fas fa-plus" style="margin-right: 5px;" aria-hidden="true"></i> Aggiungi componente</button>` : ''}
+            ${cat.quota?.tipo === 'persona' && Number.isInteger(cat.gratuitoSottoEta) ? `<p class="field-help">Chi ha meno di ${cat.gratuitoSottoEta} anni il giorno dell'evento partecipa gratis.</p>` : ''}
+            ${pulsanti(true)}`;
+    }
+
+    /* ---------- 4. Documenti ---------- */
+    function htmlFile(def, file, chi, etichetta) {
+        const id = `file_${def.id}_${chi}`;
+        return `<div style="margin-top: 14px;">
+            <label class="ps-form__label" for="${id}" style="margin-top:0;">${escHtml(etichetta)}${def.obbligatorio ? ' *' : ''}</label>
+            ${file
+                ? `<div class="doc-file"><span><i class="fas fa-check" aria-hidden="true"></i> ${escHtml(file.nome)} (${file.kb} KB)</span>
+                     <button type="button" class="btn btn--outline btn--small" data-azione="rimuovi-file" data-doc="${escHtml(def.id)}" data-chi="${chi}">Sostituisci</button></div>`
+                : `<input type="file" class="ps-form__input" id="${id}" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf" data-doc="${escHtml(def.id)}" data-chi="${chi}">`}
+        </div>`;
+    }
+
+    function htmlDocumenti() {
+        const cat = categoria();
+        return `
+            <h2 class="step-title" tabindex="-1">Documenti</h2>
+            <p class="field-help" style="margin-top:0;">Formati accettati: foto JPG o PNG (vengono ridotte automaticamente) e PDF fino a ${MAX_PDF_MB} MB. I file sono visibili solo agli organizzatori.</p>
+            ${(cat.documenti || []).map(def => `
+                <div class="doc-block">
+                    <h3>${escHtml(def.nome)}</h3>
+                    ${def.descrizione ? `<p class="field-help" style="margin-top:0;">${testoConAcapo(def.descrizione)}</p>` : ''}
+                    ${def.per === 'squadra'
+                        ? htmlFile(def, d.documentiSquadra[def.id], 'squadra', 'File della squadra')
+                        : d.componenti.map((c, i) => htmlFile(def, c.documenti[def.id], `c${i}`, `${c.nome} ${c.cognome}`.trim() || `Componente ${i + 1}`)).join('')}
+                </div>`).join('')}
+            ${pulsanti(true)}`;
+    }
+
+    /* ---------- 5. Riepilogo ---------- */
+    function htmlRiepilogo() {
+        const cat = categoria();
+        const calc = R.calcolaImporto(evento, cat, d.componenti, R.oggiRoma());
+        const regolamento = linkSicuro(evento.linkRegolamento);
+        const valore = (def, v) => def.tipo === 'casella' ? (v ? 'Sì' : 'No') : (String(v ?? '').trim() || '—');
+        const campiSq = (cat.campiSquadra || []).map(def =>
+            `<div class="summary-item"><strong>${escHtml(def.etichetta)}:</strong> ${escHtml(valore(def, d.campiSquadra[def.id]))}</div>`).join('');
+        const docs = (cat.documenti || []).map(def => {
+            const n = def.per === 'squadra'
+                ? (d.documentiSquadra[def.id] ? 1 : 0)
+                : d.componenti.filter(c => c.documenti[def.id]).length;
+            const tot = def.per === 'squadra' ? 1 : d.componenti.length;
+            return `<div class="summary-item"><strong>${escHtml(def.nome)}:</strong> ${n}/${tot} caricati</div>`;
+        }).join('');
+        const importo = calc ? calc.importo : 0;
+        return `
+            <h2 class="step-title" tabindex="-1">Riepilogo e conferma</h2>
+            <div class="summary-box">
+                <div class="summary-item"><strong>Squadra:</strong> ${escHtml(d.nomeSquadra)}</div>
+                <div class="summary-item"><strong>Email:</strong> ${escHtml(d.email)}</div>
+                <div class="summary-item"><strong>Categoria:</strong> ${escHtml(cat.nome)}</div>
+                ${campiSq}
+                <div class="summary-item"><strong>Componenti:</strong>
+                    <ul class="summary-list">${d.componenti.map((c, i) => {
+                        const extra = (cat.campiComponente || []).map(def => {
+                            const v = c.campi[def.id];
+                            return v === undefined || v === '' ? '' : `${def.etichetta}: ${valore(def, v)}`;
+                        }).filter(Boolean).join(', ');
+                        return `<li>– ${escHtml(c.nome)} ${escHtml(c.cognome)}${c.dataNascita ? ` (${escHtml(c.dataNascita.split('-').reverse().join('/'))})` : ''}${extra ? ` · ${escHtml(extra)}` : ''}${calc?.gratuitoPerComponente[i] ? ' <span class="badge-gratuito">Gratuito</span>' : ''}</li>`;
+                    }).join('')}</ul>
+                </div>
+                ${docs}
+            </div>
+
+            <label class="ps-form__checkbox-wrap">
+                <input type="checkbox" class="ps-form__checkbox" data-bind="consensi.regolamento" ${d.consensi.regolamento ? 'checked' : ''}>
+                <span class="ps-form__checkbox-text">Ho letto e accetto il ${regolamento ? `<a href="${escHtml(regolamento)}" target="_blank" rel="noopener noreferrer">regolamento dell'evento</a>` : "regolamento dell'evento"} *</span>
+            </label>
+            <label class="ps-form__checkbox-wrap">
+                <input type="checkbox" class="ps-form__checkbox" data-bind="consensi.privacy" ${d.consensi.privacy ? 'checked' : ''}>
+                <span class="ps-form__checkbox-text">Ho letto l'<a href="${PRIVACY_URL}" target="_blank" rel="noopener noreferrer">informativa sul trattamento dei dati personali</a> e dichiaro di essere autorizzato/a a comunicare i dati degli altri componenti della squadra *</span>
+            </label>
+            ${R.haDocumentiSanitari(cat) ? `
+            <label class="ps-form__checkbox-wrap">
+                <input type="checkbox" class="ps-form__checkbox" data-bind="consensi.datiSanitari" ${d.consensi.datiSanitari ? 'checked' : ''}>
+                <span class="ps-form__checkbox-text">Acconsento al trattamento dei dati relativi alla salute contenuti nei certificati medici caricati, per la sola verifica dell'idoneità a partecipare *</span>
+            </label>` : ''}
+            ${importo > 0 ? `<p class="field-help" style="margin-top: 20px;">Premendo il pulsante verrai portato alla pagina di pagamento sicura di SumUp. L'iscrizione sarà confermata dopo il pagamento.</p>` : ''}
+            ${pulsanti(true,
+                importo > 0
+                    ? `<i class="fas fa-credit-card" style="margin-right: 10px;" aria-hidden="true"></i> Paga ${fmtEuro(importo)} con carta`
+                    : `Conferma iscrizione <i class="fas fa-check" style="margin-left: 8px;" aria-hidden="true"></i>`,
+                'btn--green')}`;
+    }
+
+    /* =========================================================================
+       TOTALE
+       ========================================================================= */
+    function aggiornaTotale() {
+        const box = $('totaleBox');
+        const cat = categoria();
+        if (!cat || $('passo').hidden) { box.hidden = true; return; }
+        const oggi = R.oggiRoma();
+        const n = Math.max(d.componenti.length, cat.componentiMin || 1);
+        const comp = d.componenti.length ? d.componenti : Array.from({ length: n }, () => ({}));
+        const calc = R.calcolaImporto(evento, cat, comp, oggi);
+        if (!calc) { box.hidden = true; return; }
+        let dettaglio;
+        if (calc.tipo === 'gratuita') dettaglio = 'Categoria gratuita: nessun pagamento.';
+        else if (calc.tipo === 'squadra') dettaglio = `Quota a squadra: ${fmtEuro(calc.euroUnitario)}.`;
+        else dettaglio = `${calc.paganti} × ${fmtEuro(calc.euroUnitario)}${calc.gratuiti ? ` · ${calc.gratuiti} gratuit${calc.gratuiti === 1 ? 'o' : 'i'}` : ''}.`;
+        const sc = R.scaglioneAttuale(cat, oggi);
+        if (sc?.finoAl) dettaglio += ` Quota valida per le iscrizioni fino al ${R.fmtGiorno(sc.finoAl)}.`;
+        box.innerHTML = `<span class="totale-box__label">Totale</span>
+            <span class="totale-box__importo">${fmtEuro(calc.importo)}</span>
+            <span class="totale-box__dettaglio">${escHtml(dettaglio)}</span>`;
+        box.hidden = false;
+    }
+
+    /* =========================================================================
+       MODIFICHE AI CAMPI
+       ========================================================================= */
+    function scriviPath(path, val) {
+        const parti = path.split('.');
+        let o = d;
+        for (let i = 0; i < parti.length - 1; i++) {
+            const k = /^\d+$/.test(parti[i]) ? Number(parti[i]) : parti[i];
+            if (o[k] === undefined) o[k] = {};
+            o = o[k];
+        }
+        o[parti[parti.length - 1]] = val;
+    }
+
+    function suModifica(e) {
+        const el = e.target.closest('[data-bind]');
+        if (!el) return;
+        const path = el.dataset.bind;
+        const val = el.type === 'checkbox' ? el.checked : el.value;
+        scriviPath(path, val);
+        salva();
+
+        if (path === 'categoriaId' && e.type === 'change') sceltaCategoria();
+        if (path === 'nomeSquadra') controllaNomeDifferito();
+        if (el.dataset.ricalcola) {
+            aggiornaTotale();
+            if (e.type === 'change') aggiornaBadgeGratuiti();
+        }
+    }
+
+    function aggiornaBadgeGratuiti() {
+        const calc = R.calcolaImporto(evento, categoria(), d.componenti, R.oggiRoma());
+        document.querySelectorAll('.component-row h3').forEach((h, i) => {
+            const b = h.querySelector('.badge-gratuito');
+            if (calc?.gratuitoPerComponente[i] && !b) h.insertAdjacentHTML('beforeend', '<span class="badge-gratuito">Gratuito</span>');
+            if (!calc?.gratuitoPerComponente[i] && b) b.remove();
+        });
+    }
+
+    function sceltaCategoria() {
+        const cat = categoria();
+        if (!cat) return;
+        // Porta il numero di componenti entro i limiti della categoria (senza perdere dati compilati)
+        while (d.componenti.length < cat.componentiMin) d.componenti.push(nuovoComponente());
+        while (d.componenti.length > cat.componentiMax) {
+            const ultimo = d.componenti[d.componenti.length - 1];
+            if (ultimo.nome || ultimo.cognome) break;
+            d.componenti.pop();
+        }
+        if (!d.componenti.length) d.componenti.push(nuovoComponente());
+        calcolaPassi();
+        aggiornaProgresso();
+        aggiornaTotale();
+        salva();
+    }
+
+    /* ---------- Nome squadra già usato ---------- */
+    let timerNome = null;
+    let ultimoNomeControllato = '';
+    function controllaNomeDifferito() {
+        clearTimeout(timerNome);
+        timerNome = setTimeout(controllaNome, 600);
+    }
+    async function controllaNome() {
+        const el = $('nomeStato');
+        if (!el) return;
+        const slug = R.slugify(d.nomeSquadra);
+        if (!slug) { el.innerHTML = ''; ultimoNomeControllato = ''; return; }
+        if (slug === ultimoNomeControllato) return;
+        ultimoNomeControllato = slug;
+        try {
+            const snap = await getDoc(doc(db, 'eventi', eventoId, 'nomiSquadre', slug));
+            if (R.slugify(d.nomeSquadra) !== slug || !$('nomeStato')) return;
+            $('nomeStato').innerHTML = snap.exists() && !d.iscrizioneId
+                ? '<p class="field-warn"><i class="fas fa-exclamation-circle" aria-hidden="true"></i> Esiste già una squadra con questo nome: scegline un altro.</p>'
+                : '';
+            return snap.exists();
+        } catch {
+            ultimoNomeControllato = '';   // il controllo definitivo lo fa comunque il server
+            return false;
+        }
+    }
+
+    /* =========================================================================
+       FILE
+       ========================================================================= */
     function compressImage(file, maxKB) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -649,195 +999,416 @@
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
                     let scale = 1;
-                    if (file.size > maxKB * 1024) {
-                        scale = Math.sqrt((maxKB * 1024) / file.size);
-                    }
-                    canvas.width = img.width * scale;
-                    canvas.height = img.height * scale;
-                    
+                    if (file.size > maxKB * 1024) scale = Math.sqrt((maxKB * 1024) / file.size);
+                    // Limite di sicurezza sulle dimensioni (foto molto grandi)
+                    scale = Math.min(scale, 3000 / Math.max(img.width, img.height), 1);
+                    canvas.width  = Math.max(1, Math.round(img.width * scale));
+                    canvas.height = Math.max(1, Math.round(img.height * scale));
                     const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                    
                     canvas.toBlob(blob => {
-                        if(blob) {
-                            const newFile = new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() });
-                            resolve(newFile);
-                        } else {
-                            reject(new Error('Errore durante la compressione.'));
-                        }
+                        if (blob) resolve(blob);
+                        else reject(new Error('Errore durante la compressione della foto.'));
                     }, 'image/jpeg', 0.8);
                 };
-                img.onerror = () => reject(new Error('File immagine non valido.'));
+                img.onerror = () => reject(new Error('Foto non leggibile: usa un file JPG, PNG o PDF.'));
             };
-            reader.onerror = () => reject(new Error('Errore in lettura file.'));
+            reader.onerror = () => reject(new Error('Errore nella lettura del file.'));
         });
     }
 
-    function escHtml(t) {
-        return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-                        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    function leggiSlotFile(docId, chi) {
+        if (chi === 'squadra') return d.documentiSquadra[docId];
+        return d.componenti[Number(chi.slice(1))]?.documenti[docId];
+    }
+    function scriviSlotFile(docId, chi, val) {
+        const contenitore = chi === 'squadra' ? d.documentiSquadra : d.componenti[Number(chi.slice(1))]?.documenti;
+        if (!contenitore) return;
+        if (val) contenitore[docId] = val; else delete contenitore[docId];
+        salva();
     }
 
-    function generateRiepilogo() {
-        const container = document.getElementById('riepilogoDati');
-        const nome = document.getElementById('nomeSquadra').value;
-        const email = document.getElementById('emailReferente').value;
-        const cat = document.getElementById('categoria').value;
-        
-        const righe = document.querySelectorAll('.component-row');
-        let paganti = 0;
-        let gratuiti = 0;
-        righe.forEach(row => {
-            if (row.querySelector('.comp-minore').checked) gratuiti++;
-            else paganti++;
-        });
-        const importo = paganti * 5;
-
-        let html = `
-            <div class="summary-item"><strong>Squadra:</strong> ${escHtml(nome)}</div>
-            <div class="summary-item"><strong>Email:</strong> ${escHtml(email)}</div>
-            <div class="summary-item"><strong>Categoria:</strong> ${cat === 'competitiva' ? 'Competitiva (ROSSO)' : 'Ludico-motoria (BIANCO)'}</div>
-            <div class="summary-item"><strong>Componenti:</strong><br>
-        `;
-        
-        righe.forEach((row) => {
-            const n = row.querySelector('.comp-nome').value;
-            const c = row.querySelector('.comp-cognome').value;
-            const minore = row.querySelector('.comp-minore').checked;
-            html += `<span style="padding-left: 140px; display: block; color: var(--text-light);">- ${escHtml(n)} ${escHtml(c)}${minore ? ' <span style="color: var(--accent-green); font-size:0.85rem;">(gratuito)</span>' : ''}</span>`;
-        });
-        html += `</div>`;
-
-        html += `<div class="summary-item"><strong>Importo dovuto:</strong> <span style="color: var(--accent-green); font-weight: 700; font-size: 1.1rem;">€${importo}</span> (${paganti} paganti × €5${gratuiti > 0 ? `, ${gratuiti} gratuiti` : ''})</div>`;
-        html += `<div class="summary-item"><strong>Ricevuta bonifico:</strong> ✓ Caricata</div>`;
-        if (cat === 'competitiva') {
-            html += `<div class="summary-item"><strong>Certificati medici:</strong> ✓ ${processedFiles.certificati.length} file caricati</div>`;
-        }
-
-        container.innerHTML = html;
-    }
-
-    function slugify(text) {
-        return text.toString().toLowerCase()
-            .replace(/\s+/g, '_')
-            .replace(/[^\w\-]+/g, '')
-            .replace(/\_\_+/g, '_')
-            .replace(/^-+/, '')
-            .replace(/-+$/, '');
-    }
-
-    window.submitForm = async function() {
-        showError('');
-        if (!document.getElementById('accettoRegolamento').checked || !document.getElementById('accettoPrivacy').checked) {
-            return showError('Devi accettare il regolamento e l\'informativa privacy.');
-        }
-
-        const overlay = document.getElementById('loadingOverlay');
-        const loadingText = document.getElementById('loadingText');
-        
+    async function caricaFile(input) {
+        const file = input.files[0];
+        if (!file) return;
+        const { doc: docId, chi } = input.dataset;
+        mostraErrori(null);
+        caricamentiInCorso++;
+        attesa('Caricamento del file…');
         try {
-            overlay.style.display = 'flex';
-            loadingText.textContent = 'Creazione identificativo...';
-
-            const squadraId = crypto.randomUUID ? crypto.randomUUID() : Date.now().toString() + Math.random().toString(36).substring(2);
-            const nomeSquadraRaw = document.getElementById('nomeSquadra').value.trim();
-            const safeFolder = slugify(nomeSquadraRaw) || squadraId;
-            const basePath = `iscrizioni/${safeFolder}`;
-
-            const cat = document.getElementById('categoria').value;
-
-            loadingText.textContent = 'Upload ricevuta bonifico...';
-            const bonificoExt = processedFiles.bonifico.name.split('.').pop();
-            const pathBonifico = `${basePath}/ricevuta_bonifico.${bonificoExt}`;
-            const bonificoRef = ref(storage, pathBonifico);
-            await uploadBytes(bonificoRef, processedFiles.bonifico);
-
-            const componentiData = [];
-            const rows = document.querySelectorAll('.component-row');
-            
-            for (let i = 0; i < rows.length; i++) {
-                const row = rows[i];
-                const nome = row.querySelector('.comp-nome').value.trim();
-                const cognome = row.querySelector('.comp-cognome').value.trim();
-                let pathCertificato = null;
-
-                if (cat === 'competitiva' && processedFiles.certificati[i]) {
-                    loadingText.textContent = `Upload certificato ${i + 1}/${rows.length}...`;
-                    const fileCert = processedFiles.certificati[i];
-                    const certExt = fileCert.name.split('.').pop();
-                    const cleanNome = slugify(nome);
-                    const cleanCognome = slugify(cognome);
-                    pathCertificato = `${basePath}/certificato_${cleanNome}_${cleanCognome}.${certExt}`;
-                    const certRef = ref(storage, pathCertificato);
-                    await uploadBytes(certRef, fileCert);
-                }
-
-                const isMinore = row.querySelector('.comp-minore').checked;
-                componentiData.push({ nome, cognome, pathCertificato, natoDopoGennaio2014: isMinore });
+            let blob, ext, tipo;
+            if (file.type === 'application/pdf' || /\.pdf$/i.test(file.name)) {
+                if (file.size > MAX_PDF_MB * 1024 * 1024)
+                    throw new Error(`Il file "${file.name}" supera ${MAX_PDF_MB} MB: comprimi il PDF prima di caricarlo.`);
+                blob = file; ext = 'pdf'; tipo = 'application/pdf';
+            } else if (file.type.startsWith('image/') || /\.(jpe?g|png)$/i.test(file.name)) {
+                attesa('Ottimizzazione della foto…');
+                blob = await compressImage(file, MAX_IMG_KB); ext = 'jpg'; tipo = 'image/jpeg';
+            } else {
+                throw new Error('Formato non supportato: usa JPG, PNG o PDF.');
             }
-
-            loadingText.textContent = 'Salvataggio dati finali...';
-            
-            const paganti = componentiData.filter(c => !c.natoDopoGennaio2014).length;
-            const importoDovuto = paganti * 5;
-
-            const docData = {
-                squadraId: squadraId,
-                cartellaStorage: safeFolder,
-                nomeSquadra: nomeSquadraRaw,
-                categoria: cat,
-                email: document.getElementById('emailReferente').value.trim(),
-                componenti: componentiData,
-                certificatoMedicoConfermato: cat === 'competitiva' ? document.getElementById('dichiaraCertificato').checked : false,
-                pathRicevuta: pathBonifico,
-                timestamp: serverTimestamp(),
-                status: "in_attesa",
-                importoDovuto: importoDovuto
-            };
-
-            await setDoc(doc(collection(db, "iscrizioni"), squadraId), docData);
-
-            loadingText.textContent = 'Accodamento email di conferma...';
-            const mailData = {
-                to: docData.email,
-                message: {
-                    subject: `Conferma registrazione Piacenza Svelata - ${docData.nomeSquadra}`,
-                    html: `
-                        <div style="background-color: #050505; padding: 40px 20px; font-family: Arial, sans-serif; color: #e0e0e0; line-height: 1.6;">
-                            <div style="max-width: 600px; margin: 0 auto; background-color: #121212; border: 1px solid #333333; border-radius: 8px; padding: 30px;">
-                                <h2 style="color: #FF0099; font-size: 24px; font-weight: 800; margin-top: 0; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #333333; padding-bottom: 10px;">Iscrizione Ricevuta</h2>
-                                <p style="font-size: 16px; margin-bottom: 20px;">Ciao, la richiesta per la squadra <strong style="color: #ffffff;">${escHtml(docData.nomeSquadra)}</strong> è stata registrata nei nostri sistemi.</p>
-                                <p style="font-size: 16px; margin-bottom: 20px;">La tua iscrizione è attualmente <strong style="color: #e67e22;">in attesa di conferma</strong>.</p>
-                                <p style="font-size: 16px; margin-bottom: 20px;">Verificheremo a breve l'accredito del bonifico e, per la categoria competitiva, la validità dei certificati medici caricati.</p>
-                                <p style="font-size: 16px; margin-bottom: 0;">A presto,<br><strong style="color: #FF0099;">Il team di Piacenza Svelata</strong></p>
-                            </div>
-                        </div>
-                    `
-                }
-            };
-            await setDoc(doc(collection(db, "mail"), squadraId), mailData);
-
-            document.getElementById('progressBar').style.display = 'none';
-            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
-            document.getElementById('successScreen').classList.add('active');
-            document.getElementById('successEmail').textContent = docData.email;
-            // Pixel Meta — evento conversione iscrizione completata
-                if (typeof fbq === 'function') {
-                    fbq('track', 'CompleteRegistration', {
-                        content_name: 'Piacenza Svelata 2026',
-                        status: docData.categoria
-                    });
-                }
-
-        } catch (error) {
-            console.error(error);
-            showError(`Errore durante l'invio: ${error.message}. Riprova.`);
+            attesa('Caricamento del file…');
+            const nomeFile = `${docId}-${chi}-${Date.now().toString(36)}.${ext}`;
+            const path = `caricamenti/${utente.uid}/${nomeFile}`;
+            await uploadBytes(ref(storage, path), blob, { contentType: tipo });
+            scriviSlotFile(docId, chi, { path, nome: file.name.slice(0, 80), kb: Math.max(1, Math.round(blob.size / 1024)) });
+        } catch (err) {
+            if (err.code) console.error(err);
+            input.value = '';
+            mostraErrori([err.code === 'storage/unauthorized'
+                ? 'Il file non è stato accettato (formato o dimensione non validi).'
+                : (err.message || 'Caricamento non riuscito. Riprova.')]);
         } finally {
-            overlay.style.display = 'none';
+            caricamentiInCorso--;
+            attesa(false);
+            if (d.passo === 'documenti') {
+                const y = window.scrollY;
+                $('passo').innerHTML = htmlDocumenti();
+                window.scrollTo(0, y);
+            }
         }
-    };
+    }
 
-    addComponente();
+    function rimuoviFile(docId, chi) {
+        const f = leggiSlotFile(docId, chi);
+        scriviSlotFile(docId, chi, null);
+        if (f?.path) deleteObject(ref(storage, f.path)).catch(() => {});
+        const y = window.scrollY;
+        $('passo').innerHTML = htmlDocumenti();
+        window.scrollTo(0, y);
+    }
+
+    /* =========================================================================
+       NAVIGAZIONE E CONTROLLI
+       ========================================================================= */
+    function datiPerInvio() {
+        const cat = categoria();
+        const docIds = new Set((cat?.documenti || []).map(x => x.id));
+        const soloPath = m => Object.fromEntries(Object.entries(m || {}).filter(([k, v]) => docIds.has(k) && v?.path).map(([k, v]) => [k, v.path]));
+        const pulisciCampi = (defs, valori) => Object.fromEntries((defs || []).map(def => {
+            const v = valori?.[def.id];
+            return [def.id, def.tipo === 'casella' ? v === true : String(v ?? '').trim()];
+        }));
+        return {
+            categoriaId: d.categoriaId,
+            nomeSquadra: d.nomeSquadra.trim(),
+            email: d.email.trim(),
+            campiSquadra: pulisciCampi(cat?.campiSquadra, d.campiSquadra),
+            componenti: d.componenti.map(c => ({
+                nome: c.nome.trim(),
+                cognome: c.cognome.trim(),
+                ...(R.richiedeDataNascita(cat) ? { dataNascita: c.dataNascita } : {}),
+                campi: pulisciCampi(cat?.campiComponente, c.campi),
+                documenti: soloPath(c.documenti)
+            })),
+            documentiSquadra: soloPath(d.documentiSquadra),
+            consensi: {
+                regolamento: d.consensi.regolamento === true,
+                privacy: d.consensi.privacy === true,
+                ...(R.haDocumentiSanitari(cat) ? { datiSanitari: d.consensi.datiSanitari === true } : {})
+            }
+        };
+    }
+
+    async function avanti() {
+        const cat = categoria();
+        const dati = datiPerInvio();
+        let err = [];
+        switch (d.passo) {
+            case 'categoria':
+                if (!cat || cat.attiva === false) err.push('Scegli una categoria.');
+                break;
+            case 'squadra':
+                err = R.erroriSquadra(cat, dati);
+                if (R.normalizzaEmail(d.email) !== R.normalizzaEmail(d.email2)) err.push('Le due email non coincidono.');
+                if (R.slugify(d.nomeSquadra) && !d.iscrizioneId) {
+                    ultimoNomeControllato = '';
+                    if (await controllaNome()) err.push('Esiste già una squadra con questo nome: scegline un altro.');
+                }
+                break;
+            case 'componenti':
+                err = R.erroriComponenti(evento, cat, dati.componenti);
+                break;
+            case 'documenti':
+                if (caricamentiInCorso) err.push('Attendi la fine del caricamento dei file.');
+                else err = R.erroriDocumenti(cat, dati);
+                break;
+            case 'riepilogo':
+                err = R.erroriConsensi(cat, dati.consensi);
+                if (!err.length) { await invia(); return; }
+                break;
+        }
+        if (err.length) { mostraErrori(err); return; }
+        vaiA(passi[passi.indexOf(d.passo) + 1]);
+    }
+
+    function indietro() {
+        const i = passi.indexOf(d.passo);
+        if (i > 0) vaiA(passi[i - 1]);
+    }
+
+    /* =========================================================================
+       INVIO
+       ========================================================================= */
+    function motivoErrore(err) {
+        return err?.details?.motivo || '';
+    }
+
+    async function invia() {
+        const dati = datiPerInvio();
+        const oggi = R.oggiRoma();
+        const errori = R.erroriIscrizione(evento, dati, oggi);
+        if (errori.length) { mostraErrori(errori); return; }
+        const calc = R.calcolaImporto(evento, categoria(), dati.componenti, oggi);
+        let reindirizzato = false;
+        $('btnAvanti').disabled = true;
+        attesa(calc.importo > 0 ? 'Preparazione del pagamento…' : 'Invio dell\'iscrizione…');
+        try {
+            const res = await fnCreaIscrizione({
+                eventoId,
+                dati,
+                totaleAtteso: calc.importo,
+                sostituisci: d.iscrizioneId || null
+            });
+            const r = res.data || {};
+            d.iscrizioneId = r.iscrizioneId || '';
+            salva();
+            if (r.stato === 'confermata_gratuita') {
+                successo(r.importo ?? 0);
+            } else if (r.checkoutUrl) {
+                attesa('Apertura della pagina di pagamento…');
+                reindirizzato = true;
+                location.href = r.checkoutUrl;
+                return;
+            } else {
+                throw new Error('Risposta inattesa dal server.');
+            }
+        } catch (err) {
+            gestisciErroreInvio(err);
+        } finally {
+            if (!reindirizzato) attesa(false);
+            const b = $('btnAvanti');
+            if (b) b.disabled = false;
+        }
+    }
+
+    function gestisciErroreInvio(err) {
+        const motivo = motivoErrore(err);
+        const det = err?.details || {};
+        switch (motivo) {
+            case 'nome-preso':
+                vaiA('squadra');
+                mostraErrori(['Esiste già una squadra con questo nome: scegline un altro.']);
+                break;
+            case 'email-usata':
+                vaiA('squadra');
+                mostraErrori(['Con questa email è già stata iscritta una squadra a questo evento. Usa un altro indirizzo o scrivi agli organizzatori.']);
+                break;
+            case 'chiuse':
+                messaggio({ icona: 'lock', titolo: 'Iscrizioni chiuse', testo: 'Le iscrizioni sono state chiuse nel frattempo. Per informazioni scrivi agli organizzatori.' });
+                break;
+            case 'evento-cambiato':
+            case 'importo-cambiato':
+                // La configurazione è cambiata (quota, scaglione, categorie): ricarica e mostra il nuovo totale
+                ricaricaEvento().then(() => {
+                    vaiA('riepilogo');
+                    mostraErrori([motivo === 'importo-cambiato' && typeof det.importo === 'number'
+                        ? `La quota è cambiata: il nuovo totale è ${fmtEuro(det.importo)}. Controlla il riepilogo e conferma di nuovo.`
+                        : "I dati dell'evento sono stati aggiornati. Controlla il riepilogo e conferma di nuovo."]);
+                });
+                break;
+            case 'documento-mancante':
+                vaiA(passi.includes('documenti') ? 'documenti' : 'riepilogo');
+                mostraErrori([err.message || 'Uno dei file caricati non è più disponibile: caricalo di nuovo.']);
+                break;
+            case 'gia-pagata':
+                successo(det.importo);
+                break;
+            case 'non-valido':
+                mostraErrori(Array.isArray(det.errori) && det.errori.length ? det.errori : [err.message]);
+                break;
+            default:
+                console.error(err);
+                mostraErrori([`Non è stato possibile completare l'iscrizione${err?.message ? ` (${err.message})` : ''}. Riprova tra qualche istante; se il problema continua scrivi agli organizzatori.`]);
+        }
+    }
+
+    async function ricaricaEvento() {
+        try {
+            const snap = await getDoc(doc(db, 'eventi', eventoId));
+            if (snap.exists()) evento = snap.data();
+            calcolaPassi();
+        } catch { /* si continua con i dati che abbiamo */ }
+    }
+
+    /* =========================================================================
+       ESITI
+       ========================================================================= */
+    function successo(importo) {
+        const cat = categoria();
+        const email = d.email;
+        const squadra = d.nomeSquadra;
+        if (typeof fbq === 'function') {
+            fbq('track', 'CompleteRegistration', { content_name: evento?.titolo || eventoId, status: d.categoriaId });
+        }
+        dimentica();
+        d = datiVuoti();
+        messaggio({
+            icona: 'check-circle', colore: 'var(--accent-green)',
+            titolo: 'Iscrizione confermata!',
+            html: `<p style="font-size: 1.1rem;">La squadra <strong style="color: var(--text-white);">${escHtml(squadra)}</strong> è iscritta${cat ? ` alla categoria <strong style="color: var(--text-white);">${escHtml(cat.nome)}</strong>` : ''}.</p>
+                   ${typeof importo === 'number' && importo > 0 ? `<p>Pagamento ricevuto: ${escHtml(fmtEuro(importo))}.</p>` : ''}
+                   ${email ? `<p style="color: #aaa;">Abbiamo inviato la conferma a <strong style="color: var(--text-white);">${escHtml(email)}</strong>. Se non la trovi, controlla anche nella posta indesiderata.</p>` : ''}
+                   <a class="btn btn--outline" href="ps-home.html">Torna al sito</a>`
+        });
+    }
+
+    function pausa(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    // Ritorno dalla pagina di pagamento SumUp
+    async function gestisciRitorno(iscrizioneId) {
+        messaggio({ icona: 'hourglass-half', colore: 'var(--text-light)', titolo: 'Verifica del pagamento…', testo: 'Attendi qualche secondo, stiamo controllando il pagamento.' });
+        let stato = '', importo;
+        for (let tentativo = 0; tentativo < 5; tentativo++) {
+            try {
+                const r = (await fnVerificaPagamento({ eventoId, iscrizioneId })).data || {};
+                stato = r.stato; importo = r.importo;
+            } catch (err) {
+                console.error(err);
+                // Ripiego: lettura diretta della propria iscrizione
+                try {
+                    const snap = await getDoc(doc(db, 'eventi', eventoId, 'iscrizioni', iscrizioneId));
+                    stato = snap.exists() ? snap.data().stato : 'inesistente';
+                    importo = snap.exists() ? snap.data().importo : undefined;
+                } catch (e2) {
+                    console.error(e2);
+                    stato = 'sconosciuto';
+                }
+            }
+            if (stato !== 'in_attesa_pagamento') break;
+            await pausa(3000);
+        }
+
+        if (stato === 'pagata' || stato === 'confermata_gratuita') { successo(importo); return; }
+
+        if (stato === 'in_attesa_pagamento' || stato === 'fallito') {
+            d.iscrizioneId = iscrizioneId;
+            salva();
+            messaggio({
+                icona: 'credit-card', colore: '#e67e22',
+                titolo: 'Pagamento non completato',
+                testo: "Non abbiamo ricevuto il pagamento. Puoi riprovare: i dati della squadra sono stati conservati. Senza pagamento l'iscrizione viene annullata automaticamente dopo circa due ore.",
+                html: `<div class="esito__azioni">
+                    <button type="button" class="btn btn--green" data-azione="riprova-pagamento" data-id="${escHtml(iscrizioneId)}"><i class="fas fa-credit-card" style="margin-right: 10px;" aria-hidden="true"></i> Riprova il pagamento</button>
+                    <button type="button" class="btn btn--outline" data-azione="modifica-dati">Modifica i dati</button>
+                </div>`
+            });
+            return;
+        }
+
+        if (stato === 'inesistente') {
+            d.iscrizioneId = '';
+            salva();
+            messaggio({
+                icona: 'clock', colore: '#e67e22',
+                titolo: 'Iscrizione scaduta',
+                testo: "L'iscrizione non è stata pagata in tempo ed è stata annullata. Puoi compilare di nuovo il modulo: abbiamo conservato i dati inseriti.",
+                html: d.categoriaId ? `<button type="button" class="btn btn--green" data-azione="modifica-dati">Riprendi l'iscrizione</button>` : `<a class="btn btn--green" href="?evento=${encodeURIComponent(eventoId)}">Nuova iscrizione</a>`
+            });
+            return;
+        }
+
+        if (stato === 'annullata') {
+            messaggio({ icona: 'ban', colore: '#ff4444', titolo: 'Iscrizione annullata', testo: "Questa iscrizione è stata annullata dagli organizzatori. Se hai pagato, scrivi agli organizzatori." });
+            return;
+        }
+
+        messaggio({
+            icona: 'question-circle', colore: 'var(--text-light)',
+            titolo: 'Non riusciamo a verificare il pagamento',
+            testo: "Se il pagamento è andato a buon fine riceverai a breve l'email di conferma. Se non arriva entro qualche minuto, scrivi agli organizzatori indicando il nome della squadra (non ripetere il pagamento)."
+        });
+    }
+
+    async function riprovaPagamento(iscrizioneId) {
+        attesa('Apertura della pagina di pagamento…');
+        try {
+            const r = (await fnRiprendiPagamento({ eventoId, iscrizioneId })).data || {};
+            if (r.stato === 'pagata') { attesa(false); successo(r.importo); return; }
+            if (!r.checkoutUrl) throw new Error('Risposta inattesa dal server.');
+            location.href = r.checkoutUrl;
+        } catch (err) {
+            console.error(err);
+            attesa(false);
+            if (motivoErrore(err) === 'scaduta') {
+                d.iscrizioneId = '';
+                salva();
+                messaggio({ icona: 'clock', colore: '#e67e22', titolo: 'Iscrizione scaduta', testo: "Il tempo per il pagamento è scaduto. Compila di nuovo il modulo: abbiamo conservato i dati inseriti.",
+                    html: `<button type="button" class="btn btn--green" data-azione="modifica-dati">Riprendi l'iscrizione</button>` });
+                return;
+            }
+            mostraErrori([`Non è stato possibile riaprire il pagamento${err?.message ? ` (${err.message})` : ''}. Riprova tra qualche istante.`]);
+        }
+    }
+
+    function modificaDati() {
+        if (!evento.iscrizioniAperte) {
+            messaggio({ icona: 'lock', titolo: 'Iscrizioni chiuse', testo: `Le iscrizioni a "${evento.titolo}" non sono aperte in questo momento.` });
+            return;
+        }
+        if (!categoria() || categoria().attiva === false) d.categoriaId = '';
+        calcolaPassi();
+        vaiA(d.categoriaId ? 'riepilogo' : 'categoria');
+    }
+
+    /* =========================================================================
+       EVENTI DELLA PAGINA
+       ========================================================================= */
+    const form = $('passo');
+    form.addEventListener('input', suModifica);
+    form.addEventListener('change', e => {
+        if (e.target.type === 'file') { caricaFile(e.target); return; }
+        suModifica(e);
+    });
+    form.addEventListener('submit', e => { e.preventDefault(); avanti(); });
+
+    document.addEventListener('click', e => {
+        const b = e.target.closest('[data-azione]');
+        if (!b || b.disabled) return;
+        switch (b.dataset.azione) {
+            case 'indietro': indietro(); break;
+            case 'aggiungi-componente': {
+                const cat = categoria();
+                if (d.componenti.length < cat.componentiMax) d.componenti.push(nuovoComponente());
+                salva();
+                vaiA('componenti');
+                const ultimo = document.querySelectorAll('.component-row');
+                ultimo[ultimo.length - 1]?.scrollIntoView({ block: 'center' });
+                ultimo[ultimo.length - 1]?.querySelector('input')?.focus({ preventScroll: true });
+                break;
+            }
+            case 'rimuovi-componente': {
+                const i = Number(b.dataset.i);
+                const c = d.componenti[i];
+                if (!c) break;
+                if ((c.nome || c.cognome) && !confirm(`Rimuovere ${`${c.nome} ${c.cognome}`.trim()} dalla squadra?`)) break;
+                Object.values(c.documenti || {}).forEach(f => { if (f?.path) deleteObject(ref(storage, f.path)).catch(() => {}); });
+                d.componenti.splice(i, 1);
+                salva();
+                const y = window.scrollY;
+                vaiA('componenti');
+                window.scrollTo(0, y);
+                break;
+            }
+            case 'rimuovi-file':        rimuoviFile(b.dataset.doc, b.dataset.chi); break;
+            case 'riprova-pagamento':   riprovaPagamento(b.dataset.id); break;
+            case 'modifica-dati':       modificaDati(); break;
+        }
+    });
+
+    avvia();
 </script>
 </body>
 </html>

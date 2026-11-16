@@ -14,7 +14,8 @@
     <meta property="og:url" content="https://www.orienteeringpiacenza.it/trasparenza.html">
     <meta property="og:image" content="https://www.orienteeringpiacenza.it/images/sfondo-trasparenza.jpg">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stile-comune.css">
+    <link rel="stylesheet" href="stile-principale.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -37,29 +38,31 @@
     <!-- End Meta Pixel Code -->
 </head>
 <body>
+    <a class="skip-link" href="#contenuto">Vai al contenuto</a>
 
     <header class="main-header">
         <nav class="navbar">
             <div class="logo">
-                <a href="index.html"><img src="images/logo.png" alt="Logo OTP-GEA Orienteering"></a>
+                <a href="index.html"><img width="2125" height="522" src="images/logo.png" alt="Logo OTP-GEA Orienteering"></a>
             </div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li>
-                    <a href="ps-home.html" style="color: #FF0099; font-weight: 800; border: 2px solid #FF0099; padding: 8px 15px; border-radius: 4px; text-transform: uppercase; transition: all 0.3s ease;" onmouseover="this.style.backgroundColor='#FF0099'; this.style.color='#fff'" onmouseout="this.style.backgroundColor='transparent'; this.style.color='#FF0099'">
+                    <a href="ps-home.html" class="nav-ps-link">
                         Piacenza Svelata
                     </a>
                 </li>
                 <li class="dropdown">
-                    <a href="#">Le Nostre Attività <i class="fas fa-caret-down"></i></a>
+                    <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">Le Nostre Attività <i class="fas fa-caret-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-content">
                         <li><a href="eventi.html">Eventi</a></li>
                         <li><a href="teambuilding.html">Teambuilding</a></li>
                         <li><a href="caccia-al-tesoro.html">Caccia al tesoro</a></li>
+                        <li><a href="web-app.html">Web app per le scuole</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#">L'Associazione <i class="fas fa-caret-down"></i></a>
+                    <a href="#" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">L'Associazione <i class="fas fa-caret-down" aria-hidden="true"></i></a>
                     <ul class="dropdown-content">
                         <li><a href="storia.html">La Nostra Storia</a></li>
                         <li><a href="promozione-territorio.html">Promozione Territorio</a></li>
@@ -70,13 +73,13 @@
                     </ul>
                 </li>
             </ul>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Apri menu">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Apri menu" aria-expanded="false" aria-controls="nav-links">
                 <i class="fas fa-bars"></i>
             </button>
         </nav>
     </header>
 
-    <main>
+    <main id="contenuto" tabindex="-1">
         <section id="hero-trasparenza" class="hero-section">
             <div class="hero-content">
                 <h1>Associazione Trasparente</h1>
@@ -106,43 +109,43 @@
                 
                 <div class="board-members-grid">
                     <div class="member-card">
-                        <img src="images/fava.jpg" alt="Foto del Presidente">
+                        <img width="1406" height="1406" src="images/fava.jpg" alt="Foto del Presidente">
                         <h4>Presidente</h4>
                         <p>Riccardo Fava</p>
                     </div>
 
                     <div class="member-card">
-                        <img src="images/giovanni.jpg" alt="Foto del Vicepresidente">
+                        <img width="562" height="564" src="images/giovanni.jpg" alt="Foto del Vicepresidente">
                         <h4>Vicepresidente</h4>
                         <p>Giovanni Schembari</p>
                     </div>
 
                     <div class="member-card">
-                        <img src="images/gabbo.jpg" alt="Foto del Segretario e Tesoriere">
+                        <img width="1920" height="1920" src="images/gabbo.jpg" alt="Foto del Segretario e Tesoriere">
                         <h4>Segretario</h4>
                         <p>Gabriele Barbato</p>
                     </div>
 
                     <div class="member-card">
-                        <img src="images/marco.jpg" alt="Foto del Consigliere 1">
+                        <img width="261" height="259" src="images/marco.jpg" alt="Foto del Consigliere 1">
                         <h4>Consigliere</h4>
                         <p>Marco Guglielmetti</p>
                     </div>
 
                     <div class="member-card">
-                        <img src="images/elisabetta.jpg" alt="Foto del Consigliere 2">
+                        <img width="1043" height="1043" src="images/elisabetta.jpg" alt="Foto del Consigliere 2">
                         <h4>Consigliere</h4>
                         <p>Elisabetta Asti</p>
                     </div>
 
                     <div class="member-card">
-                        <img src="images/elisa.jpg" alt="Foto del Consigliere 2">
+                        <img width="758" height="758" src="images/elisa.jpg" alt="Foto del Consigliere 2">
                         <h4>Consigliere</h4>
                         <p>Elisa Cremonesi</p>
                     </div>
 
                     <div class="member-card">
-                        <img src="images/botta.jpg" alt="Foto del Consigliere 2">
+                        <img width="666" height="663" src="images/botta.jpg" alt="Foto del Consigliere 2">
                         <h4>Consigliere</h4>
                         <p>Marco Bottaro</p>
                     </div>

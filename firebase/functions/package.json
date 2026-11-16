@@ -1,0 +1,21 @@
+{
+  "name": "otpgea-iscrizioni-functions",
+  "description": "Cloud Functions del sistema iscrizioni OTP-GEA",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "copia-comune": "node ../copia-comune.cjs",
+    "pretest": "node ../copia-comune.cjs",
+    "test": "node --test \"test/*.test.js\"",
+    "deploy": "npm test && firebase deploy --only functions --project otpgea-iscrizioni",
+    "logs": "firebase functions:log --project otpgea-iscrizioni"
+  },
+  "dependencies": {
+    "firebase-admin": "^14.5.1",
+    "firebase-functions": "^7.4.0"
+  }
+}

@@ -254,10 +254,48 @@ rieseguire `npm run deploy`, altrimenti form e server non coincidono.
 
 Registri delle funzioni: `npm run logs` oppure console Firebase → Functions → Registri.
 
-### Passaggio all'account SumUp reale (Fase F)
-Ripetere i due comandi `firebase functions:secrets:set ... --project otpgea-iscrizioni` con chiave
-e codice commerciante dell'account dell'associazione, poi `npm run deploy`. Le vecchie versioni dei
-segreti si possono poi eliminare con `firebase functions:secrets:destroy NOME@versione --project otpgea-iscrizioni`.
+### Passaggio all'account SumUp reale (Fase F2)
+Sandbox e account reale usano lo stesso indirizzo delle API (`api.sumup.com`): cambiano solo
+la chiave e il codice commerciante, il codice delle funzioni resta uguale. L'account deve essere
+**verificato** da SumUp e abilitato ai pagamenti online.
+
+1. In me.sumup.com controllare in alto di essere sull'account **dell'associazione** (non su
+   quello di prova della sandbox: il selettore degli account è lo stesso usato per la sandbox).
+2. Creare una **chiave segreta** nella pagina delle chiavi API
+   (https://me.sumup.com/settings/api-keys): inizia con `sup_sk_`. Non usare la chiave
+   pubblica `sup_pk_...`. Va trattata come una password: mai nel sito, nel repository o in chat.
+3. Annotare il **codice commerciante** (merchant code) dell'account reale (profilo/impostazioni
+   dell'account, di solito inizia con `M`).
+4. Dalla cartella `functions` sostituire i due segreti (si crea una nuova versione; il valore
+   si incolla quando la CLI chiede "Enter a value"):
+   ```
+   firebase functions:secrets:set SUMUP_API_KEY --project otpgea-iscrizioni
+   firebase functions:secrets:set SUMUP_MERCHANT_CODE --project otpgea-iscrizioni
+   ```
+   Se la CLI chiede se ripubblicare le funzioni che usano il segreto, rispondere **no**
+   (si pubblica al punto 5, con i test).
+5. Pubblicare: `npm run deploy` (le funzioni leggono i segreti alla pubblicazione).
+6. Prova con un pagamento vero di piccolo importo (vedi "Prova con l'account reale").
+7. Eliminare le versioni vecchie (sandbox) dei segreti, non più usate:
+   `firebase functions:secrets:prune --project otpgea-iscrizioni` (elenca le versioni inutilizzate
+   e chiede conferma prima di distruggerle).
+
+Se la creazione del pagamento fallisce dopo il passaggio (nel form: "Il servizio di pagamento non
+risponde"; nei registri `npm run logs`: `SumUp POST /v0.1/checkouts: HTTP 401/403...`), la chiave è
+sbagliata o l'account non è ancora abilitato ai pagamenti online: controllare la chiave e,
+se serve, chiedere l'abilitazione all'assistenza SumUp. Per tornare temporaneamente alla
+sandbox basta rimettere chiave e codice di prova con gli stessi comandi e ripubblicare.
+
+### Prova con l'account reale
+1. In ps-admin creare un evento di prova (es. `prova-reale`) con una categoria a quota fissa di
+   **1 € a squadra**, senza documenti, e aprire le iscrizioni.
+2. Iscriversi dal sito pubblicato (`https://www.orienteeringpiacenza.it/ps-form-iscrizioni.html?evento=prova-reale`)
+   e pagare con una carta vera.
+3. Controllare: ritorno al form con "Iscrizione confermata", email di conferma arrivata,
+   in ps-admin stato "Pagata" con il codice della transazione SumUp, pagamento visibile in
+   me.sumup.com → Transazioni.
+4. Rimborsare il pagamento da me.sumup.com (dettaglio della transazione → Rimborsa), poi in
+   ps-admin annullare l'iscrizione e chiudere o eliminare l'evento di prova.
 
 ### Prove con la sandbox
 - Carta che va a buon fine: VISA `4200 0000 0000 0091`, scadenza futura (es. `12/30`), CVV `123`.

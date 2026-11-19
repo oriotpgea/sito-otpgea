@@ -2416,3 +2416,77 @@ body.page-ps .ed-lock {
 
     .admin-section__head .admin-actions { width: 100%; }
 }
+
+
+/* --- GIOCA UN'EDIZIONE PASSATA (ps-edizioni + teaser in ps-home) --- */
+.ps-replay {
+    max-width: 800px;
+    margin: 3rem auto 0 auto;
+    padding: 30px;
+    background-color: var(--bg-panel);
+    border: 2px solid var(--accent-fucsia);
+    border-radius: var(--radius-default);
+    box-shadow: 0 0 24px rgba(255, 0, 153, 0.15);
+    scroll-margin-top: 100px;
+}
+
+.ps-replay__title {
+    font-size: 1.4rem;
+    color: var(--accent-fucsia);
+    margin-bottom: 0.75rem;
+}
+
+.ps-replay__title i { margin-right: 8px; }
+
+.ps-replay__text {
+    font-size: 1rem;
+    color: var(--text-light);
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.ps-replay__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.ps-replay__actions .btn i { margin-right: 8px; }
+
+.hero-light__link {
+    color: var(--accent-fucsia);
+    text-decoration: underline;
+}
+
+.ps-replay-teaser {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-dark);
+    max-width: 600px;
+}
+
+.ps-replay-teaser__text {
+    color: var(--text-light);
+    font-size: 1rem;
+    text-align: left;
+    margin-bottom: 1.25rem;
+}
+
+.ps-replay-teaser__text i {
+    color: var(--accent-green);
+    margin-right: 6px;
+}
+
+.ps-replay-teaser__text strong { color: var(--text-white); }
+
+@media screen and (max-width: 768px) {
+    .ps-replay { padding: 20px; }
+
+    .ps-replay__actions { flex-direction: column; }
+
+    .ps-replay__actions .btn { width: 100%; justify-content: center; }
+
+    .ps-replay-teaser { margin-left: auto; margin-right: auto; }
+
+    .ps-replay-teaser__text { text-align: center; }
+}
